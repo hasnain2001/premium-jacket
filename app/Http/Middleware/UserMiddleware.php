@@ -17,6 +17,8 @@ class UserMiddleware
         if (auth()->check() && auth()->user()->is_admin) {
             return redirect()->route('admin.home');
             }
+
+            
         if (auth()->check() && !auth()->user()->is_admin) {
             return $next($request);
         }

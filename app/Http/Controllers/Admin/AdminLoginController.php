@@ -20,17 +20,26 @@ class AdminLoginController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+    
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
+    
 
         if (Auth::attempt($request->only('email', 'password'))) {
+         
             if (auth()->user()->is_admin) {
+            
                 return redirect()->route('admin.home');
+            } else {
+         
+                Auth::logout();
+                return back()->withErrors(['email' => 'Unauthorized access']);
             }
         }
+    
 
         return back()->withErrors(['email' => 'Wrong credentials']);
     }
+    
 }

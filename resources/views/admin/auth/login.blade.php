@@ -8,7 +8,7 @@
                 <div class="card-header py-4 bg-dark text-white text-center">{{ __('Admin Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.login') }}">
+                    <form method="POST" action="{{ route('admin.login.submit') }}">
                         @csrf
 
                         <div class="row mb-3">

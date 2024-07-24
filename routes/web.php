@@ -10,9 +10,12 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\GuestAdminMiddleware;
 
 
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+
 
 Route::prefix('admin')->group(function () {
     
