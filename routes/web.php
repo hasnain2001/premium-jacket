@@ -8,11 +8,19 @@ use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Middleware\UserMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\GuestAdminMiddleware;
+use App\Http\Controllers\ProductController;
 
 
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+route::fallback(function(){
+return view('404');
+});
+Route :: any('*',function(){
+return view('404');
 });
 
 
@@ -42,4 +50,15 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home')
     ->middleware(UserMiddleware::class);
+
+
+    Route::controller(ProductController::class)->prefix('dashboard')->name('admin.')->group(function () {
+        Route::get('/product', 'index')->name('product');
+        Route::get('/product/create', 'create')->name('product.create');
+        Route::post('/product/store', 'store')->name('product.store');
+        Route::get('/product/edit/{id}', 'edit')->name('product.edit');
+        Route::post('/product/update/{id}', 'update')->name('product.update');
+        Route::get('/product/delete/{id}', 'destroy')->name('product.delete');
+         Route::post('/product/deleteSelected', 'deleteSelected')->name('product.deleteSelected');
+    });
     

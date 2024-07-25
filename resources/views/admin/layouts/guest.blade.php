@@ -7,73 +7,164 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <title>Dashboard</title>
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon"/>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <!-- Theme Config Js -->
+        <script src="{{asset('assets/js/head.js')}}"></script>
+
+        <!-- Bootstrap css -->
+        <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
+
+        <!-- App css -->
+        <link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Icons css -->
+        <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+            <!-- Plugins css-->
+            <link href="{{asset('assets/libs/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
+            <link href="{{asset('assets/libs/dropzone/min/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
+            <link href="{{asset('assets/libs/quill/quill.core.css')}}" rel="stylesheet" type="text/css" />
+            <link href="{{asset('assets/libs/quill/quill.snow.css')}}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+    <div id="wrapper">
+    <!-- ========== Menu ========== -->
+    <div class="app-menu">  
+    
+        <!-- Brand Logo -->
+        <div class="logo-box">
+            <!-- Brand Logo Light -->
+            <a href="{{route('admin.home')}}" class="logo-light">
+                <img src="{{asset('assets/images/logo-light.png')}}" alt="logo" class="logo-lg">
+                <img src="{{asset('assets/images/logo-sm.png')}}" alt="small logo" class="logo-sm">
+            </a>
 
-                    </ul>
+            <!-- Brand Logo Dark -->
+            <a href="{{route('admin.home')}}" class="logo-dark">
+                <img src="{{asset('assets/images/logo-dark.png')}}" alt="dark logo" class="logo-lg">
+                <img src="{{asset('assets/images/logo-sm.png')}}" alt="small logo" class="logo-sm">
+            </a>
+        </div>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+        <!-- menu-left -->
+        <div class="scrollbar">
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
+            <!-- User box -->
+            <div class="user-box text-center">
+                <img src="assets/images/users/user-1.jpg" alt="user-img" title="Mat Helme" class="rounded-circle avatar-md">
+                <div class="dropdown">
+                    <a href="javascript: void(0);" class="dropdown-toggle h5 mb-1 d-block" data-bs-toggle="dropdown">Geneva Kennedy</a>
+                    <div class="dropdown-menu user-pro-dropdown">
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                  document.getElementById('logout-form').submit();">
-                                     {{ __('Logout') }}
-                                 </a>
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <i class="fe-user me-1"></i>
+                            <span>My Account</span>
+                        </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <i class="fe-settings me-1"></i>
+                            <span>Settings</span>
+                        </a>
+
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <i class="fe-lock me-1"></i>
+                            <span>Lock Screen</span>
+                        </a>
+
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <i class="fe-log-out me-1"></i>
+                            <span>Logout</span>
+                        </a>
+
+                    </div>
                 </div>
+                <p class="text-muted mb-0">Admin Head</p>
             </div>
-        </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+            <!--- Menu -->
+            <ul class="menu">
+
+                <li class="menu-title">Navigation</li>
+
+                <li class="menu-item bg-success text-white">
+                    <a href="{{route('admin.home')}}"  class="menu-link ">
+                        <span class="menu-icon"><i data-feather="airplay"></i></span>
+                        <span class=""> Dashboards </span>
+                       
+                    </a>
+                   
+                </li>
+
+                <li class="menu-item">
+                    <a href="#menuCrm" data-bs-toggle="collapse" class="menu-link">
+                        <span class="menu-icon"><i data-feather="users"></i></span>
+                        <span class="menu-text"> CRM </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="menuCrm">
+                        <ul class="sub-menu">
+                            <li class="menu-item">
+                                <a href="{{route('admin.product')}}" class="menu-link">
+                                    <span class="menu-text">Product</span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{route('admin.home')}}" class="menu-link">
+                                    <span class="menu-text">Genders</span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{route('admin.home')}}" class="menu-link">
+                                    <span class="menu-text">Categories</span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{route('admin.home')}}" class="menu-link">
+                                    <span class="menu-text">Orders</span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{route('admin.home')}}" class="menu-link">
+                                    <span class="menu-text">Customers</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <!--- End Menu -->
+            <div class="clearfix"></div>
+        </div>
+    </div> 
+    <!-- ========== Left menu End ========== -->
+
+    @yield('main-content')
+</div>
+
+
+
+    
+        <!-- Vendor js -->
+        <script src="{{asset('assets/js/vendor.min.js')}}"></script>
+
+        <!-- App js -->
+        <script src="{{asset('assets/js/app.min.js')}}"></script>
+
+        <!-- Plugins js -->
+        <script src="{{asset('assets/libs/morris.js06/morris.min.js')}}"></script>
+        <script src="{{asset('assets/libs/raphael/raphael.min.js')}}"></script>
+
+        <!-- Dashboard init-->
+        <script src="{{asset('assets/js/pages/dashboard-4.init.js')}}"></script>
 </body>
 </html>

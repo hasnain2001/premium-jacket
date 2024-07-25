@@ -39,13 +39,13 @@
             <!-- Brand Logo -->
             <div class="logo-box">
                 <!-- Brand Logo Light -->
-                <a href="index.html" class="logo-light">
+                <a href="{{route('admin.home')}}" class="logo-light">
                     <img src="{{asset('assets/images/logo-light.png')}}" alt="logo" class="logo-lg">
                     <img src="{{asset('assets/images/logo-sm.png')}}" alt="small logo" class="logo-sm">
                 </a>
     
                 <!-- Brand Logo Dark -->
-                <a href="index.html" class="logo-dark">
+                <a href="{{route('admin.home')}}" class="logo-dark">
                     <img src="{{asset('assets/images/logo-dark.png')}}" alt="dark logo" class="logo-lg">
                     <img src="{{asset('assets/images/logo-sm.png')}}" alt="small logo" class="logo-sm">
                 </a>
@@ -113,7 +113,7 @@
                         <div class="collapse" id="menuCrm">
                             <ul class="sub-menu">
                                 <li class="menu-item">
-                                    <a href="{{route('admin.home')}}" class="menu-link">
+                                    <a href="{{route('admin.product')}}" class="menu-link">
                                         <span class="menu-text">Product</span>
                                     </a>
                                 </li>
