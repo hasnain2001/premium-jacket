@@ -6,14 +6,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Models\Product;
 use App\Models\Categories;
+use App\Models\Gender;
+use Illuminate\Support\Str;
 
 
 
 class ProductController extends Controller
 {
-   
+
+    public function productdetail($slug){
+
+
+        $product = Product::where('slug', $slug)->first();
+
+        if (!$product) {
+
+            abort(404);
+        }
+
+        return view('admin.product.product-detail', compact("product"));
+    }
     public function product_blog() {
-        
+
         $productsByCategory = Product::select('category', Product::raw('count(*) as total'))
             ->groupBy('category')
             ->get();
@@ -37,24 +51,32 @@ class ProductController extends Controller
         return view('admin.product.create', compact('categories'));
     }
 
-    
+
     public function store(Request $request)
     {
-        // Validate the incoming request data
         $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:products,slug',
             'description' => 'required|string|max:10000',
             'price' => 'required|numeric',
+            'offprice' => 'required|numeric',
             'quantity' => 'required|integer',
-           'categories' => 'nullable|string|max:255',
+            'categories' => 'nullable|string|max:255',
             'title' => 'nullable|string|max:255',
             'meta_tag' => 'nullable|string|max:255',
             'meta_keyword' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
+            'productimage' => 'required|array|max:6',
             'productimage.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-    
+        $slug = Str::slug($request->name);
+
+        $originalSlug = $slug;
+        $count = 1;
+        while (Product::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
+        }
+
         $images = [];
         if ($files = $request->file('productimage')) {
             foreach ($files as $file) {
@@ -67,12 +89,13 @@ class ProductController extends Controller
                 $images[] = $image_url;
             }
         }
-    
+
         Product::create([
             'name' => $request->name,
-            'slug' => $request->slug,
+            'slug' => $slug,
             'description' => $request->description,
             'price' => $request->price,
+            'offprice' => $request->offprice,
             'quantity' => $request->quantity,
             'categories' => $request->categories,
             'title' => $request->title,
@@ -83,32 +106,28 @@ class ProductController extends Controller
             'authentication' => $request->authentication ?? "No Auth",
             'productimage' => json_encode($images),
         ]);
-    
+
         return redirect()->back()->with('success', 'Product Created Successfully');
     }
-    
-    
 
-    
-    
-    
+
+
+
+
     public function edit($id) {
         $product = Product::find($id);
         $categories = Categories::all();
 
         return view('admin.product.edit', compact('product', 'categories'));
     }
-
     public function update(Request $request, $id)
     {
-        // Validate the incoming request data
         $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:products,slug,' . $id,
             'description' => 'required|string|max:10000',
             'price' => 'required|numeric',
+            'offprice' => 'required|numeric',
             'quantity' => 'required|integer',
-            'sizes' => 'required|string|max:255',
             'categories' => 'required|string|max:255',
             'title' => 'nullable|string|max:255',
             'meta_tag' => 'nullable|string|max:255',
@@ -116,12 +135,26 @@ class ProductController extends Controller
             'meta_description' => 'nullable|string',
             'productimage.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-    
+
+
         $product = Product::findOrFail($id);
-    
-        // Handle product image updates
-        $images = json_decode($product->productimage, true) ?: [];
-    
+
+        if ($request->name !== $product->name) {
+            $slug = Str::slug($request->name);
+
+
+            $originalSlug = $slug;
+            $count = 1;
+            while (Product::where('slug', $slug)->where('id', '!=', $id)->exists()) {
+                $slug = $originalSlug . '-' . $count;
+                $count++;
+            }
+            $product->slug = $slug;
+        }
+
+        // Handle image uploads
+        $images = json_decode($product->productimage, true) ?? [];
+
         if ($files = $request->file('productimage')) {
             foreach ($files as $file) {
                 $image_name = md5(rand(1000, 10000));
@@ -133,15 +166,14 @@ class ProductController extends Controller
                 $images[] = $image_url;
             }
         }
-    
-        // Update product details
+
+        // Update the product details
         $product->update([
             'name' => $request->name,
-            'slug' => $request->slug,
             'description' => $request->description,
             'price' => $request->price,
+            'offprice' => $request->offprice,
             'quantity' => $request->quantity,
-            'sizes' => $request->sizes,
             'categories' => $request->categories,
             'title' => $request->title,
             'meta_tag' => $request->meta_tag,
@@ -151,11 +183,13 @@ class ProductController extends Controller
             'authentication' => $request->authentication ?? "No Auth",
             'productimage' => json_encode($images),
         ]);
-    
-        return redirect()->back()->with('success', 'Product Updated Successfully');
+
+        return redirect()->back()->with('success', 'Product updated successfully');
     }
-    
-    
+
+
+
+
     public function destroy($id) {
         Product::find($id)->delete();
         return redirect()->back()->with('success', 'Product Deleted Successfully');
@@ -163,20 +197,19 @@ class ProductController extends Controller
 
     public function deleteSelected(Request $request) {
         $productIds = $request->input('selected_products');
-    
+
         if ($productIds) {
             // Debug: Check the product IDs to be deleted
             dd($productIds);
-    
+
             // Delete only the products
             Product::whereIn('id', $productIds)->delete();
-    
+
             return redirect()->back()->with('success', 'Selected products deleted successfully');
         } else {
             return redirect()->back()->with('error', 'No products selected for deletion');
         }
     }
-    
-    
+
 
 }

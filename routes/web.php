@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\GenderController;
 use App\Http\Middleware\UserMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\GuestAdminMiddleware;
@@ -12,9 +15,13 @@ use App\Http\Controllers\ProductController;
 
 
 
+
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
 route::fallback(function(){
 return view('404');
@@ -26,7 +33,7 @@ return view('404');
 
 
 Route::prefix('admin')->group(function () {
-    
+
 });
 
 Route :: prefix('admin')->name('admin.')->group(function( ){
@@ -35,30 +42,76 @@ Route :: prefix('admin')->name('admin.')->group(function( ){
         Route::get('/login', [AdminLoginController::class, 'index'])->name('login');
         Route::post('/login', [AdminLoginController::class, 'login'])->name('login.submit');
     });
-   
 
 
-Route:: middleware(['auth',AdminMiddleware::class])->group(function(){
+
+    Route:: middleware(['auth',AdminMiddleware::class])->group(function(){
     Route::get('/home', [AdminHomeController::class, 'index'])->name('home');
 });
-  
+
 
 })   ;
 
 Auth::routes();
+
+Route::controller(MainController::class)->group(function () {
+    Route::get('/', 'index');
+
+    Route::get('/product', 'product')->name('product');
+    Route::get('/product/{slug}', 'productdetail')->name('product_details');
+    Route::get('/category', 'categories')->name('categories');
+    Route::get('/category/{slug}', 'viewcategory')->name('category_details');
+    Route::get('/gender', 'gender')->name('gender');
+    Route::get('/gender/{name}', 'viewgender')->name('gender_details');
+
+    Route::get('/blog',  'blog_home')->name('blog');
+Route::get('/blog/{slug}',  'blog_show')->name('blog-details');});
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home')
     ->middleware(UserMiddleware::class);
 
 
-    Route::controller(ProductController::class)->prefix('dashboard')->name('admin.')->group(function () {
-        Route::get('/product', 'index')->name('product');
-        Route::get('/product/create', 'create')->name('product.create');
-        Route::post('/product/store', 'store')->name('product.store');
-        Route::get('/product/edit/{id}', 'edit')->name('product.edit');
-        Route::post('/product/update/{id}', 'update')->name('product.update');
-        Route::get('/product/delete/{id}', 'destroy')->name('product.delete');
-         Route::post('/product/deleteSelected', 'deleteSelected')->name('product.deleteSelected');
+
+    Route:: middleware(['auth',AdminMiddleware::class])->group(function(){
+    Route::get('dashboard/product/create',[ProductController::class,'create' ] )->name('admin.product.create');
+Route::controller(ProductController::class)->prefix('dashboard')->group(function () {
+    Route::get('/product', 'index')->name('admin.product');
+    Route::get('/product/{slug}', 'productdetail')->name('admin.product.details');
+
+    Route::post('/product/store', 'store')->name('admin.product.store');
+    Route::get('/product/edit/{id}', 'edit')->name('admin.product.edit');
+    Route::post('/product/update/{id}', 'update')->name('admin.product.update');
+    Route::get('/product/delete/{id}', 'destroy')->name('admin.product.delete');
+     Route::post('/product/deleteSelected', 'deleteSelected')->name('admin.product.deleteSelected');
+
     });
-    
+});
+Route::controller(GenderController::class)->prefix('dashboard')->group(function () {
+    Route::get('/gender', 'index')->name('admin.gender');
+    Route::get('/gender/create', 'create')->name('admin.gender.create');
+    Route::post('/gender/store', 'store')->name('admin.gender.store');
+    Route::get('/gender/edit/{id}', 'edit')->name('admin.gender.edit');
+    Route::post('/gender/update/{id}', 'update')->name('admin.gender.update');
+    Route::get('/gender/delete/{id}', 'delete')->name('admin.gender.delete');
+     Route::post('/gender/deleteSelected', 'deleteSelected')->name('admin.gender.deleteSelected');
+});
+
+Route::controller(CategoriesController::class)->prefix('dashboard')->group(function () {
+    Route::get('/category', 'category')->name('admin.category');
+    Route::get('/category/create', 'create_category')->name('admin.category.create');
+    Route::post('/category/store', 'store_category')->name('admin.category.store');
+    Route::get('/category/edit/{id}', 'edit_category')->name('admin.category.edit');
+    Route::post('/category/update/{id}', 'update_category')->name('admin.category.update');
+    Route::get('/category/delete/{id}', 'delete_category')->name('admin.category.delete');
+     Route::post('/category/deleteSelected', 'deleteSelected')->name('admin.category.deleteSelected');
+});
+
+
+
+
+
+
+

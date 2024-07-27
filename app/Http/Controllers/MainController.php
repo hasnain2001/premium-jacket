@@ -7,18 +7,27 @@ use App\Models\Product;
 use App\Models\Categories;
 use App\Models\Blog;
 use Illuminate\Support\Str;
+use App\Models\Gender;
 
 class MainController extends Controller
 {
     public function index(){
         $categories = Categories::all();
-        return view("welcome",compact("categories"));
+        
+        $products =Product:: all();
+        $blogs = Blog::all();
+
+        return view('main',compact("categories","products","blogs"));
     }
+  
     public function product(){
         $products = Product::paginate(20);
-        return view("product",compact("products"));
+        
+        return view("product",compact("products",));
     }
     public function productdetail($slug){
+       
+       
         $product = Product::where('slug', $slug)->first();
     
         if (!$product) {
@@ -32,10 +41,11 @@ class MainController extends Controller
     
     public function blog_home()
     {
-          $blogs = Blog::paginate(5); 
+          $blogs = Blog::paginate(5);
+          $genders =Gender::all();
     $chunks = Product::latest()->limit(25)->get();
 
-        return view('blog', compact('blogs', 'chunks'));
+        return view('blog', compact('blogs', 'chunks','genders'));
     }
     
 public function blog_show($title) {
@@ -43,13 +53,44 @@ public function blog_show($title) {
     $decodedTitle = str_replace('-', ' ', $title);
     $blog = Blog::where('title', $decodedTitle)->firstOrFail();
      $chunks = Product::latest()->limit(25)->get();
-    return view('blog_details', compact('blog','chunks'));
+     $genders =Gender::all();
+    return view('blog_details', compact('blog','chunks','genders'));
 }
    public function  categories(){
     $categories = Categories::latest()->get();
-    return view('categories', compact('categories'));
+    $genders =Gender::all();
+    return view('categories', compact('categories','genders'));
    }
+   
    public function viewcategory($title)
+{
+
+    $genders =Gender::all();
+
+    $slug = Str::slug($title);
+    
+
+    $name = ucwords(str_replace('-', ' ', $slug));
+    
+
+    $products = Product::where('categories', $name)->get();
+        $categories = Categories::all();
+       
+
+
+    $storeCount = $products->count();
+
+
+    
+    return view('categories_details', compact('products', 'name', 'categories', 'storeCount','genders'));
+}
+
+public function gender(){
+    $genders = Gender::latest()->get();
+    
+    return view('gender', compact('genders'));
+   }
+public function viewgender($title)
 {
 
     $slug = Str::slug($title);
@@ -58,13 +99,21 @@ public function blog_show($title) {
     $name = ucwords(str_replace('-', ' ', $slug));
     
 
-    $product = Product::where('categories', $name)->get();
-        $categories = Categories::all();
+    $categories = Categories::where('gender', $name)->get();
+        $genders = Gender::all();
 
 
-    $storeCount = $product->count();
+    $storeCount = $categories->count();
 
     
-    return view('related_categories', compact('product', 'name', 'categories', 'storeCount'));
+    return view('gender_details', compact('categories', 'name', 'genders', 'storeCount'));
 }
+
+public function thankyou(){
+
+    return view('thankyou');
+
+}
+
+
 }

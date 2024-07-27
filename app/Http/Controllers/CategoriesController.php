@@ -3,22 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
+use App\Models\Gender;
 use Illuminate\Http\Request;
 
 
 class CategoriesController extends Controller
 {
-    public function category() {
+    public function category () {
         $categories = Categories::all();
         return view('admin.categories.index', compact('categories'));
     }
 
     public function create_category() {
-        return view('admin.categories.create');
+        $genders = Gender :: all();
+        return view('admin.categories.create', compact('genders'));
     }
 
     public function store_category(Request $request) {
-  
+
         $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:categories,slug',
@@ -27,9 +29,9 @@ class CategoriesController extends Controller
             'meta_description' => 'nullable|string',
             'status' => 'required|boolean',
             'authentication' => 'nullable|string',
-         
+
         ]);
-    
+
 
 
 
@@ -43,11 +45,11 @@ class CategoriesController extends Controller
             'authentication' => $request->filled('authentication') ? $request->authentication : "No Auth",
 
         ]);
-    
+
         return redirect()->back()->with('success', 'Category Created Successfully');
     }
-    
-    
+
+
     public function edit_category($id) {
         $categories = Categories::find($id);
         return view('admin.categories.edit', compact('categories'));
@@ -56,7 +58,7 @@ class CategoriesController extends Controller
     public function update_category(Request $request, $id) {
         $categories = Categories::find($id);
 
-        
+
 
         $categories->update([
             'title' => $request->title,
@@ -76,8 +78,8 @@ class CategoriesController extends Controller
         Categories::find($id)->delete();
         return redirect()->back()->with('success', 'Category Deleted Successfully');
     }
-    
-    
+
+
 public function deleteSelected(Request $request)
 {
     $categoryIds = $request->input('selected_categories');

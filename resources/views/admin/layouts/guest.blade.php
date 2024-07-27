@@ -35,8 +35,8 @@
 
     <div id="wrapper">
     <!-- ========== Menu ========== -->
-    <div class="app-menu">  
-    
+    <div class="app-menu">
+
         <!-- Brand Logo -->
         <div class="logo-box">
             <!-- Brand Logo Light -->
@@ -100,9 +100,9 @@
                     <a href="{{route('admin.home')}}"  class="menu-link ">
                         <span class="menu-icon"><i data-feather="airplay"></i></span>
                         <span class=""> Dashboards </span>
-                       
+
                     </a>
-                   
+
                 </li>
 
                 <li class="menu-item">
@@ -120,14 +120,15 @@
                             </li>
                             <li class="menu-item">
                                 <a href="{{route('admin.home')}}" class="menu-link">
-                                    <span class="menu-text">Genders</span>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{route('admin.home')}}" class="menu-link">
                                     <span class="menu-text">Categories</span>
                                 </a>
                             </li>
+                            <li class="menu-item">
+                                <a href="{{route('admin.gender')}}" class="menu-link">
+                                    <span class="menu-text">Genders</span>
+                                </a>
+                            </li>
+
                             <li class="menu-item">
                                 <a href="{{route('admin.home')}}" class="menu-link">
                                     <span class="menu-text">Orders</span>
@@ -145,7 +146,7 @@
             <!--- End Menu -->
             <div class="clearfix"></div>
         </div>
-    </div> 
+    </div>
     <!-- ========== Left menu End ========== -->
 
     @yield('main-content')
@@ -153,7 +154,7 @@
 
 
 
-    
+
         <!-- Vendor js -->
         <script src="{{asset('assets/js/vendor.min.js')}}"></script>
 

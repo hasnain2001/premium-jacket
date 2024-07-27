@@ -1,0 +1,418 @@
+@extends('welcome')
+
+@section('main-content')
+<style>
+ 
+    .btn-warning {
+        background-color: #f0ad4e;
+        border-color: #f0ad4e;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .btn-warning:hover {
+        background-color: #eea236;
+        border-color: #eea236;
+    }
+
+    .product-prev,
+    .product-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgb(255, 220, 25);
+        color: #fff;
+        border: none;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        cursor: pointer;
+        outline: none;
+        z-index: 10;
+    }
+
+    .product-prev {
+        left: 20px;
+    }
+
+    .product-next {
+        right: 20px;
+    }
+
+    .product-prev span,
+    .product-next span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .img-product{
+        height:468px;  
+        width: 100%;
+        object-fit: cover;
+    }
+    .img-product{
+        width:100% ;
+       height: 200px;
+    }
+
+    .customer_section {
+            background-color: #f8f9fa;
+        }
+        .customer_taital {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        .customer_main {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        .customer_img img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 5px solid #fff;
+        }
+        .customer_name {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color:rgb(102, 27, 27) ;
+        }
+        .customer_text {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+        .customer-prev,
+        .customer-next{
+            background-color: #007bff;
+            border-radius: 50%;
+        }
+        .about_section {
+            padding: 50px 0;
+            background-color: #f8f9fa;
+        }
+        .news_taital {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #343a40;
+        }
+        .about-img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .about_taital {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color:brown; 
+            margin-bottom: 1rem;
+        }
+        .about_text {
+            font-size: 1rem;
+            color: #6c757d;
+            line-height: 1.7;
+        }
+        .read_bt a {
+            font-size: 1rem;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .read_bt a:hover {
+            text-decoration: underline;
+        }
+       
+        .button {
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  padding-block: 0.5rem;
+  padding-inline: 1.25rem;
+  background-color: brown;
+  border-radius: 9999px;
+ 
+  align-items: center;
+  justify-content: center;
+  color: #ffff;
+  gap: 10px;
+  font-weight: bold;
+  border: 3px solid #ffffff4d;
+  outline: none;
+  overflow: hidden;
+  font-size: 15px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  border-color: #fff9;
+}
+
+.button:hover .icon {
+  transform: translate(4px);
+}
+
+.button:hover::before {
+  animation: shine 1.5s ease-out infinite;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background-image: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0) 70%
+  );
+  top: 0;
+  left: -100px;
+  opacity: 0.6;
+}
+
+@keyframes shine {
+  0% {
+    left: -100px;
+  }
+
+  60% {
+    left: 100%;
+  }
+
+  to {
+    left: 100%;
+  }
+}
+
+</style>
+     <!-- Product section start -->
+
+     <div class="bulb_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="bulb_taital">See Our Products</h1>
+                </div>
+            </div>
+            <div class="bulb_section_2">
+                @if ($products->isEmpty())
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Sorry!</h4>
+                        <p>No products available at the moment. Please check back later.</p>
+                        <hr>
+                        <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
+                    </div>
+                @else
+                    <div id="my_slider" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @foreach ($products->chunk(3) as $key => $chunk)
+                                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                    <div class="row">
+                                        @foreach ($chunk as $product)
+                                            <div class="col-md-4">
+                                                <div class="card mb-20 ">
+                                                    <div class="card-header h-100">
+                                                        @php
+                                                            $images = json_decode($product->productimage);
+                                                        @endphp
+                                                        @if(is_array($images) && !empty($images))
+                                                            <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-product" >
+                                                        @else
+                                                            <img src="{{ asset('images/a56d8f3f8a.jpg') }}" alt="No Image" class="img-fluid" loading="lazy">
+                                                        @endif
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-dark">{{ $product->name}}</h5>
+                                                        <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class=" btn btn-dark btn-sm">View Product</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button class="product-prev btn-dark" type="button" data-bs-target="#my_slider" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="product-next btn-dark" type="button" data-bs-target="#my_slider" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    
+    
+     <!-- product section end -->
+     <div class="customer_section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="customer_taital text-center">What Our Clients Say</h2>
+                </div>
+            </div>
+            <div class="customer_section_2 mt-4">
+                <div id="costum_slider" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="customer_main d-flex align-items-center">
+                                <div class="customer_left">
+                                    <div class="customer_img">
+                                        <img src="{{asset('images/clinet-1.jpg')}}" class="img-fluid rounded-circle" alt="Customer Image">
+                                    </div>
+                                </div>
+                                <div class="customer_right ml-4">
+                                    <h3 class="customer_name">Joneson</h3>
+                                    <p class="customer_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="customer_main d-flex align-items-center">
+                                <div class="customer_left">
+                                    <div class="customer_img">
+                                        <img src="{{asset('images/client-2.jpg')}}" class="img-fluid rounded-circle" alt="Customer Image">
+                                    </div>
+                                </div>
+                                <div class="customer_right ml-4">
+                                    <h3 class="customer_name">Smith</h3>
+                                    <p class="customer_text">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="customer_main d-flex align-items-center">
+                                <div class="customer_left">
+                                    <div class="customer_img">
+                                        <img src="{{asset('images/clent-3.jpg')}}" class="img-fluid rounded-circle" alt="Customer Image">
+                                    </div>
+                                </div>
+                                <div class="customer_right ml-4">
+                                    <h3 class="customer_name">Williams</h3>
+                                    <p class="customer_text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#costum_slider" role="button" data-slide="prev">
+                        <span class="customer-prev" aria-hidden="true"></span>
+                        <span class="sr-only"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#costum_slider" role="button" data-slide="next">
+                        <span class="customer-next" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Customers Section End -->
+
+
+ 
+   <!-- news section start -->
+<!-- News Section Start -->
+<div class="news_section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="news_taital text-center">Latest News</h3>
+            </div>
+        </div>
+        <div class="news_section_2 mt-4">
+            <div class="row">
+            
+                @if ($blogs->isEmpty() )
+                    
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Sorry!</h4>
+                    <p>No Blogs available at the moment. Please check back later.</p>
+                    <hr>
+                    <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
+                </div>
+                    
+                @else
+                    
+               
+                @foreach ($blogs as $blog)
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="{{ asset($blog->category_image) }}" class="card-img-top" alt="News Image">
+                        <div class="card-body">
+                            <h3 class="card-title seller_taital">{{ $blog->title }}</h3>
+                            <p class="card-text passages_text">{{ $blog->excerpt }}</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            @if ($blog->slug)
+                            <a href="{{ route('blog-details', ['slug' => Str::slug($blog->slug)]) }}" class="btn btn-primary">Read More</a>
+                            @else
+                            <a href="#" class="btn btn-dark">Read More</a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+<!-- News Section End -->
+
+ <!-- news section end -->
+ 
+       <!-- About Section Start -->
+    <div class="about_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="news_taital text-center">About Us</h4>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <img class="about-img" src="{{asset('images/about.jpg')}}" alt="About Image">
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <div class="about_taital_main">
+                        <div class="about_taital">About Our Company</div>
+                        <p class="about_text">That it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
+                       <div >
+                   
+                            <a class="button" href="{{route('about')}}">
+                                Read More
+                                <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+                                  <path clip-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z" fill-rule="evenodd"></path>
+                                </svg>
+                              </a>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About Section End -->
+
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+@endsection
+

@@ -7,30 +7,14 @@
         margin-bottom: 1rem;
     }
     .image-preview {
-            position: relative;
-            display: inline-block;
-            margin: 10px;
-        }
-        .image-preview img {
-            max-width: 150px;
-            max-height: 150px;
-        }
-        .image-preview .remove-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: #ff0000;
-            color: #ffffff;
-            border: none;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-        }
+    margin: 10px;
+}
+
+.image-preview img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
 
 </style>
 @section('main-content')
@@ -40,7 +24,7 @@
     @if(session('success'))
     <div class="alert alert-success alert-dismissable">
         <i class="fa fa-ban"></i>
-      
+
         <b>{{ session('success') }}</b>
     </div>
 @endif
@@ -57,7 +41,7 @@
 
         <!-- Start Content-->
         <div class="container-fluid">
-            
+
             <!-- start page title -->
             <div class="row">
                 <div class="col-12">
@@ -65,7 +49,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('admin.product')}}">Product</a></li>
-                               
+
                                 <li class="breadcrumb-item active">Add Product</li>
                             </ol>
                         </div>
@@ -88,7 +72,7 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-            
+
                                 <div class="mb-3">
                                     <label for="product-reference" class="form-label">Slug <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="slug" name="slug" required placeholder="Define your URL here">
@@ -96,15 +80,15 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-            
+
                                 <div class="mb-3">
                                     <label for="product-description" class="form-label">Product Description <span class="text-danger">*</span></label>
-                                    <textarea name="description" id="description" class="form-control" placeholder="Description"></textarea>
+                                    <textarea name="description" id="description" class="form-control" placeholder="Description" required></textarea>
                                     @error('description')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-            
+
                                 <div class="mb-3">
                                     <label for="category">Category <span class="text-danger">*</span></label>
                                     <select name="categories" id="category" class="form-control">
@@ -117,15 +101,22 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-            
+
                                 <div class="mb-3">
                                     <label for="product-price">Price <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="product-price" name="price" placeholder="Enter amount">
+                                    <input type="number" class="form-control" id="product-price" name="price" placeholder="Enter amount" required>
                                     @error('price')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-            
+                                <div class="mb-3">
+                                    <label for="product-price"> OFF Price <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="product-price" name="offprice" placeholder="Enter amount" required>
+                                    @error('offprice')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
                                 <div class="form-group">
                                     <label for="quantity">Quantity:</label>
                                     <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity" required>
@@ -133,7 +124,7 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-            
+
                                 <div class="mb-3">
                                     <label class="mb-2">Status <span class="text-danger">*</span></label>
                                     <br/>
@@ -154,7 +145,7 @@
                             </div>
                         </div>
                     </div> <!-- end col -->
-            
+
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
@@ -162,55 +153,56 @@
                                     <label for="product-meta-title" class="form-label">Meta Title</label>
                                     <input type="text" class="form-control" id="product-meta-title" name="meta_title" placeholder="Enter title">
                                 </div>
-            
+
                                 <div class="mb-3">
                                     <label for="product-meta-keywords" class="form-label">Meta Keywords</label>
                                     <input type="text" class="form-control" id="product-meta-keywords" name="meta_keywords" placeholder="Enter keywords">
                                 </div>
-            
+
                                 <div>
                                     <label for="product-meta-description" class="form-label">Meta Description</label>
                                     <textarea class="form-control" rows="5" id="product-meta-description" name="meta_description" placeholder="Please enter description"></textarea>
                                 </div>
                             </div>
                         </div> <!-- end card -->
-            
+
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Product Images</h5>
                                 <div class="mb-3">
-                                    
-                                        <label for="productimage">Product Images:</label>
-                                        <input type="file" class="form-control" id="productimage" name="productimage[]" multiple required>
-                                        <div id="imagePreviews" class="mt-3" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
-                                   
+                                    <label for="productimage">Product Images:</label>
+                                    <input type="file" class="form-control" id="productimage" name="productimage[]" multiple required onchange="previewImages(event)">
+                                    <div id="imagePreviews" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>
+                                    <span class="text-danger">maximum 6 pictures you can upload</span>
                                 </div>
-                       
+
+
+
                             </div>
                         </div> <!-- end card -->
-                        
-                        
+
+
                     </div> <!-- end col -->
                 </div>
                 <!-- end row -->
-            
+
                 <div class="row">
                     <div class="col-12">
                         <div class="text-center mb-3">
                             <a href="{{ route('admin.product') }}" class="btn w-sm btn-light waves-effect">Cancel</a>
                             <button type="submit" class="btn w-sm btn-success waves-effect waves-light">Save</button>
                             <a href="{{ route('admin.product.create') }}" class="btn w-sm btn-danger waves-effect">Delete</a>
-                         
+
                         </div>
                     </div> <!-- end col -->
                 </div>
             </form>
             <!-- end row -->
-            
 
-           
 
-            
+
+
+
         </div> <!-- container -->
 
     </div> <!-- content -->
@@ -218,30 +210,23 @@
 
 
 <script>
-     $(document).ready(function () {
-            $('#productimage').on('change', function (event) {
-                const files = event.target.files;
-                $('#imagePreviews').empty();
+  function previewImages(event) {
+        const files = event.target.files;
+        const previewsContainer = document.getElementById('imagePreviews');
+        previewsContainer.innerHTML = ''; // Clear previous previews
 
-                Array.from(files).forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        const preview = $(`
-                            <div class="image-preview">
-                                <img src="${e.target.result}" alt="Image Preview">
-                                <button class="remove-btn">&times;</button>
-                            </div>
-                        `);
-                        $('#imagePreviews').append(preview);
-                    };
-                    reader.readAsDataURL(file);
-                });
-
-                $('#imagePreviews').on('click', '.remove-btn', function () {
-                    $(this).parent().remove();
-                });
-            });
+        Array.from(files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '100px';
+                img.style.marginTop = '10px';
+                previewsContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
         });
+    }
 
 </script>
 

@@ -14,6 +14,7 @@ class Product extends Model
         "description",
         "productimage",
         "price",
+        "offprice",
         "sizes",
         "quantity",
         "categories",

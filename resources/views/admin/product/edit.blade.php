@@ -68,6 +68,13 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="price">Off Price:</label>
+                            <input type="number" class="form-control" id="price" name="offprice" value="{{ old('price', $product->price) }}" required>
+                            @error('offprice')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="quantity">Quantity:</label>
                             <input type="number" class="form-control" id="quantity" name="quantity" value="{{ old('quantity', $product->quantity) }}" required>
                             @error('quantity')
@@ -82,7 +89,7 @@
                             @enderror
                         </div>
                     </div>
-            
+
                     <!-- Section 2: Category and Meta Information -->
                     <div class="col-md-4">
                         <div class="form-group">
@@ -126,7 +133,7 @@
                             @enderror
                         </div>
                     </div>
-            
+
                     <!-- Section 3: Status and Images -->
                     <div class="col-md-4">
                         <div class="form-group">
@@ -141,7 +148,7 @@
                         <div class="form-group">
                             <label for="authentication">Authentication</label><br>
                             <input type="checkbox" name="authentication" id="authentication" {{ $product->authentication == 'top_stores' ? 'checked' : '' }} value="top_stores">&nbsp;<label for="authentication">Top Store</label>
-                            
+
                             @error('authentication')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -164,7 +171,7 @@
                             @enderror
                         </div>
                     </div>
-            
+
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary">Update</button>
                         <a href="{{ route('admin.product') }}" class="btn btn-secondary">Cancel</a>
