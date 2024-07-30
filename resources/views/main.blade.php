@@ -2,68 +2,34 @@
 
 @section('main-content')
 <style>
- 
-    .btn-warning {
-        background-color: #f0ad4e;
-        border-color: #f0ad4e;
-        color: #fff;
-        font-weight: bold;
-    }
+.text{
+color: brown;
+font-size: 2.5rem;
+font-weight: bold;
+text-align: center;
+}
 
-    .btn-warning:hover {
-        background-color: #eea236;
-        border-color: #eea236;
-    }
 
-    .product-prev,
-    .product-next {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgb(255, 220, 25);
-        color: #fff;
-        border: none;
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-        cursor: pointer;
-        outline: none;
-        z-index: 10;
-    }
-
-    .product-prev {
-        left: 20px;
-    }
-
-    .product-next {
-        right: 20px;
-    }
-
-    .product-prev span,
-    .product-next span {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
     .img-product{
-        height:468px;  
+        height:250px;
         width: 100%;
         object-fit: cover;
     }
-    .img-product{
-        width:100% ;
-       height: 200px;
+    .card-body{
+        height: 150px;
+
     }
 
+
     .customer_section {
-            background-color: #f8f9fa;
+        margin-top: 10px;
+        height: 60vh;
         }
         .customer_taital {
             font-size: 2.5rem;
             font-weight: bold;
             color: #343a40;
-            margin-bottom: 1rem;
+
         }
         .customer_main {
             background: #fff;
@@ -88,18 +54,14 @@
         }
         .customer-prev,
         .customer-next{
-            background-color: #007bff;
+            background-color: #2bff00;
             border-radius: 50%;
         }
         .about_section {
             padding: 50px 0;
             background-color: #f8f9fa;
         }
-        .news_taital {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #343a40;
-        }
+
         .about-img {
             width: 100%;
             height: auto;
@@ -109,7 +71,7 @@
         .about_taital {
             font-size: 1.75rem;
             font-weight: bold;
-            color:brown; 
+            color:brown;
             margin-bottom: 1rem;
         }
         .about_text {
@@ -125,7 +87,7 @@
         .read_bt a:hover {
             text-decoration: underline;
         }
-       
+
         .button {
   position: relative;
   transition: all 0.3s ease-in-out;
@@ -134,7 +96,7 @@
   padding-inline: 1.25rem;
   background-color: brown;
   border-radius: 9999px;
- 
+
   align-items: center;
   justify-content: center;
   color: #ffff;
@@ -195,75 +157,94 @@
   }
 }
 
+.product{
+    height:70vh;
+}
+.custom-prev, .custom-next {
+    background-color: transparent; /* Dark background color */
+    border: none; /* Remove border */
+    width: 15px;
+    height: 40px;
+
+}
+
+.custom-prev:hover, .custom-next:hover {
+    background-color:brown; /* Darker background on hover */
+}
+
+.custom-prev .carousel-control-prev-icon,
+.custom-next .carousel-control-next-icon {
+    filter: invert(1); /* Invert icon color to make it visible on dark background */
+}
+
 </style>
      <!-- Product section start -->
-
-     <div class="bulb_section layout_padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="bulb_taital">See Our Products</h1>
-                </div>
-            </div>
-            <div class="bulb_section_2">
-                @if ($products->isEmpty())
-                    <div class="alert alert-success" role="alert">
-                        <h4 class="alert-heading">Sorry!</h4>
-                        <p>No products available at the moment. Please check back later.</p>
-                        <hr>
-                        <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
-                    </div>
-                @else
-                    <div id="my_slider" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            @foreach ($products->chunk(3) as $key => $chunk)
-                                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                    <div class="row">
-                                        @foreach ($chunk as $product)
-                                            <div class="col-md-4">
-                                                <div class="card mb-20 ">
-                                                    <div class="card-header h-100">
-                                                        @php
-                                                            $images = json_decode($product->productimage);
-                                                        @endphp
-                                                        @if(is_array($images) && !empty($images))
-                                                            <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-product" >
-                                                        @else
-                                                            <img src="{{ asset('images/a56d8f3f8a.jpg') }}" alt="No Image" class="img-fluid" loading="lazy">
-                                                        @endif
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <h5 class="card-title text-dark">{{ $product->name}}</h5>
-                                                        <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class=" btn btn-dark btn-sm">View Product</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <button class="product-prev btn-dark" type="button" data-bs-target="#my_slider" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="product-next btn-dark" type="button" data-bs-target="#my_slider" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                @endif
-            </div>
+<br>
+<div class="product">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="bulb_taital text">See Our Products</h1>
         </div>
     </div>
-    
-    
+    <div class="">
+        @if ($products->isEmpty())
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Sorry!</h4>
+                <p>No products available at the moment. Please check back later.</p>
+                <hr>
+                <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
+            </div>
+        @else
+            <div id="my_slider" class="carousel slide "  data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach ($products->chunk(3) as $key => $chunk)
+                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                            <div class="row">
+                                @foreach ($chunk as $product)
+                                    <div class="col-md-4">
+                                        <div class="card mb-25">
+                                            <div class="card-header ">
+                                                @php
+                                                    $images = json_decode($product->productimage);
+                                                @endphp
+                                                @if(is_array($images) && !empty($images))
+                                                    <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-product " loading="lazy">
+                                                @else
+                                                    <img src="{{ asset('images/a56d8f3f8a.jpg') }}" alt="No Image" class="img-fluid" loading="lazy">
+                                                @endif
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title text-dark">{{ $product->name }}</h5>
+                                                <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-dark btn-sm">View Product</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <button class="carousel-control-prev custom-prev" type="button" data-bs-target="#my_slider" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next custom-next" type="button" data-bs-target="#my_slider" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        @endif
+    </div>
+</div></div>
+
+
      <!-- product section end -->
-     <div class="customer_section py-5">
+     <div class="customer_section  py-5">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2 class="customer_taital text-center">What Our Clients Say</h2>
+                    <h2 class="text ">What Our Clients Say</h2>
                 </div>
             </div>
             <div class="customer_section_2 mt-4">
@@ -311,7 +292,7 @@
                     </div>
                     <a class="carousel-control-prev" href="#costum_slider" role="button" data-slide="prev">
                         <span class="customer-prev" aria-hidden="true"></span>
-                        <span class="sr-only"></span>
+                        <span class="sr-only">prev</span>
                     </a>
                     <a class="carousel-control-next" href="#costum_slider" role="button" data-slide="next">
                         <span class="customer-next" aria-hidden="true"></span>
@@ -324,34 +305,34 @@
     <!-- Customers Section End -->
 
 
- 
+
    <!-- news section start -->
 <!-- News Section Start -->
 <div class="news_section py-5">
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3 class="news_taital text-center">Latest News</h3>
+                <h3 class="text">Latest News</h3>
             </div>
         </div>
         <div class="news_section_2 mt-4">
             <div class="row">
-            
+
                 @if ($blogs->isEmpty() )
-                    
+
                 <div class="alert alert-success" role="alert">
                     <h4 class="alert-heading">Sorry!</h4>
                     <p>No Blogs available at the moment. Please check back later.</p>
                     <hr>
                     <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
                 </div>
-                    
+
                 @else
-                    
-               
+
+
                 @foreach ($blogs as $blog)
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100">
+                    <div class="card ">
                         <img src="{{ asset($blog->category_image) }}" class="card-img-top" alt="News Image">
                         <div class="card-body">
                             <h3 class="card-title seller_taital">{{ $blog->title }}</h3>
@@ -359,7 +340,7 @@
                         </div>
                         <div class="card-footer text-center">
                             @if ($blog->slug)
-                            <a href="{{ route('blog-details', ['slug' => Str::slug($blog->slug)]) }}" class="btn btn-primary">Read More</a>
+                            <a href="{{ route('blog-details', ['slug' => Str::slug($blog->slug)]) }}" class="btn btn-dark">Read More</a>
                             @else
                             <a href="#" class="btn btn-dark">Read More</a>
                             @endif
@@ -375,13 +356,13 @@
 <!-- News Section End -->
 
  <!-- news section end -->
- 
+
        <!-- About Section Start -->
     <div class="about_section">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h4 class="news_taital text-center">About Us</h4>
+                    <h4 class="text">About Us</h4>
                 </div>
             </div>
             <br>
@@ -394,16 +375,16 @@
                 <div class="col-md-6 d-flex align-items-center">
                     <div class="about_taital_main">
                         <div class="about_taital">About Our Company</div>
-                        <p class="about_text">That it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
+                        <p class="about_text">TWelcome to Hide Leather Style, where you can shop for the finest leather jackets. A multitude of leather jackets, including bomber jackets, shearling fur jackets, biker jackets, vintage-style leather jackets, and more, are accessible for both men and women at our online shop. We offer something for everyone, whether you’re hunting for a traditional leather jacket to add to your outfit or a statement item to stand out.</p>
                        <div >
-                   
+
                             <a class="button" href="{{route('about')}}">
                                 Read More
                                 <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
                                   <path clip-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z" fill-rule="evenodd"></path>
                                 </svg>
                               </a>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -411,8 +392,6 @@
     </div>
     <!-- About Section End -->
 
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 @endsection
 

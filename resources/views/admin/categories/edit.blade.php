@@ -2,7 +2,7 @@
 @section('title')
     Update
 @endsection
-@section('content')
+@section('main-content')
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
@@ -61,11 +61,7 @@
                     <div class="col-6">
                         <div class="card">
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label for="status">Status <span class="text-danger">*</span></label><br>
-                                    <input type="radio" name="status" id="enable" {{ $categories->status == 'enable' ? 'checked' : '' }} value="enable">&nbsp;<label for="enable">Enable</label>
-                                    <input type="radio" name="status" id="disable" {{ $categories->status == 'disable' ? 'checked' : '' }} value="disable">&nbsp;<label for="disable">Disable</label>
-                                </div>
+                             
                                 <div class="form-group">
                                     <label for="authentication">Authentication</label><br>
                                     <input type="checkbox" name="authentication" id="authentication" {{ $categories->authentication == 'top_stores' ? 'checked' : '' }} value="top_stores">&nbsp;<label for="authentication">Top Store</label>

@@ -128,6 +128,11 @@
                                         <span class="menu-text">Genders</span>
                                     </a>
                                 </li>
+                                <li class="menu-item">
+                                    <a href="{{ route('admin.blog')}}" class="menu-link">
+                                        <span class="menu-text">Blog</span>
+                                    </a>
+                                </li>
 
                                 <li class="menu-item">
                                     <a href="{{route('admin.home')}}" class="menu-link">

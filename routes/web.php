@@ -12,6 +12,7 @@ use App\Http\Middleware\UserMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\GuestAdminMiddleware;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\BlogController;
 
 
 
@@ -87,7 +88,6 @@ Route::controller(ProductController::class)->prefix('dashboard')->group(function
     Route::get('/product/delete/{id}', 'destroy')->name('admin.product.delete');
      Route::post('/product/deleteSelected', 'deleteSelected')->name('admin.product.deleteSelected');
 
-    });
 });
 Route::controller(GenderController::class)->prefix('dashboard')->group(function () {
     Route::get('/gender', 'index')->name('admin.gender');
@@ -107,6 +107,19 @@ Route::controller(CategoriesController::class)->prefix('dashboard')->group(funct
     Route::post('/category/update/{id}', 'update_category')->name('admin.category.update');
     Route::get('/category/delete/{id}', 'delete_category')->name('admin.category.delete');
      Route::post('/category/deleteSelected', 'deleteSelected')->name('admin.category.deleteSelected');
+});
+
+Route::controller(BlogController::class)->prefix('dashboard')->group(function () {
+
+    Route::get('/Blog', 'blogs')->name('admin.blog');
+    Route::get('/Blog/create', 'create')->name('admin.blog.create');
+    Route::post('/Blog/store', 'store')->name('admin.blog.store');
+    Route::get('/Blog/{id}/edit',  'edit')->name('admin.blog.edit');
+    Route::post('/admin/Blog/update/{id}', 'update')->name('admin.Blog.update');
+    Route::delete('/admin/Blog/{id}',  'destroy')->name('admin.blog.delete');
+    Route::post('/blog/deleteSelected',  'deleteSelected')->name('admin.blog.deleteSelected');
+    Route::delete('/blog/bulk-delete',  'deleteSelected')->name('admin.blog.bulkDelete');
+    Route::delete('/blog/bulk-delete', 'deleteSelected')->name('admin.blog.bulkDelete');});
 });
 
 

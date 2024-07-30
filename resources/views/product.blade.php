@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Product</title>
 
-
+<link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <style>
          /* Custom styles for specific elements */
@@ -23,17 +23,32 @@
         .text {
             color: white;
         }
+        .conain{
+            background-position: center;
+            background-image: url('{{ asset('images/banner.jpg') }}');
+         height:400px;
+        }
+        .shop-text{
+            text-align: center;
+            color: white;
+            padding-top: 15%;
+        }
   </style>
 </head>
 <body>
     <nav>
         @include('components.navbar')
     </nav>
-    <br>
-    <br><br>
-    <br>
 
-    <p class="h5 m-0 text-dark">Total Product: <span class="fw-bold">{{ $products->total() }}</span></p>
+
+
+    <div class="conain">
+
+        <h1 class="shop-text">Shop</h1>
+    </div>
+<br>
+    <p class="h5 m-3 font-weight-bold    text-center text-dark">Total Product: <span class="fw-bold">{{ $products->total() }}</span></p>
+    <br>
     <div class="container">
         <div class="row">
             @if ($products->isEmpty())
@@ -46,9 +61,9 @@
         @else
         <div class="row">
             @foreach ($products as $product)
-       
+
                 <div class="col-md-3">
-                    <div class="card mb-4 shadow-sm h-100"> 
+                    <div class="card mb-4 shadow-sm h-100">
                         <div class="card-header p-0">
                             @php
                                 $images = json_decode($product->productimage);
@@ -67,9 +82,9 @@
                 </div>
             @endforeach
         </div>
-        
+
         @endif
-                
+
         </div>
     </div>
 
@@ -79,8 +94,8 @@
             {{ $products->links('pagination::bootstrap-4') }} </div>
         </div>
       </div>
-    
-     
+
+
 
       <script>
         function clickimg(smallimg){
@@ -96,18 +111,18 @@
                 $('.form-control').toggle('slow'); // Toggle the search input with a sliding effect (you can change 'slow' to 'fast' or a number in milliseconds)
             });
         });
-    
+
         document.getElementById('cartForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the form from submitting normally
-            
+
             // Get the action URL
             var actionUrl = this.getAttribute('action');
-            
+
             // Redirect to the action URL
             window.location.href = actionUrl;
         });
-        
+
     </script>
-    
+
 </body>
 </html>

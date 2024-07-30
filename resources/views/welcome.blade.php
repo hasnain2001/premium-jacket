@@ -4,7 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Premium | Jackets</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+      <!-- Bootstrap css -->
+      <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
+
     <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
     <style>
         .btn-brown {
@@ -17,22 +19,64 @@
             background-color: #A0522D;
             color: #fff;
         }
+        .carousel{
+            height: 100vh;
+        }
+        .slider{
+            height: 100vh;
+        }
+
     </style>
 </head>
 <body>
     <nav>
         @include('components.navbar')
     </nav>
-   
+    <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{{ asset('images/slider.jpg') }}" class="slider d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{{ asset('images/slider1.jpg') }}" class="slider d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{{ asset('images/slider2.jpg') }}" class=" slider d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
 
     <main>
         @yield('main-content')
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <!-- Popper.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<footer>
+    @include('components.footer')
+</footer>
+       <!-- Vendor js -->
+       <script src="{{asset('assets/js/vendor.min.js')}}"></script>
 
+       <!-- App js -->
+       <script src="{{asset('assets/js/app.min.js')}}"></script>
+
+       <!-- Plugins js -->
+       <script src="{{asset('assets/libs/morris.js06/morris.min.js')}}"></script>
+       <script src="{{asset('assets/libs/raphael/raphael.min.js')}}"></script>
+
+       <!-- Dashboard init-->
+       <script src="{{asset('assets/js/pages/dashboard-4.init.js')}}"></script>
 </body>
 </html>

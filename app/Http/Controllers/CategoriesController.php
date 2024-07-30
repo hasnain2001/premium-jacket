@@ -2,57 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categories;
-use App\Models\Gender;
 use Illuminate\Http\Request;
-
+use App\Models\Categories;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use App\Models\Gender;
+use App\Models\Product;
 
 class CategoriesController extends Controller
 {
-    public function category () {
+    public function category() {
         $categories = Categories::all();
         return view('admin.categories.index', compact('categories'));
     }
 
     public function create_category() {
-        $genders = Gender :: all();
-        return view('admin.categories.create', compact('genders'));
+        $genders = Gender::all();
+        return view('admin.categories.create',compact('genders'));
     }
 
     public function store_category(Request $request) {
-
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:categories,slug',
-            'meta_tag' => 'nullable|string|max:255',
-            'meta_keyword' => 'nullable|string|max:255',
-            'meta_description' => 'nullable|string',
-            'status' => 'required|boolean',
-            'authentication' => 'nullable|string',
-
-        ]);
-
-
 
 
         Categories::create([
             'title' => $request->title,
             'slug' => $request->slug,
+            'gender'=> $request->gender,
             'meta_tag' => $request->meta_tag,
             'meta_keyword' => $request->meta_keyword,
             'meta_description' => $request->meta_description,
             'status' => $request->status,
-            'authentication' => $request->filled('authentication') ? $request->authentication : "No Auth",
+            'authentication' => isset($request->authentication) ? $request->authentication : "No Auth",
 
         ]);
 
         return redirect()->back()->with('success', 'Category Created Successfully');
     }
 
-
     public function edit_category($id) {
         $categories = Categories::find($id);
-        return view('admin.categories.edit', compact('categories'));
+        $genders=Gender::all();
+        return view('admin.categories.edit', compact('categories','genders'));
     }
 
     public function update_category(Request $request, $id) {
@@ -64,6 +57,7 @@ class CategoriesController extends Controller
             'title' => $request->title,
             'slug'=> $request->slug,
             'meta_tag' => $request->meta_tag,
+            'gender'=> $request->gender,
             'meta_keyword' => $request->meta_keyword,
             'meta_description' => $request->meta_description,
             'status' => $request->status,

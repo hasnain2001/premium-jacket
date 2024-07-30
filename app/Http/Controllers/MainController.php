@@ -13,32 +13,32 @@ class MainController extends Controller
 {
     public function index(){
         $categories = Categories::all();
-        
+        $genders = Gender::all();
         $products =Product:: all();
         $blogs = Blog::all();
 
-        return view('main',compact("categories","products","blogs"));
+        return view('main',compact("categories","products","blogs","genders"));
     }
-  
+
     public function product(){
         $products = Product::paginate(20);
-        
-        return view("product",compact("products",));
+        $genders = Gender::all();
+        return view("product",compact("products","genders"));
     }
     public function productdetail($slug){
-       
-       
+
+        $genders = Gender::all();
         $product = Product::where('slug', $slug)->first();
-    
+
         if (!$product) {
-         
-            abort(404); 
+
+            abort(404);
         }
-    
-        return view("product_detail", compact("product"));
+
+        return view("product_detail", compact("product","genders"));
     }
-    
-    
+
+
     public function blog_home()
     {
           $blogs = Blog::paginate(5);
@@ -47,7 +47,7 @@ class MainController extends Controller
 
         return view('blog', compact('blogs', 'chunks','genders'));
     }
-    
+
 public function blog_show($title) {
 
     $decodedTitle = str_replace('-', ' ', $title);
@@ -61,43 +61,43 @@ public function blog_show($title) {
     $genders =Gender::all();
     return view('categories', compact('categories','genders'));
    }
-   
+
    public function viewcategory($title)
 {
 
     $genders =Gender::all();
 
     $slug = Str::slug($title);
-    
+
 
     $name = ucwords(str_replace('-', ' ', $slug));
-    
+
 
     $products = Product::where('categories', $name)->get();
         $categories = Categories::all();
-       
+
 
 
     $storeCount = $products->count();
 
 
-    
+
     return view('categories_details', compact('products', 'name', 'categories', 'storeCount','genders'));
 }
 
 public function gender(){
     $genders = Gender::latest()->get();
-    
+
     return view('gender', compact('genders'));
    }
 public function viewgender($title)
 {
 
     $slug = Str::slug($title);
-    
+
 
     $name = ucwords(str_replace('-', ' ', $slug));
-    
+
 
     $categories = Categories::where('gender', $name)->get();
         $genders = Gender::all();
@@ -105,7 +105,7 @@ public function viewgender($title)
 
     $storeCount = $categories->count();
 
-    
+
     return view('gender_details', compact('categories', 'name', 'genders', 'storeCount'));
 }
 

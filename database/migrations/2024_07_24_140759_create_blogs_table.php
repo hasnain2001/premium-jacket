@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('category_image')->nullable();
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
-            $table->string('meta_keyword')->nullable(); 
+            $table->string('meta_keyword')->nullable();
             $table->timestamps();
         });
     }

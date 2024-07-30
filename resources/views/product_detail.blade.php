@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Detail</title>
-
+  <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -50,6 +50,17 @@ nav {
 .text {
     color: white;
 }
+
+.conain{
+            background-position: center;
+            background-image: url('{{ asset('images/banner.jpg') }}');
+         height:200px;
+        }
+        .shop-text{
+            text-align: center;
+            color: rgb(255, 255, 255);
+            padding-top: 5%;
+        }
 </style>
 </head>
 <body>
@@ -58,7 +69,12 @@ nav {
     <nav>
         @include('components.navbar')
     </nav>
-<br><br><br>
+
+    <div class="conain">
+
+        <h1 class="shop-text">Shop</h1>
+    </div>
+<br>
 <div class="container">
   <h1 class="card bg-dark text-white text-center py-2">{{$product->name}}</h1>
     <!-- Alerts for Success and Error -->

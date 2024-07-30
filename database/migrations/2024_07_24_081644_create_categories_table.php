@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
+            $table->string('gender');
             $table->longText('meta_tag')->nullable();
             $table->longText('meta_keyword')->nullable();
             $table->mediumText('meta_description')->nullable();
-            $table->string('status');
             $table->string('authentication');
             $table->longText('category_image')->nullable();
             $table->timestamps();

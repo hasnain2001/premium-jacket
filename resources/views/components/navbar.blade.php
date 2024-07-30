@@ -8,80 +8,135 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <title>Navbar</title>
     <style>
-        .nav-link.active {
-            background-color: white;
-            color: black !important;
+        .nav-link {
+            color: white !important;
         }
-        nav{
-            background-color: brown;
+        nav {
+            background-color: #690500;
+        }
+        .nav-item {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 700;
+            padding-right: 15px;
+            margin-right: 10px;
         }
         .search-input {
             display: none;
+            width: 200px;
+            transition: width 0.4s ease-in-out;
+        }
+        .navbar-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .navbar-collapse {
+            justify-content: space-between;
+        }
+        .btn-brown {
+            background-color: brown;
+            color: white;
+        }
+        .btn-brown:hover {
+            background-color: darkbrown;
+            color: white;
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container.show .search-input,
+        .search-container.show .search-submit {
+            display: inline-block;
+        }
+        .search-container .search-button {
+            border: none;
+            background: none;
+            color: white;
+        }
+        .search-container.show .search-button {
+            color: black;
+        }
+        .icon-text {
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            padding:10px;
+        }
+        .icon-text i {
+            margin-right: 5px;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light ">
-        <a class="navbar-brand" href="/">Navbar</a>
+    <nav class="navbar navbar-expand-lg navbar-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item {{ Request::routeIs('gender') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('gender') }}">Gender</a>
-                </li>
+                @foreach ($genders as $gender)
+                    <li class="nav-item {{ Request::routeIs('gender') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('gender_details', ['name' => Str::slug($gender->name)]) }}">{{ $gender->name }}</a>
+                    </li>
+                @endforeach
                 <li class="nav-item {{ Request::routeIs('categories') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('categories') }}">Categories</a>
                 </li>
                 <li class="nav-item {{ Request::routeIs('product') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('product') }}">All Product</a>
+                    <a class="nav-link" href="{{ route('product') }}">Shop</a>
                 </li>
                 <li class="nav-item {{ Request::routeIs('blog') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('blog') }}">Blogs</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0 search-button" type="button"><i class="fas fa-search"></i></button>
-                <button class="btn btn-outline-success my-2 my-sm-0 search-submit" type="submit" style="display:none;">Search</button>
-            </form>
-                      @if (Route::has('login'))
+            <a class="navbar-brand text-white" href="/">Premium | Jackets</a>
 
+            @if (Route::has('login'))
                 @auth
                     @if (Auth::user()->is_admin)
-                        <a href="{{ url('/admin/home') }}" class="btn btn-brown rounded-md px-3 py-2 mx-1">
-                            Admin Dashboard
+                        <a href="{{ url('/admin/home') }}" class="btn">
+                            <span class="icon-text"><i class="fas fa-user-shield"></i>Admin Dashboard</span>
                         </a>
                     @else
-                        <a href="{{ url('/home') }}" class="btn btn-brown rounded-md px-3 py-2 mx-1">
-                            Dashboard
+                        <a href="{{ url('/home') }}" class="nav-link">
+                            <span class="icon-text"><i class="fas fa-tachometer-alt"></i>Dashboard</span>
                         </a>
                     @endif
-                @else
-                    <a href="{{ route('login') }}" class="btn btn-brown rounded-md px-3 py-2 mx-1">
-                        Log in
+                    <a href="{{ route('logout') }}" class="nav-link"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <span class="icon-text"><i class="fas fa-sign-out-alt"></i>Logout</span>
                     </a>
-
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="nav-link">
+                        <span class="icon-text"><i class="fas fa-sign-in-alt"></i>Log in</span>
+                    </a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="btn btn-brown rounded-md px-3 py-2 mx-1">
-                            Register
+                        <a href="{{ route('register') }}" class="nav-link">
+                            <span class="icon-text"><i class="fas fa-user-plus"></i>Register</span>
                         </a>
                     @endif
-
                     @if (Route::has('admin.login'))
                         <a href="{{ route('admin.login') }}" class="btn btn-brown rounded-md px-3 py-2 mx-1">
-                            Login as Admin
+                            <span class="icon-text"><i class="fas fa-user-shield"></i>Login as Admin</span>
                         </a>
                     @endif
                 @endauth
-                @endif
+            @endif
+            <form class="form-inline  my-lg-0 search-container">
+                {{-- <input class="form-control  search-input" type="search" placeholder="Search" aria-label="Search"> --}}
+                <button class="search-button" type="button"><i class="fas fa-search"></i></button>
+            </form>
+
         </div>
     </nav>
 
@@ -93,8 +148,8 @@
     <script>
         $(document).ready(function() {
             $('.search-button').on('click', function() {
-                $('.search-input').toggle().focus();
-                $('.search-submit').toggle();
+                $('.search-container').toggleClass('show');
+                $('.search-input').focus();
             });
         });
     </script>
