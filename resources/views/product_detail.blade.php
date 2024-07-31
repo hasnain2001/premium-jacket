@@ -148,6 +148,11 @@ nav {
                             </span>
 
                         </h4>
+
+                        <form action="{{ route('wishlist.add', $product->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Add to Wishlist</button>
+                        </form>
                             {{-- <form id="cartForm" action="{{ route('addtocart') }}" method="POST">
                                 @csrf
                                 <!-- Quantity and Stock -->

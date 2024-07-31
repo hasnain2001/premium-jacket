@@ -23,4 +23,9 @@ class Product extends Model
         'meta_keyword',
         'meta_description',
     ];
+
+    public function wishlistedBy()
+    {
+        return $this->belongsToMany(User::class, 'wishlists')->withTimestamps();
+    }
 }

@@ -375,7 +375,7 @@ text-align: center;
                 <div class="col-md-6 d-flex align-items-center">
                     <div class="about_taital_main">
                         <div class="about_taital">About Our Company</div>
-                        <p class="about_text">TWelcome to Hide Leather Style, where you can shop for the finest leather jackets. A multitude of leather jackets, including bomber jackets, shearling fur jackets, biker jackets, vintage-style leather jackets, and more, are accessible for both men and women at our online shop. We offer something for everyone, whether you’re hunting for a traditional leather jacket to add to your outfit or a statement item to stand out.</p>
+                        <p class="about_text">Welcome to Preamium Leather Style, where you can  shop for the finest leather jackets. A multitude of leather jackets, including bomber jackets, shearling fur jackets, biker jackets, vintage-style leather jackets, and more, are accessible for both men and women at our online shop. We offer something for everyone, whether you’re hunting for a traditional leather jacket to add to your outfit or a statement item to stand out.</p>
                        <div >
 
                             <a class="button" href="{{route('about')}}">

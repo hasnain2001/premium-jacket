@@ -66,10 +66,11 @@
             display: flex;
             align-items: center;
             font-size: 15px;
-            padding:10px;
+            padding:5px;
+            color: white;
         }
         .icon-text i {
-            margin-right: 5px;
+            margin-right: 0;
         }
     </style>
 </head>
@@ -111,31 +112,34 @@
                     @endif
                     <a href="{{ route('logout') }}" class="nav-link"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <span class="icon-text"><i class="fas fa-sign-out-alt"></i>Logout</span>
+
+                        <span class="icon-text"> <i class="fas fa-sign-out-all"></i> LogOut</span>
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="nav-link">
+                    <a href="{{ route('login') }}" class="btn-sm">
                         <span class="icon-text"><i class="fas fa-sign-in-alt"></i>Log in</span>
                     </a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="nav-link">
+                        <a href="{{ route('register') }}" class=" btn-sm">
                             <span class="icon-text"><i class="fas fa-user-plus"></i>Register</span>
                         </a>
                     @endif
                     @if (Route::has('admin.login'))
-                        <a href="{{ route('admin.login') }}" class="btn btn-brown rounded-md px-3 py-2 mx-1">
-                            <span class="icon-text"><i class="fas fa-user-shield"></i>Login as Admin</span>
+                        <a href="{{ route('admin.login') }}" class="btn-sm ">
+                            <span class="icon-text"><i class="fas fa-user-shield"></i>Admin Login</span>
                         </a>
                     @endif
                 @endauth
             @endif
             <form class="form-inline  my-lg-0 search-container">
-                {{-- <input class="form-control  search-input" type="search" placeholder="Search" aria-label="Search"> --}}
+                <input class="form-control  search-input" type="search" placeholder="Search" aria-label="Search">
                 <button class="search-button" type="button"><i class="fas fa-search"></i></button>
             </form>
+
+                <a class="icon-text" href="{{ route('wishlist.index') }}"><i class="fas fa-heart"></i></a>
 
         </div>
     </nav>

@@ -35,11 +35,30 @@ class ProductController extends Controller
         return view('blog', compact('productsByCategory'));
     }
 
-    public function index() {
-        $products = Product::all();
+    public function index(Request $request) {
+        // Fetch distinct categories from the products table
+        $categories = Product::select('categories')->distinct()->get();
 
-        return view('admin.product.index', compact('products'));
+        // Get the selected category from the request
+        $selectedCategory = $request->input('categories');
+
+        // Create a query builder instance for the Product model
+        $productsQuery = Product::query();
+
+        // Apply the category filter if a category is selected
+        if ($selectedCategory) {
+            $productsQuery->where('categories', $selectedCategory);
+        }
+
+        // Paginate the products (10 products per page)
+        $products = $productsQuery->paginate(10);
+
+        // Return the view with products, categories, and selectedCategory
+        return view('admin.product.index', compact('products', 'categories', 'selectedCategory'));
     }
+
+
+
     public function product_home() {
         $products = Product::all();
 

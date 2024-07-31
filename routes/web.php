@@ -13,6 +13,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\GuestAdminMiddleware;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\Frontend\WishListController;
 
 
 
@@ -74,7 +75,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home')
     ->middleware(UserMiddleware::class);
 
-
+    Route::middleware('auth')->group(function () {
+        Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.index');
+        Route::post('/wishlist/add/{product}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+        Route::delete('/wishlist/remove/{product}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
+    });
 
     Route:: middleware(['auth',AdminMiddleware::class])->group(function(){
     Route::get('dashboard/product/create',[ProductController::class,'create' ] )->name('admin.product.create');

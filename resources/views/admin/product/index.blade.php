@@ -44,15 +44,19 @@
                                     <div class="me-3">
                                         <input type="search" class="form-control my-1 my-lg-0" id="inputPassword2" placeholder="Search...">
                                     </div>
-                                    <label for="status-select" class="me-2">Sort By</label>
+                                    <label for="status-select" class="me-2">Select By Category</label>
                                     <div class="me-sm-3">
-                                        <select class="form-select my-1 my-lg-0" id="status-select">
-                                            <option selected="">All</option>
-                                            <option value="1">Popular</option>
-                                            <option value="2">Price Low</option>
-                                            <option value="3">Price High</option>
-                                            <option value="4">Sold Out</option>
-                                        </select>
+                                        <form method="GET" action="{{ route('admin.product') }}">
+                                            <select class="form-select my-1 my-lg-0" name="categories" id="category-select" onchange="this.form.submit()">
+                                                <option value=""><a href="{{ route('admin.product') }}" >All Categories</a></option>
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->categories }}" {{ $selectedCategory == $category->categories ? 'selected' : '' }}>
+                                                        {{ $category->categories }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </form>
+
                                     </div>
                                 </form>
                             </div>
@@ -128,25 +132,10 @@
 
         <div class="row">
             <div class="col-12">
-                <ul class="pagination pagination-rounded justify-content-end mb-3">
-                    <li class="page-item">
-                        <a class="page-link" href="javascript: void(0);" aria-label="Previous">
-                            <span aria-hidden="true">«</span>
-                            <span class="visually-hidden">Previous</span>
-                        </a>
-                    </li>
-                    <l  i class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></l>
-                    <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript: void(0);" aria-label="Next">
-                            <span aria-hidden="true">»</span>
-                            <span class="visually-hidden">Next</span>
-                        </a>
-                    </li>
-                </ul>
+              <!-- Pagination links -->
+              <div class="pagination-wrapper">
+                {{ $products->appends(request()->input())->links('pagination::bootstrap-4') }}
+            </div>
             </div> <!-- end col-->
         </div>
         <!-- end row-->

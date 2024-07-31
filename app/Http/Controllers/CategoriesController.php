@@ -34,7 +34,7 @@ class CategoriesController extends Controller
             'meta_tag' => $request->meta_tag,
             'meta_keyword' => $request->meta_keyword,
             'meta_description' => $request->meta_description,
-            'status' => $request->status,
+
             'authentication' => isset($request->authentication) ? $request->authentication : "No Auth",
 
         ]);
@@ -60,7 +60,7 @@ class CategoriesController extends Controller
             'gender'=> $request->gender,
             'meta_keyword' => $request->meta_keyword,
             'meta_description' => $request->meta_description,
-            'status' => $request->status,
+         
             'authentication' => isset($request->authentication) ? $request->authentication : "No Auth",
 
         ]);
