@@ -1,14 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.home')
 
 @section('content')
 <style>
-    
+
     .card-header{
         background-color:rgb(95, 22, 22) ;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         align-items: center;
-        color: white;
-        text-align: center;
+            text-align: center;
         font-weight: 700;
         font-size: 20px;
 
@@ -20,7 +19,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header ">{{ __('Dashboard') }}</div>
+                <div class="card-header bg-dark text-white ">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))

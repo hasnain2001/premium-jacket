@@ -2,13 +2,28 @@
 
 @section('content')
 
+<style>
+    body {
+        background-repeat: no-repeat;
+        background: url('{{ asset('images/register.jpg') }}') no-repeat center center fixed;
+        background-size: cover;
+
+    }
+
+    .toggle-password {
+        cursor: pointer;
+    }
+    .card{
+        height: 450px;
+    }
+</style>
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
-
+<br><br>
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -45,7 +60,14 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <div class="input-group">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text toggle-password">
+                                            <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                                        </span>
+                                    </div>
+                                </div>
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -59,7 +81,14 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <div class="input-group">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text toggle-password">
+                                            <i class="fas fa-eye" id="togglePasswordConfirmIcon"></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -76,4 +105,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.toggle-password').forEach(item => {
+        item.addEventListener('click', function (e) {
+            const passwordField = e.target.closest('.input-group').querySelector('input');
+            const toggleIcon = e.target.closest('.input-group-text').querySelector('i');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            toggleIcon.classList.toggle('fa-eye');
+            toggleIcon.classList.toggle('fa-eye-slash');
+        });
+    });
+</script>
+
 @endsection

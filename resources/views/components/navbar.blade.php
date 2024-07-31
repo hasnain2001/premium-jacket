@@ -140,6 +140,10 @@
             </form>
 
                 <a class="icon-text" href="{{ route('wishlist.index') }}"><i class="fas fa-heart"></i></a>
+                <a class="icon-text" href="{{ route('wishlist.index') }}">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+
 
         </div>
     </nav>
