@@ -14,6 +14,7 @@ use App\Http\Middleware\GuestAdminMiddleware;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Frontend\WishListController;
+use App\Http\Controllers\CartController;
 
 
 
@@ -76,6 +77,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->middleware(UserMiddleware::class);
 
     Route::middleware('auth')->group(function () {
+
+
+        Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+        Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+        Route::delete('/cart/remove/{product}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+        
+
         Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.index');
         Route::post('/wishlist/add/{product}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
         Route::delete('/wishlist/remove/{product}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');

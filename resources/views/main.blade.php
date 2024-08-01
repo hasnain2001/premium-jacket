@@ -21,42 +21,6 @@ text-align: center;
     }
 
 
-    .customer_section {
-        margin-top: 10px;
-        height: 60vh;
-        }
-        .customer_taital {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #343a40;
-
-        }
-        .customer_main {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-        }
-        .customer_img img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border: 5px solid #fff;
-        }
-        .customer_name {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color:rgb(102, 27, 27) ;
-        }
-        .customer_text {
-            font-size: 1rem;
-            color: #6c757d;
-        }
-        .customer-prev,
-        .customer-next{
-            background-color: #2bff00;
-            border-radius: 50%;
-        }
         .about_section {
             padding: 50px 0;
             background-color: #f8f9fa;
@@ -157,9 +121,7 @@ text-align: center;
   }
 }
 
-.product{
-    height:70vh;
-}
+
 .custom-prev, .custom-next {
     background-color: transparent; /* Dark background color */
     border: none; /* Remove border */
@@ -176,42 +138,207 @@ text-align: center;
 .custom-next .carousel-control-next-icon {
     filter: invert(1); /* Invert icon color to make it visible on dark background */
 }
+.header {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.line {
+  width: 800px;
+  height: 3px;
+  background-color: black;
+  margin: 0 auto 20px;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-img {
+  width: 100%;
+  height: 300px;
+max-height: 400px;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+.card-product {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.card p {
+  margin: 0;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.Feeling {
+  position: relative;
+  text-align: center;
+}
+
+.Feeling span {
+
+  font-family: Georgia, sans-serif;
+  color: black;
+  font-size: 24px;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+.Feeling p {
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+text-align: left;
+  margin-top: 10px;
+}
+
+.Feeling span:hover + p {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
 
 </style>
+
+
+<div class="container">
+    <div class="header">
+      <h1>Premium Jackets. Dutch Designed, Sustainably Made</h1>
+      <div class="line"></div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-3">
+        <div class="Feeling">
+          <span>Feeling Free</span>
+          <p>Searching for a premium leather style for men? Hide leather style has been writing history in leather jackets since 1860. As fashion evolved, so did we. Now more than 150 years later and 2500 points of sale further, we feel that it is time to profile ourselves. Donders 1860: the producer of real leather jackets.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="{{ asset('images/image1.jpg') }}" class="card-img" alt="Bomber Jacket">
+          <div class="overlay">
+            <span class="card-product">BOMBER JACKET</span>
+            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="{{ asset('images/image2.jpg') }}" class="card-img" alt="Varsity Jacket">
+          <div class="overlay">
+            <span class="card-product">VARSITY JACKET</span>
+            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="{{ asset('images/image6.jfif') }}" class="card-img" alt="Sale">
+          <div class="overlay">
+            <span class="card-product">SALE</span>
+            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <div class="card">
+          <img src="{{ asset('images/image3.jpg') }}" class="card-img" alt="Blog">
+          <div class="overlay">
+            <span class="card-product">BLOG</span>
+            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img src="{{ asset('images/image4.jpg') }}" class="card-img" alt="Our Stories">
+          <div class="overlay">
+            <span class="card-product">OUR STORIES</span>
+            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img src="{{ asset('images/image5.jpg') }}" class="card-img" alt="Contact">
+          <div class="overlay">
+            <span class="card-product">CONTACT</span>
+            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
      <!-- Product section start -->
 <br>
-<div class="product">
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="bulb_taital text">See Our Products</h1>
+
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h1 class="bulb_taital text">Top Selling Product</h1>
         </div>
     </div>
+
     <div class="">
         @if ($products->isEmpty())
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-warning" role="alert">
                 <h4 class="alert-heading">Sorry!</h4>
                 <p>No products available at the moment. Please check back later.</p>
                 <hr>
                 <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
             </div>
         @else
-            <div id="my_slider" class="carousel slide "  data-bs-ride="carousel">
+            <div id="my_slider" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     @foreach ($products->chunk(3) as $key => $chunk)
                         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                             <div class="row">
                                 @foreach ($chunk as $product)
                                     <div class="col-md-4">
-                                        <div class="card mb-25">
-                                            <div class="card-header ">
+                                        <div class="card mb-4">
+                                            <div class="card-header">
                                                 @php
                                                     $images = json_decode($product->productimage);
                                                 @endphp
                                                 @if(is_array($images) && !empty($images))
-                                                    <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-product " loading="lazy">
+                                                    <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-fluid" loading="lazy">
                                                 @else
-                                                    <img src="{{ asset('images/a56d8f3f8a.jpg') }}" alt="No Image" class="img-fluid" loading="lazy">
+                                                    <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="img-fluid" loading="lazy">
                                                 @endif
                                             </div>
                                             <div class="card-body">
@@ -225,26 +352,28 @@ text-align: center;
                         </div>
                     @endforeach
                 </div>
-                <button class="carousel-control-prev custom-prev" type="button" data-bs-target="#my_slider" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#my_slider" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next custom-next" type="button" data-bs-target="#my_slider" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#my_slider" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
         @endif
     </div>
-</div></div>
+</div>
 
-
+<br><br><br>
      <!-- product section end -->
+
+      <!-- Customers Section start -->
      <div class="customer_section  py-5">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2 class="text ">What Our Clients Say</h2>
+                    <h2 class="text ">Hear What our Customers Are Saying</h2>
                 </div>
             </div>
             <div class="customer_section_2 mt-4">
@@ -333,7 +462,12 @@ text-align: center;
                 @foreach ($blogs as $blog)
                 <div class="col-md-4 mb-4">
                     <div class="card ">
+                        @if ($blog->category_image)
                         <img src="{{ asset($blog->category_image) }}" class="card-img-top" alt="News Image">
+                        @else
+                           <img src="{{ asset('images/No-image-available.jpg') }}" alt="">
+                        @endif
+
                         <div class="card-body">
                             <h3 class="card-title seller_taital">{{ $blog->title }}</h3>
                             <p class="card-text passages_text">{{ $blog->excerpt }}</p>

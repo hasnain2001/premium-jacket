@@ -43,7 +43,9 @@
     <h1 class="mb-4">Your Wishlist</h1>
 
     @if($wishlist->isEmpty())
-        <p class="text-muted">Your wishlist is empty.</p>
+    <div class="alert alert-primary" role="alert">
+       Your wishlist Is empty Add Some Product
+         </div>
     @else
         <div class="row">
             @foreach($wishlist as $product)

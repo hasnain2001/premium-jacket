@@ -25,13 +25,15 @@
         }
         .conain{
             background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
             background-image: url('{{ asset('images/banner.jpg') }}');
-         height:400px;
+
         }
         .shop-text{
             text-align: center;
             color: white;
-            padding-top: 15%;
+            padding-top: 5%;
         }
   </style>
 </head>
@@ -71,7 +73,7 @@
                             @if(is_array($images) && !empty($images))
                                 <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-fluid shadow product" style="height: 200px;">
                             @else
-                                <img src="{{ asset('front/assets/images/no-image-found.jpg') }}" alt="No Image" class="img-fluid stores shadow rounded-circle">
+                                <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="img-fluid stores shadow rounded-circle">
                             @endif
                         </div>
                         <div class="card-body d-flex flex-column">
@@ -87,16 +89,14 @@
 
         </div>
     </div>
+    <br>
+{{ $products->links('vendor.pagination.custom') }}
 
-    <div class="container bg-light mt-3">
-        <div class="row mt-3 justify-content-end">
-          <div class="col-12">
-            {{ $products->links('pagination::bootstrap-4') }} </div>
-        </div>
-      </div>
+<br>
 
-
-
+<footer>
+    @include('components.footer')
+</footer>
       <script>
         function clickimg(smallimg){
             var fullimg=document.getElementById("imagebox")

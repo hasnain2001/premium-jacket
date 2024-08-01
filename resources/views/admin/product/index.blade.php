@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-auto">
                                 <div class="text-lg-end my-1 my-lg-0">
-                                    <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button>
+
                                     <a href="{{ route('admin.product.create') }}" class="btn btn-danger waves-effect waves-light">
                                         <i class="mdi mdi-plus-circle me-1"></i> Add New
                                     </a>

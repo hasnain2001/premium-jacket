@@ -61,7 +61,10 @@ nav {
             color: rgb(255, 255, 255);
             padding-top: 5%;
         }
+
+
 </style>
+@livewireStyles
 </head>
 <body>
 
@@ -111,7 +114,7 @@ nav {
                                             <img class="productimage img-fluid small-img" src="{{ asset($image) }}" data-index="{{ $key }}" onclick="changeImage(this)">
                                         @endforeach
                                     @else
-                                        <p class="no-images">No images available.</p>
+                                      <img src="{{ asset('images/No-image-available.jpg') }}" alt="" srcset="">
                                     @endif
                                 </div>
                             </div>
@@ -153,70 +156,15 @@ nav {
                             @csrf
                             <button type="submit" class="btn btn-primary">Add to Wishlist</button>
                         </form>
-                            {{-- <form id="cartForm" action="{{ route('addtocart') }}" method="POST">
-                                @csrf
-                                <!-- Quantity and Stock -->
-                                <p>
-                                    Quantity: Left
-                                    @if ($product->quantity == 0)
-                                        <span class="text-danger">Out of Stock</span>
-                                    @elseif ($product->quantity < 10)
-                                        <span class="text-warning">{{ $product->quantity }} (Low Stock)</span>
-                                    @else
-                                        {{ $product->quantity }}
-                                    @endif
-                                </p>
 
-                                <!-- Color Selection -->
-                                <div class="mb-3">
-                                    <label for="color" class="form-label text-dark">Color:</label>
-                                    <select name="color" id="color" class="form-select" required onchange="showCustomColorInput(this)">
-                                        <option value="Black">Black</option>
-                                        <option value="Brown">Brown</option>
-                                        <option value="custom">Customize Color</option>
-                                    </select>
-                                    <input type="color" name="custom_color" id="custom_color" style="display: none; margin-top: 10px;">
-                                </div>
+                     <!-- Add to Cart Button -->
+                     <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
 
-                                <!-- Gender Selection -->
-                                <div class="mb-3">
-                                    <label for="category" class="form-label text-dark">Gender:</label>
-                                    <select name="category" id="category" class="form-select" required>
-                                        <option value="" disabled selected>---Select Gender---</option>
-                                        @foreach($genders as $category)
-                                            <option class="text-dark" value="{{ $category->name }}">{{ $category->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('category')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
 
-                                <!-- Size Selection -->
-                                <div class="mb-3">
-                                    <label for="size" class="form-label text-dark">Select Size:</label>
-                                    <select class="form-select" name="size" id="size" required onchange="toggleCustomSize(this)">
-                                        <option value="small">Small</option>
-                                        <option value="medium">Medium</option>
-                                        <option value="large">Large</option>
-                                        <option value="xl">XL</option>
-                                        <option value="xxl">XXL</option>
-                                        <option value="custom">Customize Size</option>
-                                    </select>
-                                    <div class="custom-size-container" id="customSizeContainer" style="display: none;">
-                                        <label for="customSizeTextarea" class="form-label">Custom Size:</label>
-                                        <textarea class="form-control" name="custom_size" id="customSizeTextarea" cols="30" rows="3"></textarea>
-                                    </div>
-                                </div>
 
-                                <!-- Quantity Input and Add to Cart Button -->
-                                <div class="mb-3">
-                                    <label for="quantity" class="form-label text-dark ">Add Quantity:</label>
-                                    <input type="hidden" name="productid" value="{{ $product->id }}">
-                                    <input class="form-control" type="number" name="quantity" value="1" min="1" max="{{ $product->quantity }}" required>
-                                </div>
-                                <button class="btn btn-dark btn-lg" type="submit">Add to Cart</button>
-                            </form> --}}
                     </div>
                 </div>
             @endif
@@ -235,8 +183,10 @@ nav {
 
 <br><br><br><br>
 
-
-
+<footer>
+    @include('components.footer')
+</footer>
+@livewireScripts
 <!-- Bootstrap JS and Custom Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>

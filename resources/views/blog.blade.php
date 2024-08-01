@@ -16,9 +16,9 @@ header("X-Robots-Tag:index, follow");
  <meta name="robots" content="index, follow">
 
 <link rel="canonical" href="https://deals69.com/blog">
-<link rel="icon" href="{{ asset('images/icons.png') }}" type="image/x-icon">
+<link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
   <!-- Bootstrap CSS -->
-   
+
    <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- Custom CSS -->
@@ -146,7 +146,7 @@ header("X-Robots-Tag:index, follow");
       border-color: #dee2e6;
     }
     .text{
-      text-decoration:none; 
+      text-decoration:none;
     }
   </style>
 </head>
@@ -160,19 +160,19 @@ header("X-Robots-Tag:index, follow");
   <div class="row">
       <h1 class="text">Shopping Hacks & Savings Tips & Tricks</h1>
       <div class="col-md-8">
-          
+
           <!-- Blog posts -->
           <div class="row">
-          
+
 @if ($blogs->isEmpty())
     <span>no blog Found</span>
- 
-        
-    @else
-        
-  
 
-       
+
+    @else
+
+
+
+
               @foreach ($blogs as $blog)
               @if ($blog->slug)
          <a href="{{ route('blog-details', ['slug' => Str::slug($blog->slug)]) }}" class="col-md-12 mb-4">
@@ -192,12 +192,12 @@ header("X-Robots-Tag:index, follow");
                   </a>
                   @endforeach
                   @endif
-               
+
           </div>
           <div class="container bg-light mt-3">
             <div class="row mt-3 justify-content-end">
               <div class="col-12">
-                {{ $blogs->links('pagination::bootstrap-4') }} 
+                {{ $blogs->links('pagination::bootstrap-4') }}
               </div>
             </div>
           </div>
@@ -207,7 +207,7 @@ header("X-Robots-Tag:index, follow");
         <aside class="sidebar p-3 bg-light">
             <!-- Sidebar Title -->
             <h2 class="text-left text">Latest Products</h2>
-            
+
             <!-- Store Listings -->
             <div class="row gx-2 gy-2">
                 @foreach ($chunks as $store)
@@ -223,7 +223,7 @@ header("X-Robots-Tag:index, follow");
                             @else
                                 <img src="{{ asset('front/assets/images/no-image-found.jpg') }}" alt="No Image" class="img-fluid stores shadow rounded-circle">
                             @endif
-                            
+
                             <!-- Store Name -->
                             <p class="text-capitalize">{{ $store->name }}</p>
                           </a>
@@ -233,7 +233,7 @@ header("X-Robots-Tag:index, follow");
             </div>
         </aside>
     </div>
-    
+
     </aside>
   </div>
   </div>
