@@ -143,10 +143,10 @@ text-align: center;
   margin-top: 20px;
 }
 
-.line {
-  width: 800px;
-  height: 3px;
-  background-color: black;
+.line hr {
+  width: 80%;
+  color: black;
+  border:2px dotted;
   margin: 0 auto 20px;
 }
 
@@ -227,16 +227,22 @@ text-align: left;
   padding: 10px;
   border-radius: 5px;
 }
-
+@media(max-width:786px;){
+    .line hr{
+        width: 3
+    }
+}
 </style>
 
 
 <div class="container">
     <div class="header">
       <h1>Premium Jackets. Dutch Designed, Sustainably Made</h1>
-      <div class="line"></div>
+      <div class="line">
+        <hr>
+      </div>
     </div>
-  
+
     <div class="row">
       <div class="col-md-3">
         <div class="Feeling">
@@ -272,7 +278,7 @@ text-align: left;
         </div>
       </div>
     </div>
-  
+
     <div class="row mt-3">
       <div class="col-md-4">
         <div class="card">
@@ -303,67 +309,66 @@ text-align: left;
       </div>
     </div>
   </div>
-  
-     <!-- Product section start -->
-<br>
 
-<div class="container mt-5">
+     <!-- Product section start -->
+<br> <div class="line">
+    <hr>
+  </div>
+
+
+
+
+  <div class="container">
     <div class="row mb-4">
         <div class="col text-center">
             <h1 class="bulb_taital text">Top Selling Product</h1>
         </div>
     </div>
-
-    <div class="">
-        @if ($products->isEmpty())
-            <div class="alert alert-warning" role="alert">
-                <h4 class="alert-heading">Sorry!</h4>
-                <p>No products available at the moment. Please check back later.</p>
-                <hr>
-                <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
-            </div>
-        @else
-            <div id="my_slider" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    @foreach ($products->chunk(3) as $key => $chunk)
-                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                            <div class="row">
-                                @foreach ($chunk as $product)
-                                    <div class="col-md-4">
-                                        <div class="card mb-4">
-                                            <div class="card-header">
-                                                @php
-                                                    $images = json_decode($product->productimage);
-                                                @endphp
-                                                @if(is_array($images) && !empty($images))
-                                                    <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-fluid" loading="lazy">
-                                                @else
-                                                    <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="img-fluid" loading="lazy">
-                                                @endif
-                                            </div>
-                                            <div class="card-body">
-                                                <h5 class="card-title text-dark">{{ $product->name }}</h5>
-                                                <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-dark btn-sm">View Product</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#my_slider" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#my_slider" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        @endif
+    @if ($products->isEmpty())
+    <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">Sorry!</h4>
+        <p>No products available at the moment. Please check back later.</p>
+        <hr>
+        <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
     </div>
+    @else
+    <div id="storeCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach ($products->chunk(3) as $key => $chunk) <!-- Change chunk size as needed -->
+                <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                    <div class="row">
+                        @foreach ($chunk as $product)
+                            <div class="col-md-4"> <!-- Adjust column size as needed -->
+                                <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="text-dark text-decoration-none">
+                                    @php
+                                    $images = json_decode($product->productimage);
+                                    @endphp
+                                    @if(is_array($images) && !empty($images))
+                                        <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-fluid mb-2" loading="lazy">
+                                    @else
+                                        <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="img-fluid mb-2" loading="lazy">
+                                    @endif
+                                    <span class="fw-bold  text-center">{{ $product->name }}</span>
+                                </a>
+                                <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-dark btn-sm">View Product</a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#storeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#storeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    @endif
 </div>
+
 
 <br><br><br>
      <!-- product section end -->

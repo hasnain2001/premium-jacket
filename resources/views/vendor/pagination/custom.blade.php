@@ -9,7 +9,9 @@
     <title>Document</title>
 
     <style>
-        /* Add your custom styles here */
+    .pagination-nav{
+        background-color: white
+    }
 .pagination {
     display: flex;
     justify-content: center;
@@ -53,7 +55,7 @@
 </head>
 <body>
     @if ($paginator->hasPages())
-    <nav aria-label="Page navigation">
+    <nav aria-label="Page navigation" class="pagination-nav">
         <ul class="pagination">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
