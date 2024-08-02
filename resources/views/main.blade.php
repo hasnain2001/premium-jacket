@@ -100,8 +100,9 @@ text-align: left;
         }
         .carousel-control-prev-icon,
         .carousel-control-next-icon {
-            background-color: #007bff;
+            background-color: brown;
             border-radius: 50%;
+            height: 30px;
         }
 
         .news_section {
@@ -138,115 +139,94 @@ text-align: left;
         .alert-heading {
             font-weight: bold;
         }
+
+   /* Custom Styles for Carousel */
+
+   .slider{
+    width:100% ;
+    height:480px;
+   }
+.carousel-indicators .active {
+    background-color: #000; /* Dark color for the active indicator */
+}
+
+.carousel-indicators button {
+    background-color: #fff; /* White color for inactive indicators */
+    border-radius: 70%; /* Rounded indicators */
+    width: 18px;
+    height: 19px;
+    opacity: 0.7;
+}
+
+.carousel-indicators button:hover {
+    opacity: 1;
+}
+
+.carousel-slider-prev-icon,
+.carousel-slider-next-icon {
+    background-color: rgb(61, 55, 55); /* Dark color for the control icons */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px; /* Make sure the height matches the width for a perfect circle */
+    padding: 10px;
+}
+
+/* Optional: Adjust the padding to better fit the icons */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-size: 100%, 100%; /* Ensure the icons fit within the circle */
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: brown; /* Dark color for the control icons */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px; /* Make sure the height matches the width for a perfect circle */
+    padding: 10px;
+}
+
+/* Optional: Adjust the padding to better fit the icons */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-size: 100%, 100%; /* Ensure the icons fit within the circle */
+}
+
 </style>
+ <!-- Carousel Start -->
 <div id="carouselExampleIndicators" class="carousel slide">
     <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="{{ asset('images/slider.jpg') }}" class="slider d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="{{ asset('images/slider1.jpg') }}" class="slider d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="{{ asset('images/slider2.jpg') }}" class=" slider d-block w-100" alt="...">
-      </div>
+        <div class="carousel-item active">
+            <img src="{{ asset('images/slider.jpg') }}" class="slider" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="{{ asset('images/slider1.jpg') }}" class="slider" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="{{ asset('images/slider2.jpg') }}" class="slider" alt="...">
+        </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
     </button>
-  </div>
-  <div class="container">
-    <div class="header">
-      <h1>Premium Jackets. Dutch Designed, Sustainably Made</h1>
-      <div class="line">
-        <hr>
-      </div>
-    </div>
+</div>
+<!-- Carousel End -->
 
-    <div class="row">
-      <div class="col-md-3">
-        <div class="Feeling">
-          <span>Feeling Free</span>
-          <p>Searching for a premium leather style for men? Hide leather style has been writing history in leather jackets since 1860. As fashion evolved, so did we. Now more than 150 years later and 2500 points of sale further, we feel that it is time to profile ourselves. Donders 1860: the producer of real leather jackets.</p>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card">
-          <img src="{{ asset('images/image1.jpg') }}" class="card-img" alt="Bomber Jacket">
-          <div class="overlay">
-            <span class="card-product">BOMBER JACKET</span>
-            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card">
-          <img src="{{ asset('images/image2.jpg') }}" class="card-img" alt="Varsity Jacket">
-          <div class="overlay">
-            <span class="card-product">VARSITY JACKET</span>
-            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card">
-          <img src="{{ asset('images/image6.jfif') }}" class="card-img" alt="Sale">
-          <div class="overlay">
-            <span class="card-product">SALE</span>
-            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row mt-3">
-        <div class="col-md-4">
-          <div class="card">
-            <img src="{{ asset('images/image3.jpg') }}" class="card-img" alt="Blog">
-            <div class="overlay">
-              <span class="card-product">BLOG</span>
-              <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card">
-            <img src="{{ asset('images/image4.jpg') }}" class="card-img" alt="Our Stories">
-            <div class="overlay">
-              <span class="card-product">OUR STORIES</span>
-              <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card">
-            <img src="{{ asset('images/image5.jpg') }}" class="card-img" alt="Contact">
-            <div class="overlay">
-              <span class="card-product">CONTACT</span>
-              <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  <div class="container my-5">
+<div class="container mt-5">
     <div class="row mb-4">
         <div class="col text-center">
-            <h1 class="bulb_taital text-uppercase">Top Selling Products</h1>
-            <p class="text-muted">Discover our most popular products of the season</p>
+            <h1 class="text-brown">Top Selling Product</h1>
         </div>
     </div>
-
     @if ($products->isEmpty())
     <div class="alert alert-warning" role="alert">
         <h4 class="alert-heading">Sorry!</h4>
@@ -262,22 +242,18 @@ text-align: left;
                     <div class="row">
                         @foreach ($chunk as $product)
                             <div class="col-md-4 mb-4">
-                                <div class="card border-0 shadow-sm h-100">
-                                    <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="text-dark text-decoration-none">
-                                        @php
-                                        $images = json_decode($product->productimage);
-                                        @endphp
-                                        @if(is_array($images) && !empty($images))
-                                            <img src="{{ asset($images[0]) }}" alt="Product Image" class="card-img-top img-fluid" loading="lazy">
-                                        @else
-                                            <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="card-img-top img-fluid" loading="lazy">
-                                        @endif
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title fw-bold">{{ $product->name }}</h5>
-                                        </div>
-                                    </a>
-                                    <div class="card-footer bg-transparent border-0 text-center">
-                                        <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-dark btn-sm">View Product</a>
+                                <div class="card product-card">
+                                    @php
+                                    $images = json_decode($product->productimage);
+                                    @endphp
+                                    @if(is_array($images) && !empty($images))
+                                        <img src="{{ asset($images[0]) }}" alt="Product Image" class="card-img-top img-fluid" loading="lazy">
+                                    @else
+                                        <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="card-img-top img-fluid" loading="lazy">
+                                    @endif
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                        <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-dark">View Product</a>
                                     </div>
                                 </div>
                             </div>
@@ -286,20 +262,17 @@ text-align: left;
                 </div>
             @endforeach
         </div>
-
-        <!-- Controls -->
         <button class="carousel-control-prev" type="button" data-bs-target="#storeCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#storeCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
     </div>
     @endif
 </div>
-
 
 <div class="customer_section py-5">
     <div class="container">
@@ -364,8 +337,8 @@ text-align: left;
     </div>
 </div>
 
-  <!-- News Section Start -->
-  <div class="news_section py-5">
+<!-- News Section Start -->
+<div class="news_section py-5">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -373,43 +346,60 @@ text-align: left;
             </div>
         </div>
         <div class="news_section_2 mt-4">
-            <div class="row">
-                @if ($blogs->isEmpty())
-                    <div class="alert alert-success" role="alert">
-                        <h4 class="alert-heading">Sorry!</h4>
-                        <p>No Blogs available at the moment. Please check back later.</p>
-                        <hr>
-                        <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
-                    </div>
-                @else
-                    @foreach ($blogs as $blog)
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                @if ($blog->category_image)
-                                    <img src="{{ asset($blog->category_image) }}" class="card-img-top" alt="News Image">
-                                @else
-                                    <img src="{{ asset('images/No-image-available.jpg') }}" class="card-img-top" alt="No Image">
-                                @endif
-                                <div class="card-body">
-                                    <h3 class="card-title">{{ $blog->title }}</h3>
-                                    <p class="card-text">{{ $blog->excerpt }}</p>
-                                </div>
-                                <div class="card-footer text-center">
-                                    @if ($blog->slug)
-                                        <a href="{{ route('blog-details', ['slug' => Str::slug($blog->slug)]) }}" class="btn btn-dark">Read More</a>
-                                    @else
-                                        <a href="#" class="btn btn-dark">Read More</a>
-                                    @endif
+            @if ($blogs->isEmpty())
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Sorry!</h4>
+                    <p>No Blogs available at the moment. Please check back later.</p>
+                    <hr>
+                    <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
+                </div>
+            @else
+                <div id="newsCarousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        @foreach ($blogs->chunk(3) as $chunk)
+                            <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                <div class="row">
+                                    @foreach ($chunk as $blog)
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card h-100">
+                                                @if ($blog->category_image)
+                                                    <img src="{{ asset($blog->category_image) }}" class="card-img-top" alt="News Image">
+                                                @else
+                                                    <img src="{{ asset('images/No-image-available.jpg') }}" class="card-img-top" alt="No Image">
+                                                @endif
+                                                <div class="card-body">
+                                                    <h3 class="card-title">{{ $blog->title }}</h3>
+                                                    <p class="card-text">{{ $blog->excerpt }}</p>
+                                                </div>
+                                                <div class="card-footer text-center">
+                                                    @if ($blog->slug)
+                                                        <a href="{{ route('blog-details', ['slug' => Str::slug($blog->slug)]) }}" class="btn btn-dark">Read More</a>
+                                                    @else
+                                                        <a href="#" class="btn btn-dark">Read More</a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
-                @endif
-            </div>
+                        @endforeach
+                    </div>
+                    <a class="carousel-control-prev" href="#newsCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#newsCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 </div>
 <!-- News Section End -->
+
 
 @endsection
 

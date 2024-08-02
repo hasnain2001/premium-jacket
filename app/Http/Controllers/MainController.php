@@ -11,14 +11,19 @@ use App\Models\Gender;
 
 class MainController extends Controller
 {
-    public function index(){
+    public function index()
+    {
+
         $categories = Categories::all();
         $genders = Gender::all();
-        $products =Product:: all();
-        $blogs = Blog::all();
+        $products = Product::latest()->take(25)->get();
+        $blogs = Blog::paginate(10);
 
-        return view('main',compact("categories","products","blogs","genders"));
+
+        return view('main', ['categories' => $categories,'products' => $products,'blogs' => $blogs,'genders' => $genders
+        ]);
     }
+
 
     public function product(){
         $products = Product::paginate(20);

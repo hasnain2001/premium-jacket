@@ -194,13 +194,9 @@ header("X-Robots-Tag:index, follow");
                   @endif
 
           </div>
-          <div class="container bg-light mt-3">
-            <div class="row mt-3 justify-content-end">
-              <div class="col-12">
-                {{ $blogs->links('pagination::bootstrap-4') }}
-              </div>
-            </div>
-          </div>
+
+
+
 
       </div>
       <div class="col-md-4">
@@ -238,6 +234,10 @@ header("X-Robots-Tag:index, follow");
   </div>
   </div>
 </div>
+{{ $blogs->links('vendor.pagination.bootstrap-4') }}
+<footer>
+    @include('components.footer')
+</footer>
 
 
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
