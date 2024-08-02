@@ -22,7 +22,7 @@ class ProductSeeder extends Seeder
             $name = $faker->unique()->word();
             DB::table('products')->insert([
                 'name' => $name,
-                'slug' => Str::slug($name . '-' . Str::random(5)), // Ensure unique slugs
+                'slug' => Str::slug($name . '-' . Str::random(5)), 
                 'description' => $faker->paragraph(),
                 'productimage' => $faker->imageUrl(640, 480, 'products', true),
                 'price' => $faker->randomFloat(2, 10, 1000),

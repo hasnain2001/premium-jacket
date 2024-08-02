@@ -6,116 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+    <link rel="stylesheet" href="{{ asset('cssfile/navbar.css') }}">
     <title>Navbar</title>
-    <style>
-        .nav-link {
-            color: white !important;
-        }
-        nav {
-            background-color: #690500;
-            height: 150px;
-        }
-        .nav-item {
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: 700;
-            padding-right: 15px;
-            margin-right: 10px;
-        }
-        .search-input {
-            display: none;
-            width: 0;
-            opacity: 0;
-            transition: width 0.4s ease-in-out, opacity 0.4s ease-in-out;
-        }
-        .search-container.show .search-input {
-            display: inline-block;
-            width: 200px;
-            opacity: 1;
-        }
-        .navbar-brand {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        .navbar-collapse {
-            justify-content: space-between;
-        }
-        .btn-brown {
-            background-color: brown;
-            color: white;
-        }
-        .btn-brown:hover {
-            background-color: darkbrown;
-            color: white;
-        }
-        .search-container {
-            display: flex;
-            align-items: center;
-        }
-        .search-container .search-button {
-            border: none;
-            background: none;
-            color: white;
-        }
-        .search-container.show .search-button {
-            color: black;
-        }
-        .auth {
-            display: flex;
-            align-items: center;
-            font-size: 15px;
-            padding: 5px;
-            color: white;
-            text-decoration: none;
-        }
-        .auth i {
-            margin-right: 0;
-        }
-        .icon-cart {
-            color: white;
-            font-size: 28px;
-            margin-right:10px; 
-        }
-        .navbar-right {
-            display: flex;
-            align-items: center;
-        }
-        .navbar-right .icon {
-            margin: 0 5px;
-        }
-        .logo-nav {
-            width: 150px;
-            height: 150px;
-        }
-        @media (max-width: 768px) {
-            nav {
-            background-color: #690500;
-            height: auto;
-        }
-            .navbar-brand {
-                position: static;
-                transform: none;
-            }
-            .navbar-right {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .search-container {
-                width: 100%;
-                justify-content: flex-end;
-            }
-            .search-input {
-                width: 100% !important;
-            }
-        }
-    </style>
+
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light ">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand text-white" href="/"> <img class="logo-nav" src="{{ asset('images/logo.png') }}" alt=""> </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -174,10 +72,17 @@
                         @endif
                     @endauth
                 @endif
-                <form class="form-inline my-lg-0 search-container">
-                    <button class="search-button" type="button"><i class="fas fa-search"></i></button>
-                    <input class="form-control search-input" type="search" placeholder="Search" aria-label="Search">
-                </form>
+                <div class="dropdown search-container">
+                    <button class="search-button dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right p-3" aria-labelledby="dropdownMenuButton">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search" aria-label="Search">
+
+                        </form>
+                    </div>
+                </div>
                 <a class="icon-cart" href="{{ route('wishlist.index') }}"><i class="fas fa-heart"></i></a>
                 <a class="icon-cart" href="{{ route('cart.index') }}">
                     <i class="fas fa-shopping-cart"></i>

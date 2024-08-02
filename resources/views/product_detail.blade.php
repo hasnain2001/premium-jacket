@@ -169,7 +169,7 @@
                                             <img src="{{ asset('images/No-image-available.jpg') }}" alt="" class="img-fluid">
                                         @endif
                                     </div>
-                                    
+
                                 </div>
 
                                 <div class="col-8">
@@ -181,7 +181,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h2 class="card-title">{{ $product->name }}</h2>
-            
+
                             <h6 class="text-dark text-uppercase">
                                 {{ number_format((($product->offprice - $product->price) / $product->offprice) * 100, 2) }}% Off
                                 (Save ${{ number_format($product->offprice - $product->price, 2) }} USD)
@@ -210,7 +210,7 @@
                             <form action="{{ route('cart.add', $product->id) }}" method="POST">
                                 @csrf
                                 <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#sizeGuideModal">Size Guide</button>
-            
+
                                 <!-- Modal HTML -->
                                 <div class="modal fade" id="sizeGuideModal" tabindex="-1" aria-labelledby="sizeGuideModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
@@ -257,6 +257,7 @@
                                     <option value="5XL">5XL</option>
                                 </select>
                                 <hr>
+
                                 <span class="text-dark font-weight-bold">Add</span>
                                 <input type="number" name="quantity" min="1" max="{{ $product->quantity }}" style="width: 70px;" required>
                                 <hr>
@@ -267,8 +268,7 @@
                             <form action="{{ route('wishlist.add', $product->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-primary">Add to Wishlist</button>
-                            </form>
-                            <div class="feature-icons">
+                            </form>                            <div class="feature-icons">
                                 <div class="feature-icon">
                                     <i class="fas fa-shipping-fast"></i>
                                     <span>Free Shipping Sitewide</span>
@@ -289,8 +289,8 @@
                         </div>
                     </div>
                 @endif
-            </div>
-            
+            </div></div></div>
+
     <div class="container mt-4">
         <h6 class="mt-4 mb-3">Description</h6>
         <div class="card">
@@ -299,7 +299,7 @@
             </div>
         </div>
     </div>
-
+ <br><br>
     <footer>
         @include('components.footer')
     </footer>

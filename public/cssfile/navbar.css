@@ -1,0 +1,81 @@
+.nav-link {
+    color: white !important;
+}
+nav {
+    background-color: #690500;
+    height: 150px;
+}
+.nav-item {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    padding-right: 15px;
+    margin-right: 10px;
+}
+.navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.navbar-collapse {
+    justify-content: space-between;
+}
+.btn-brown {
+    background-color: brown;
+    color: white;
+}
+.btn-brown:hover {
+    background-color: darkbrown;
+    color: white;
+}
+.search-container .search-input {
+    width: 200px;
+}
+.search-container .search-button {
+    border: none;
+    background: none;
+    color: white;
+}
+.search-container.show .search-button {
+    color: black;
+}
+.auth {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    padding: 5px;
+    color: white;
+    text-decoration: none;
+}
+.auth i {
+    margin-left: 0;
+}
+.icon-cart {
+    color: white;
+    font-size: 28px;
+    margin-right: 10px;
+}
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+.navbar-right .icon {
+    margin: 0 5px;
+}
+.logo-nav {
+    width: 150px;
+    height: 150px;
+}
+@media (max-width: 768px) {
+    nav {
+        background-color: #690500;
+        height: auto;
+    }
+    .navbar-brand {
+        position: static;
+        transform: none;
+    }
+    .navbar-right {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
