@@ -30,17 +30,24 @@ class MainController extends Controller
         $genders = Gender::all();
         return view("product",compact("products","genders"));
     }
-    public function productdetail($slug){
+    public function productdetail($slug)
+    {
 
         $genders = Gender::all();
+
+
         $product = Product::where('slug', $slug)->first();
 
-        if (!$product) {
 
+        if (!$product) {
             abort(404);
         }
 
-        return view("product_detail", compact("product","genders"));
+       
+        return view('product_detail', [
+            'product' => $product,
+            'genders' => $genders
+        ]);
     }
 
 

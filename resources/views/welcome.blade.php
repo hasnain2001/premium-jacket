@@ -8,7 +8,7 @@
       <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
 
     <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
-
+ <link rel="stylesheet" href="{{ asset('cssfile/home.css') }}">
 </head>
 <body>
     <nav>

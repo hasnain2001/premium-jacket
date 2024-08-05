@@ -10,7 +10,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('cssfile/navbar.css') }}">
     <title>Navbar</title>
+<style>
+    /* public/css/app.css */
+#autocomplete-results {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
 
+#autocomplete-results .list-group-item {
+    cursor: pointer;
+}
+
+#autocomplete-results .list-group-item:hover {
+    background-color: #f1f1f1;
+}
+
+</style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -77,10 +96,11 @@
                         <i class="fas fa-search"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right p-3" aria-labelledby="dropdownMenuButton">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search" aria-label="Search">
-
+                        <form action="{{ route('search.index') }}" method="GET" class="form-inline">
+                            <input id="search-input" class="form-control mr-sm-2 search-input" type="search" name="query" placeholder="Search" aria-label="Search">
+                      
                         </form>
+
                     </div>
                 </div>
                 <a class="icon-cart" href="{{ route('wishlist.index') }}"><i class="fas fa-heart"></i></a>
@@ -90,6 +110,44 @@
             </div>
         </div>
     </nav>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#search-input').on('input', function() {
+                let query = $(this).val();
+                if (query.length > 2) { // Minimum length for suggestions
+                    $.ajax({
+                        url: '{{ route('search.autocomplete') }}',
+                        method: 'GET',
+                        data: { query: query },
+                        success: function(data) {
+                            $('#autocomplete-results').empty();
+                            if (data.length > 0) {
+                                data.forEach(item => {
+                                    $('#autocomplete-results').append(
+                                        `<li class="list-group-item">${item.title}</li>`
+                                    );
+                                });
+                            } else {
+                                $('#autocomplete-results').append(
+                                    `<li class="list-group-item">No results found</li>`
+                                );
+                            }
+                        }
+                    });
+                } else {
+                    $('#autocomplete-results').empty();
+                }
+            });
+
+            // Hide suggestions on item click or when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('#search-input').length) {
+                    $('#autocomplete-results').empty();
+                }
+            });
+        });
+    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

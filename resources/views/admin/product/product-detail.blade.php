@@ -99,8 +99,8 @@
                                     <b>${{ number_format($product->price, 2) }} USD</b>
                                 </h4>
 
-                                <h4><span class="badge bg-soft-success text-success mb-4">Instock</span></h4>
-                                <p class="text-muted mb-4">The languages only differ in their grammar, their pronunciation and their most common words. Everyone realizes why a new common language would be desirable: one could refuse to pay expensive translators.</p>
+                                <h4><span class="badge bg-soft-success text-success mb-4">Instock {{$product->quantity  }}</span></h4>
+                                <p class="text-muted mb-4">{{ $product->description }}.</p>
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <div>

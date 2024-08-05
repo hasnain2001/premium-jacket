@@ -52,11 +52,11 @@
         <form id="bulkDeleteForm" action="{{ route('admin.blog.bulkDelete') }}" method="POST">
             @csrf
             @method('DELETE')
-            <table id="datatable-buttons" class="table table-striped dt-responsive  w-100">
+            <table id="datatable-buttons" class="table dt-responsive nowrap w-100">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">
-                            <input type="checkbox" id="select-all-header">
+                            <input type="checkbox" id="selectAllHeader">
                         </th>
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
@@ -93,7 +93,7 @@
                 <tfoot class="thead-dark">
                     <tr>
                         <th scope="col">
-                            <input type="checkbox" id="select-all-footer">
+                            <input type="checkbox" id="selectAllFooter">
                         </th>
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
@@ -118,43 +118,42 @@
         </div>
     </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const selectAllHeader = document.getElementById('select-all-header');
-        const selectAllFooter = document.getElementById('select-all-footer');
-        const checkboxes = document.querySelectorAll('.selectCheckbox');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectAllHeader = document.getElementById('select-all-header');
+            const selectAllFooter = document.getElementById('select-all-footer');
+            const checkboxes = document.querySelectorAll('.selectCheckbox');
 
-        function toggleCheckboxes(selectAll) {
+            function toggleCheckboxes(selectAll) {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = selectAll.checked;
+                });
+            }
+
+            selectAllHeader.addEventListener('change', function() {
+                toggleCheckboxes(selectAllHeader);
+                selectAllFooter.checked = selectAllHeader.checked;
+            });
+
+            selectAllFooter.addEventListener('change', function() {
+                toggleCheckboxes(selectAllFooter);
+                selectAllHeader.checked = selectAllFooter.checked;
+            });
+
             checkboxes.forEach(checkbox => {
-                checkbox.checked = selectAll.checked;
-            });
-        }
-
-        selectAllHeader.addEventListener('change', function() {
-            toggleCheckboxes(selectAllHeader);
-            selectAllFooter.checked = selectAllHeader.checked;
-        });
-
-        selectAllFooter.addEventListener('change', function() {
-            toggleCheckboxes(selectAllFooter);
-            selectAllHeader.checked = selectAllFooter.checked;
-        });
-
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    if (document.querySelectorAll('.selectCheckbox:checked').length === checkboxes.length) {
-                        selectAllHeader.checked = true;
-                        selectAllFooter.checked = true;
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        if (document.querySelectorAll('.selectCheckbox:checked').length === checkboxes.length) {
+                            selectAllHeader.checked = true;
+                            selectAllFooter.checked = true;
+                        }
+                    } else {
+                        selectAllHeader.checked = false;
+                        selectAllFooter.checked = false;
                     }
-                } else {
-                    selectAllHeader.checked = false;
-                    selectAllFooter.checked = false;
-                }
+                });
             });
         });
-    });
-</script>
-
+    </script>
 
 @endsection

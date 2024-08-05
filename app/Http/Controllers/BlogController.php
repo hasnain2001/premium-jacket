@@ -11,13 +11,13 @@ use Illuminate\Support\Str;
 class BlogController extends Controller
 {
 
-  
- 
+
+
     public function blogs() {
-        $blogs = Blog::all(); 
+        $blogs = Blog::all();
         return view('admin.Blog.index', compact('blogs'));
     }
-    
+
     public function create() {
         return view('admin.Blog.create');
     }
@@ -33,7 +33,7 @@ class BlogController extends Controller
             'meta_description' => 'nullable|string|max:155',
             'meta_keyword' => 'nullable|string|max:255',
         ]);
-    
+
         if ($request->hasFile('category_image')) {
             $image = $request->file('category_image');
             $imageName = time().'.'.$image->getClientOriginalExtension();
@@ -42,13 +42,13 @@ class BlogController extends Controller
         } else {
             $imagePath = null;
         }
-    
+
         $blog = new Blog();
         $blog->title = $request->input('title');
         $blog->slug = $request->input('slug');
         $blog->content = $request->input('content');
         $blog->category_image = $imagePath;
-    
+
         // Process the content for base64 images
         $content = $request->input('content');
         $content = preg_replace('/<o:p[^>]*>(.*?)<\/o:p>/', '', $content);
@@ -57,10 +57,10 @@ class BlogController extends Controller
         $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         libxml_clear_errors();
         $images = $dom->getElementsByTagName("img");
-    
+
         foreach ($images as $img) {
             $image_64 = $img->getAttribute('src');
-    
+
             if (strpos($image_64, 'data:image') !== false) {
                 list($type, $image_data) = explode(';', $image_64);
                 list(, $extension) = explode('/', $type);
@@ -73,15 +73,15 @@ class BlogController extends Controller
                 $img->setAttribute('src', '/uploads/blog/' . $imageName);
             }
         }
-    
+
         $blog->content = $dom->saveHTML();
         $blog->save();
-    
 
-    
+
+
         return redirect()->back()->with('success', 'Blog created successfully.');
     }
-    
+
 
     public function edit($id)
     {
@@ -97,16 +97,16 @@ class BlogController extends Controller
             'slug' => 'required|string|max:255',
             'content' => 'required|string',
             'category_image' => 'image|mimes:jpeg,png,jpg,gif',
-            
+
             'meta_title' => 'nullable|string|max:65',
             'meta_description' => 'nullable|string|max:155',
             'meta_keyword' => 'nullable|string|max:255',
         ]);
-    
+
 
         $blog = Blog::findOrFail($id);
-    
-        
+
+
         if ($request->hasFile('category_image')) {
             $image = $request->file('category_image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -118,13 +118,13 @@ class BlogController extends Controller
         $content = preg_replace('/<o:p[^>]*>(.*?)<\/o:p>/', '', $content);
         $dom = new \DomDocument();
         libxml_use_internal_errors(true);
-    
+
         $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-    
+
         $errors = libxml_get_errors();
         if (!empty($errors)) {
         }
-    
+
         libxml_clear_errors();
         $blog->content = $dom->saveHTML();
         $blog->title = $validatedData['title'];
@@ -132,14 +132,14 @@ class BlogController extends Controller
         $blog->meta_title = $request->input('meta_title');
         $blog->meta_description = $request->input('meta_description');
         $blog->meta_keyword = $request->input('meta_keyword');
-    
-      
+
+
         $blog->save();
-    
-        
+
+
         return redirect()->back()->with('success', 'Blog updated successfully.');
     }
-    
+
 
 public function destroy($id)
 {
@@ -150,7 +150,7 @@ public function destroy($id)
 
     public function index()
     {
-        $blogs = Blog::paginate(10); 
+        $blogs = Blog::paginate(10);
         return view('admin.Blog', compact('blogs'));
     }
        public function deleteSelected(Request $request)
@@ -158,7 +158,7 @@ public function destroy($id)
         $selectedIds = $request->input('selected_blogs');
 
         if ($selectedIds) {
-          
+
             Blog::whereIn('id', $selectedIds)->delete();
 
             return redirect()->back()->with('success', 'Selected blog entries deleted successfully.');
@@ -166,7 +166,7 @@ public function destroy($id)
             return redirect()->back()->with('error', 'No blog entries selected for deletion.');
         }
     }
-    
+
 public function bulkDelete(Request $request)
     {
         $selectedBlogs = $request->input('selected_blogs');

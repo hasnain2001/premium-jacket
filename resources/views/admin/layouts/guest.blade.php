@@ -8,36 +8,52 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Dashboard</title>
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon"/>
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-        <!-- Theme Config Js -->
-        <script src="{{asset('assets/js/head.js')}}"></script>
+        <!-- Fonts -->
+        <link rel="dns-prefetch" href="//fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-        <!-- Bootstrap css -->
-        <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
-
-        <!-- App css -->
-        <link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
-
-        <!-- Icons css -->
-        <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-            <!-- Plugins css-->
-            <link href="{{asset('assets/libs/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
-            <link href="{{asset('assets/libs/dropzone/min/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
-            <link href="{{asset('assets/libs/quill/quill.core.css')}}" rel="stylesheet" type="text/css" />
-            <link href="{{asset('assets/libs/quill/quill.snow.css')}}" rel="stylesheet" type="text/css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 
-            <!-- third Datatables css -->
+            <!-- Theme Config Js -->
+            <script src="{{asset('assets/js/head.js')}}"></script>
+
+            <!-- Bootstrap css -->
+            <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
+
+            <!-- App css -->
+            <link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+
+            <!-- Icons css -->
+            <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- Plugins css -->
+    <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
+
+    <!-- Theme Config Js -->
+    <script src="{{ asset('assets/js/head.js') }}"></script>
+
+    <!-- Bootstrap css -->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
+
+    <!-- App css -->
+    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- Icons css -->
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+<!-- third Datatables css -->
 <link href="{{ asset('assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css ') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css ') }}" rel="stylesheet" type="text/css" />
 
+
+    <link rel="stylesheet" href="{{ asset('DataTables/datatables.css') }}" />
+
+    <script src="{{ asset('DataTables/datatables.js') }}"></script>
+    <link href="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.css" rel="stylesheet">
+
+<script src="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.js"></script>
 </head>
 <body>
 
@@ -165,6 +181,22 @@
     @yield('main-content')
 </div>
 
+
+
+
+
+ <!-- Vendor js -->
+ <script src="{{asset('assets/js/vendor.min.js')}}"></script>
+
+ <!-- App js -->
+ <script src="{{asset('assets/js/app.min.js')}}"></script>
+
+ <!-- Plugins js -->
+ <script src="{{asset('assets/libs/morris.js06/morris.min.js')}}"></script>
+ <script src="{{asset('assets/libs/raphael/raphael.min.js')}}"></script>
+
+ <!-- Dashboard init-->
+ <script src="{{asset('assets/js/pages/dashboard-4.init.js')}}"></script>
 
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
 <!--
@@ -325,19 +357,30 @@
         ]
     });
 </script>
+<!-- Vendor js -->
+<script src="{{ asset('assets/js/vendor.min.js') }}"></script>
 
+<!-- App js -->
+<script src="{{ asset('assets/js/app.min.js') }}"></script>
 
-        <!-- Vendor js -->
-        <script src="{{asset('assets/js/vendor.min.js')}}"></script>
+<!-- Third party js -->
+<script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script>
+<script src="{{ asset('assets/libs/pdfmake/build/pdfmake.min.js') }}"></script>
+<script src="{{ asset('assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
+<!-- Third party js ends -->
 
-        <!-- App js -->
-        <script src="{{asset('assets/js/app.min.js')}}"></script>
+<!-- Datatables init -->
+<script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 
-        <!-- Plugins js -->
-        <script src="{{asset('assets/libs/morris.js06/morris.min.js')}}"></script>
-        <script src="{{asset('assets/libs/raphael/raphael.min.js')}}"></script>
-
-        <!-- Dashboard init-->
-        <script src="{{asset('assets/js/pages/dashboard-4.init.js')}}"></script>
 </body>
 </html>

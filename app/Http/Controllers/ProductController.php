@@ -14,6 +14,27 @@ use Illuminate\Support\Str;
 class ProductController extends Controller
 {
 
+    public function searchResults(Request $request)
+    {
+
+        $genders = Gender::all();
+        $query = $request->input('query');
+        $trimmedQuery = trim($query);
+        $stores = Product::where('name', 'like', "%$trimmedQuery%")
+                         ->orderBy('name')
+                         ->get();
+        $exactStore = Product::where('name', $trimmedQuery)->first();
+        if ($exactStore) {
+            return redirect()->route('admin.product.details', ['slug' => Str::slug($exactStore->name)]);
+        }
+
+        return view('admin.product.index', [
+            'stores' => $stores,
+            'query' => $query,
+            'genders' => $genders,
+        ]);
+    }
+
     public function productdetail($slug){
 
 
@@ -36,24 +57,14 @@ class ProductController extends Controller
     }
 
     public function index(Request $request) {
-        // Fetch distinct categories from the products table
-        $categories = Product::select('categories')->distinct()->get();
 
-        // Get the selected category from the request
-        $selectedCategory = $request->input('categories');
-
-        // Create a query builder instance for the Product model
-        $productsQuery = Product::query();
-
-        // Apply the category filter if a category is selected
+           $categories = Product::select('categories')->distinct()->get();
+           $selectedCategory = $request->input('categories');
+           $productsQuery = Product::query();
         if ($selectedCategory) {
             $productsQuery->where('categories', $selectedCategory);
         }
-
-        // Paginate the products (10 products per page)
         $products = $productsQuery->paginate(10);
-
-        // Return the view with products, categories, and selectedCategory
         return view('admin.product.index', compact('products', 'categories', 'selectedCategory'));
     }
 

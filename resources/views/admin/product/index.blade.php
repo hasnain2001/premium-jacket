@@ -1,8 +1,8 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.guest')
 @section('datatable-title')
     create
 @endsection
-@section('content')
+@section('main-content')
 
 <style>
     .img-fluid{
@@ -39,11 +39,13 @@
                     <div class="card-body">
                         <div class="row justify-content-between">
                             <div class="col-auto">
-                                <form class="d-flex flex-wrap align-items-center">
+                                <form action="{{route('product.search.index')}}" class="d-flex flex-wrap align-items-center">
+                                    @csrf
                                     <label for="inputPassword2" class="visually-hidden">Search</label>
                                     <div class="me-3">
-                                        <input type="search" class="form-control my-1 my-lg-0" id="inputPassword2" placeholder="Search...">
+                                        <input type="search" name="query" class="form-control my-1 my-lg-0" id="inputPassword2" placeholder="Search...">
                                     </div>
+                                </form>
                                     <label for="status-select" class="me-2">Select By Category</label>
                                     <div class="me-sm-3">
                                         <form method="GET" action="{{ route('admin.product') }}">
@@ -58,7 +60,7 @@
                                         </form>
 
                                     </div>
-                                </form>
+
                             </div>
                             <div class="col-auto">
                                 <div class="text-lg-end my-1 my-lg-0">
@@ -159,5 +161,42 @@
     </div>
 
 
+    <script>
+        $(document).ready(function() {
+            $('#search-input').on('input', function() {
+                let query = $(this).val();
+                if (query.length > 2) { 
+                    $.ajax({
+                        url: '{{ route('product.search.index') }}',
+                        method: 'GET',
+                        data: { query: query },
+                        success: function(data) {
+                            $('#autocomplete-results').empty();
+                            if (data.length > 0) {
+                                data.forEach(item => {
+                                    $('#autocomplete-results').append(
+                                        `<li class="list-group-item">${item.title}</li>`
+                                    );
+                                });
+                            } else {
+                                $('#autocomplete-results').append(
+                                    `<li class="list-group-item">No results found</li>`
+                                );
+                            }
+                        }
+                    });
+                } else {
+                    $('#autocomplete-results').empty();
+                }
+            });
+
+            // Hide suggestions on item click or when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('#search-input').length) {
+                    $('#autocomplete-results').empty();
+                }
+            });
+        });
+    </script>
 
 @endsection

@@ -15,6 +15,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Frontend\WishListController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\SearchController;
 
 
 
@@ -51,11 +52,11 @@ Route :: prefix('admin')->name('admin.')->group(function( ){
     Route:: middleware(['auth',AdminMiddleware::class])->group(function(){
     Route::get('/home', [AdminHomeController::class, 'index'])->name('home');
 });
-
-
-})   ;
+}) ;
 
 Auth::routes();
+Route::get('/search', [SearchController::class, 'searchResults'])->name('search.index');
+Route::get('/autocomplete', [SearchController::class, 'autocomplete'])->name('search.autocomplete');
 
 Route::controller(MainController::class)->group(function () {
     Route::get('/', 'index');
@@ -83,10 +84,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
         Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
         Route::delete('/cart/remove/{product}', [CartController::class, 'removeFromCart'])->name('cart.remove');
         Route::put('/cart/update/{productId}', [CartController::class, 'update'])->name('cart.update');
-
-
-
-        Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.index');
+        Route::get('/wishlist', [App\Http\Controllers\Frontend\WishListController::class, 'showWishlist'])->name('wishlist.index');
         Route::post('/wishlist/add/{product}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
         Route::delete('/wishlist/remove/{product}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
     });
@@ -96,13 +94,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
 Route::controller(ProductController::class)->prefix('dashboard')->group(function () {
     Route::get('/product', 'index')->name('admin.product');
     Route::get('/product/{slug}', 'productdetail')->name('admin.product.details');
-
-    Route::post('/product/store', 'store')->name('admin.product.store');
+   Route::post('/product/store', 'store')->name('admin.product.store');
     Route::get('/product/edit/{id}', 'edit')->name('admin.product.edit');
     Route::post('/product/update/{id}', 'update')->name('admin.product.update');
     Route::get('/product/delete/{id}', 'destroy')->name('admin.product.delete');
      Route::post('/product/deleteSelected', 'deleteSelected')->name('admin.product.deleteSelected');
-
+     Route::get('/search', 'searchResults')->name('product.search.index');
+     Route::get('/autocomplete',  'autocomplete')->name('product.search.autocomplete');
 });
 Route::controller(GenderController::class)->prefix('dashboard')->group(function () {
     Route::get('/gender', 'index')->name('admin.gender');

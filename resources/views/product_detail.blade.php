@@ -119,6 +119,68 @@
     color: #0056b3; /* Darker icon color on hover */
 }
 
+.text-danger {
+    color: #dc3545; /* Red color */
+}
+
+.text-warning {
+    color: #ffc107; /* Yellow color */
+}
+
+.btn-cart {
+    background-color: #951d1d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20%;
+    box-shadow: 0 4px 6px rgb(192, 11, 11);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-cart:hover {
+    background-color: brown;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.badge {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    transition: transform 0.2s;
+}
+
+
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem 2rem;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
 
     </style>
     @livewireStyles
@@ -194,11 +256,16 @@
                     <div class="card">
                         <div class="card-body">
                             <h2 class="card-title">{{ $product->name }}</h2>
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <span class="text-dark text-uppercase">
+                                    {{ number_format((($product->offprice - $product->price) / $product->offprice) * 100, 2) }}% Off
+                                    (Save ${{ number_format($product->offprice - $product->price, 2) }} USD)
+                                </span>
+                                <span class="text-right">
+                                    <i class="fas fa-shipping-fast"></i> Estimated delivery Time In 10 Days
+                                </span>
+                            </div>
 
-                            <h6 class="text-dark text-uppercase">
-                                {{ number_format((($product->offprice - $product->price) / $product->offprice) * 100, 2) }}% Off
-                                (Save ${{ number_format($product->offprice - $product->price, 2) }} USD)
-                            </h6>
                             <h4 class="mb-4">
                                 Price:
                                 <b>${{ number_format($product->price, 2) }} USD</b>
@@ -206,43 +273,64 @@
                                     <del>${{ number_format($product->offprice, 2) }} USD</del>
                                 </span>
                             </h4>
-                            <h5 class="mt-2 mb-4">Stock: {{ $product->quantity }}</h5>
+
+                            <h4 class="mb-4
+                                @if ($product->quantity == 0)
+                                    text-danger
+                                @elseif ($product->quantity < 10)
+                                    text-warning
+                                @endif
+                            ">
+                                @if ($product->quantity == 0)
+                                    Out of Stock
+                                @else
+                                    Stock: {{ $product->quantity }}
+                                @endif
+                            </h4>
+
                             <form action="{{ route('cart.add', $product->id) }}" method="POST">
                                 @csrf
-                                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#sizeGuideModal">Size Guide</button>
-
-                                <!-- Modal HTML -->
+                                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#sizeGuideModal">
+                                    Size Guide
+                                </button>
                                 <div class="modal fade" id="sizeGuideModal" tabindex="-1" aria-labelledby="sizeGuideModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="sizeGuideModalLabel">Size Guide</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <span>Inches</span>
-                                                    <img src="{{ asset('images/about.jpg') }}" alt="Size Guide Inches" class="img-fluid">
+                                                <div class="mb-3 text-center">
+                                                    <span class="badge bg-secondary">Inches</span>
+                                                    <img id="inchesImage" src="{{ asset('images/size-guide-inches.png') }}" alt="Size Guide Inches" class="img-fluid rounded shadow-sm">
                                                 </div>
-                                                <div>
-                                                    <span>CM</span>
-                                                    <img src="{{ asset('images/about.jpg') }}" alt="Size Guide CM" class="img-fluid">
+                                                <div class="text-center" style="display: none;" id="cmSection">
+                                                    <span class="badge bg-secondary">CM</span>
+                                                    <img id="cmImage" src="{{ asset('images/size-guide-cm.png') }}" alt="Size Guide CM" class="img-fluid rounded shadow-sm">
+                                                </div>
+                                                <div class="text-center mt-4">
+                                                    <button type="button" class="btn btn-primary" onclick="toggleImage()">Next</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
+
                                 <br>
                                 <h5 class="">Colors</h5>
                                 <hr>
                                 <div class="image-selector">
                                     <img src="{{ asset('images/black.jfif') }}" class="product-color active" alt="black" data-color="black">
                                     <img src="{{ asset('images/brown.png') }}" class="product-color" alt="brown" data-color="brown">
-                                    <select name="color" class="form-select" aria-label="Default select example" required style=" width:100px">
-                                        <option value="black"> Black </option>
-                                        <option value="brown"> Brown </option>
+                                    <select name="color" class="form-select" aria-label="Default select example" required style="width: 100px;">
+                                        <option value="black">Black</option>
+                                        <option value="brown">Brown</option>
                                     </select>
                                 </div>
+
                                 <hr>
                                 <h5 class="">Sizes</h5>
                                 <select name="size" class="form-select" aria-label="Default select example" required>
@@ -256,19 +344,26 @@
                                     <option value="4XL">4XL</option>
                                     <option value="5XL">5XL</option>
                                 </select>
-                                <hr>
 
+                                <hr>
                                 <span class="text-dark font-weight-bold">Add</span>
                                 <input type="number" name="quantity" min="1" max="{{ $product->quantity }}" style="width: 70px;" required>
+
                                 <hr>
                                 <div class="d-flex">
-                                    <button type="submit" class="btn btn-success">Add to Cart</button>
+
+                                        <button type="submit" class="btn-cart">Add to Cart</button>
+                                    </form>
+
+                                    <form action="{{ route('wishlist.add', $product->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-dark ">Add to Wishlist</button>
+                                    </form>
                                 </div>
-                            </form>
-                            <form action="{{ route('wishlist.add', $product->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-primary">Add to Wishlist</button>
-                            </form>                            <div class="feature-icons">
+
+
+                            <hr>
+                            <div class="feature-icons">
                                 <div class="feature-icon">
                                     <i class="fas fa-shipping-fast"></i>
                                     <span>Free Shipping Sitewide</span>
@@ -289,7 +384,9 @@
                         </div>
                     </div>
                 @endif
-            </div></div></div>
+            </div>
+
+        </div></div>
 
     <div class="container mt-4">
         <h6 class="mt-4 mb-3">Description</h6>
@@ -308,6 +405,19 @@
     <!-- Bootstrap JS and Custom Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+function toggleImage() {
+    var inchesImage = document.getElementById('inchesImage');
+    var cmSection = document.getElementById('cmSection');
+
+    if (inchesImage.style.display === 'none') {
+        inchesImage.style.display = 'block';
+        cmSection.style.display = 'none';
+    } else {
+        inchesImage.style.display = 'none';
+        cmSection.style.display = 'block';
+    }
+}
+
 
     function selectColor(img) {
         // Deselect all images
