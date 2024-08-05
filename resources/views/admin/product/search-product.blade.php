@@ -43,7 +43,7 @@
                                     @csrf
                                     <label for="inputPassword2" class="visually-hidden">Search</label>
                                     <div class="me-3">
-                                        <input type="search" name="query" class="form-control my-1 my-lg-0" id="inputPassword2" placeholder="Search...">
+                                        <input id="searchInput" name="query" class="form-control my-1 my-lg-0" id="inputPassword2" placeholder="Search...">
                                     </div>
                                 </form>
                                     <label for="status-select" class="me-2">Select By Category</label>
@@ -82,8 +82,16 @@
         <!-- end row-->
 
         <div class="row">
-            @if (count($products) > 0)
-                @foreach ($products as $product)
+            @if ($adminproduct->isEmpty())
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Sorry!</h4>
+                <p>No products available at the moment. Please check back later.</p>
+                <hr>
+                <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
+            </div>
+        @else
+
+                @foreach ($adminproduct as $product)
                     <div class="col-md-4">
                         <div class="card product-box">
                             <div class="card-body">
@@ -126,21 +134,14 @@
                         </div> <!-- end card -->
                     </div> <!-- end col -->
                 @endforeach
-            @else
-                <p class="no-products">No products available.</p>
+
+
             @endif
         </div> <!-- end row -->
 
 
-        <div class="row">
-            <div class="col-12">
-              <!-- Pagination links -->
-              <div class="pagination-wrapper">
-                {{ $products->appends(request()->input())->links('vendor.pagination.custom') }}
-            </div>
-            </div> <!-- end col-->
-        </div>
-        <!-- end row-->
+
+           {{ $adminproduct->links('vendor.pagination.custom') }}
 
     </div> <!-- container -->
 
@@ -161,5 +162,35 @@
     </div>
 
 
+    <script>
+
+$(document).ready(function() {
+    $('#searchInput').autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: '{{ route('product.search.index') }}',
+                dataType: 'json',
+                data: {
+                    query: request.term
+                },
+                success: function(data) {
+                    console.log(data); // Debugging line
+                    response($.map(data, function(item) {
+                        return {
+                            label: item.label, // Display label
+                            value: item.value // Value submitted to input
+                        };
+                    }));
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('AJAX call failed: ' + textStatus + ', ' + errorThrown);
+                }
+            });
+        }
+    });
+});
+
+
+    </script>
 
 @endsection
