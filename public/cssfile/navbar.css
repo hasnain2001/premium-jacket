@@ -1,10 +1,7 @@
 .nav-link {
-    color: white !important;
+    color:rgb(255, 255, 255) !important;
 }
-nav {
-    background-color: #690500;
-    height: 150px;
-}
+
 .nav-item {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;

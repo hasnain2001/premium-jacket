@@ -112,7 +112,7 @@
 <div class="container mt-5">
     <div class="row mb-4">
         <div class="col text-center">
-            <h1 class="text-brown">Top Selling Product</h1>
+            <h1 class="text-brown">Trending Product</h1>
         </div>
     </div>
     @if ($products->isEmpty())

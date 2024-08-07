@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap Footer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{ asset('cssfile/footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('cssfile/footer.css') }}">
 </head>
 <body>
 <!-- Footer -->
@@ -13,11 +13,13 @@
     <div class="contain py-4">
         <div class="row">
             <div class="col-md-2 text-center text-md-start">
+                <a href="/">
                 <img class="logofooter" src="{{ asset('images/logo.png') }}" alt="Logo">
+            </a>
             </div>
 
             <div class="col-md-3 text-center text-md-start">
-                <button class="collapse-button" type="button" data-bs-toggle="collapse" data-bs-target="#aboutUsContent" aria-expanded="false" aria-controls="aboutUsContent">
+                <button class="collapse-button btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#aboutUsContent" aria-expanded="false" aria-controls="aboutUsContent">
                     About Us
                 </button>
                 <div class="collapse" id="aboutUsContent">
@@ -26,7 +28,7 @@
             </div>
 
             <div class="col-md-2 text-center text-md-start">
-                <button class="collapse-button" type="button" data-bs-toggle="collapse" data-bs-target="#quickLinksContent" aria-expanded="false" aria-controls="quickLinksContent">
+                <button class="collapse-button btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#quickLinksContent" aria-expanded="false" aria-controls="quickLinksContent">
                     Quick Links
                 </button>
                 <div class="collapse" id="quickLinksContent">
@@ -40,7 +42,7 @@
             </div>
 
             <div class="col-md-3 text-center text-md-start">
-                <button class="collapse-button" type="button" data-bs-toggle="collapse" data-bs-target="#contactUsContent" aria-expanded="false" aria-controls="contactUsContent">
+                <button class="collapse-button btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#contactUsContent" aria-expanded="false" aria-controls="contactUsContent">
                     Contact Us
                 </button>
                 <div class="collapse" id="contactUsContent">
@@ -53,7 +55,7 @@
             </div>
 
             <div class="col-md-2 text-center text-md-start">
-                <button class="collapse-button" type="button" data-bs-toggle="collapse" data-bs-target="#followUsContent" aria-expanded="false" aria-controls="followUsContent">
+                <button class="collapse-button btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#followUsContent" aria-expanded="false" aria-controls="followUsContent">
                     Follow Us
                 </button>
                 <div class="collapse" id="followUsContent">

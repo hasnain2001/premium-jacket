@@ -127,7 +127,9 @@
                     </div> <!-- end col -->
                 @endforeach
             @else
-                <p class="no-products">No products available.</p>
+            <div class="alert alert-danger" role="alert">
+               No Product AVailable
+                     </div>
             @endif
         </div> <!-- end row -->
 

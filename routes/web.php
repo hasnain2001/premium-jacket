@@ -78,8 +78,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->middleware(UserMiddleware::class);
 
     Route::middleware('auth')->group(function () {
-
-
         Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
         Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
         Route::delete('/cart/remove/{product}', [CartController::class, 'removeFromCart'])->name('cart.remove');

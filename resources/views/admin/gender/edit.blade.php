@@ -1,8 +1,8 @@
-@extends('admin.datatable_master')
+@extends('admin.layouts.guest')
 @section('title')
-    Update
+   update
 @endsection
-@section('content')
+@section('main-content')
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
@@ -22,7 +22,7 @@
                     <b>{{ session('success') }}</b>
                 </div>
             @endif
-            <form name="UpdateGender" id="UpdateGender" method="POST" enctype="multipart/form-data" action="{{ route('admin.gender.edit', $genders->id) }}">
+            <form name="UpdateGender" id="UpdateGender" method="POST" enctype="multipart/form-data" action="{{ route('admin.gender.update', $genders->id) }}">
                 @csrf
                 <div class="row">
                     <div class="col-6">
@@ -33,12 +33,16 @@
                                     <input type="text" class="form-control" name="name" id="slug" value="{{ $genders->name }}">
                                 </div>
                                 <div class="form-group">
+                                    <label for="Slug">Slug<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="slug" id="slug" value="{{ $genders->slug }}">
+                                </div>
+                                <div class="form-group">
                                     <label for="title">Meta Title<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="title" id="slug" value="{{ $genders->title }}" >
                                 </div>
-                              
-                               
-                               
+
+
+
                                 <div class="form-group">
                                     <label for="meta_tag">Meta Tag <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="meta_tag" id="meta_tag" value="{{ $genders->meta_tag }}">
@@ -49,31 +53,31 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="meta_description">Meta Description</label>
-                                    <textarea 
-                                    name="meta_description" 
-                                    id="meta_description"  
-                                    class="form-control" 
-                                    cols="30" 
-                                    rows="4" 
+                                    <textarea
+                                    name="meta_description"
+                                    id="meta_description"
+                                    class="form-control"
+                                    cols="30"
+                                    rows="4"
                                     style="resize: none;"
                                 >{{ $genders->meta_description }}</textarea>
-                                
+
                                 </div>
 
 
                                 <div class="col-12">
                                     <div class="d-grid gap-2">
-            
+
                                     <button type="submit" class="btn btn-lg btn-primary">Save</button>
                                     <a href="{{ route('admin.gender') }}" class="btn btn-secondary">Cancel</a>
                                     </div>
                                 </div>
-                             
+
                             </div>
                         </div>
                     </div>
-                  
-                  
+
+
                 </div>
             </form>
         </div>
