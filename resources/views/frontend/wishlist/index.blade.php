@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WishList</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
     <style>
         .wishlist-item {
             margin-bottom: 20px;
@@ -43,9 +44,12 @@
     <h1 class="mb-4">Your Wishlist</h1>
 
     @if($wishlist->isEmpty())
-    <div class="alert alert-primary" role="alert">
-       Your wishlist Is empty Add Some Product
-         </div>
+    <div class="alert alert-warning text-center">
+        <h4 class="alert-heading">Your Wishlist  is Empty</h4>
+        <p>It looks like you haven't added anything to your Wishlist yet. Start shopping to fill it up!</p>
+        <hr>
+        <p class="mb-0">Explore our products and find something you love.</p>
+    </div>
     @else
         <div class="row">
             @foreach($wishlist as $product)

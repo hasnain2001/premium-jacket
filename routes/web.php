@@ -23,16 +23,10 @@ use App\Http\Controllers\SearchController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
 
-route::fallback(function(){
-return view('404');
-});
-Route :: any('*',function(){
-return view('404');
-});
+
+
+
 
 
 
@@ -61,13 +55,14 @@ Route::get('/autocomplete', [SearchController::class, 'autocomplete'])->name('se
 Route::controller(MainController::class)->group(function () {
     Route::get('/', 'index');
 
+    Route::get('/about', 'about')->name('about');
     Route::get('/product', 'product')->name('product');
     Route::get('/product/{slug}', 'productdetail')->name('product_details');
     Route::get('/category', 'categories')->name('categories');
     Route::get('/category/{slug}', 'viewcategory')->name('category_details');
     Route::get('/gender', 'gender')->name('gender');
     Route::get('/gender/{name}', 'viewgender')->name('gender_details');
-
+    Route::fallback( 'notfound')->name('notfound');
     Route::get('/blog',  'blog_home')->name('blog');
 Route::get('/blog/{slug}',  'blog_show')->name('blog-details');});
 
@@ -78,6 +73,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->middleware(UserMiddleware::class);
 
     Route::middleware('auth')->group(function () {
+
+
         Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
         Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
         Route::delete('/cart/remove/{product}', [CartController::class, 'removeFromCart'])->name('cart.remove');

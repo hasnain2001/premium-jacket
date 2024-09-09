@@ -4,151 +4,145 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Bootstrap 5.0.2 CSS -->
+    <link rel="stylesheet" href="{{ asset('bootstrap-5.0.2/css/bootstrap.min.css') }}">
+
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('cssfile/navbar.css') }}">
-    <title>Navbar</title>
+
     <style>
+nav{background-color:#690500;height:150px;width:100%}.navbar-custom .auth,.navbar-custom .icon-cart,.navbar-custom .nav-link,.navbar-custom .search-button{color:#fff!important}.navbar-brand{position:absolute;left:50%;transform:translateX(-50%)}.navbar-collapse{justify-content:space-between}.nav-item{font-family:Arial,Helvetica,sans-serif;font-weight:700;padding-right:15px;margin-right:10px}.nav-item.dropdown:hover .dropdown-menu{display:block;margin-top:0;background-color:#0c0c0c}.dropdown-item:hover{background-color:#0c0c0c;color:#fff}.search-container .search-input{width:300px}.search-container .search-button{border:none;background:0 0;color:#fff}.bg{background-color:transparent}#autocomplete-results{border:1px solid #ccc;border-radius:4px;background-color:#fff;max-height:200px;overflow-y:auto;z-index:1000;position:absolute;width:200px}#autocomplete-results .list-group-item{cursor:pointer}#autocomplete-results .list-group-item:hover{background-color:#f1f1f1}@media (max-width:768px){nav{height:auto}.navbar-brand{position:static;transform:none}.navbar-right{flex-direction:column;align-items:flex-start}}
+#myBtn,.loader{position:fixed}::-webkit-scrollbar{width:20px}::-webkit-scrollbar-track{box-shadow:inset 0 0 5px grey;border-radius:10px}::-webkit-scrollbar-thumb{background:#990c0c;border-radius:10px}::-webkit-scrollbar-thumb:hover{background:#ca3b3b}.loader{width:120px;height:20px;background:linear-gradient(#990c0c 0 0) 0/0 no-repeat #ddd;animation:2s linear infinite l1;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999}@keyframes l1{100%{background-size:100%}}#myBtn{display:none;bottom:20px;right:30px;z-index:99;border:none;outline:0;background-color:#990c0c;color:#fff;cursor:pointer;padding:15px;border-radius:10px;font-size:18px}#myBtn:hover{background-color:#555}
 
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-transparent navbar-custom">
-        <a class="navbar-brand text-white" href="/"> <img class="logo-nav" src="{{ asset('images/logo.png') }}" alt=""> </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <a class="navbar-brand" href="/">
+            <img class="logo-nav" src="{{ asset('images/logo.png') }}" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto left-items">
+            <ul class="navbar-nav me-auto left-items">
                 @foreach ($genders as $gender)
-                    <li class="nav-item {{ Request::routeIs('gender') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('gender_details', ['name' => Str::slug($gender->name)]) }}">{{ $gender->name }}</a>
-                    </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{{ route('gender_details', ['name' => Str::slug($gender->name)]) }}" id="navbarDropdown{{ $gender->id }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ $gender->name }}
+                    </a>
+                    @if(isset($categoriesByGender[$gender->name]) && $categoriesByGender[$gender->name]->isNotEmpty())
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown{{ $gender->id }}">
+                            @foreach ($categoriesByGender[$gender->name] as $category)
+                                <li><a href="{{ route('category_details', ['slug' => Str::slug($category->slug)]) }}" class="dropdown-item text-white">{{ $category->title }}</a></li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </li>
                 @endforeach
-
-                {{-- <li class="nav-item {{ Request::routeIs('categories') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('categories') }}">Categories</a>
-                </li> --}}
-                <li class="nav-item {{ Request::routeIs('product') ? 'active' : '' }}">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('product') }}">SHOP</a>
                 </li>
-                {{-- <li class="nav-item {{ Request::routeIs('blog') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('blog') }}">BLOGS</a>
-                </li> --}}
             </ul>
 
             <div class="navbar-right right-items">
+                <a class="nav-link" href="{{ route('blog') }}">
+                    <i class="fas fa-blog"></i> Blogs
+                </a>
+
+                <div class="search-container">
+                    <button class="search-button" type="button" data-bs-toggle="modal" data-bs-target="#searchModal">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                </div>
                 @if (Route::has('login'))
                     @auth
-                        @if (Auth::user()->is_admin)
-                            <a href="{{ url('/admin/home') }}" class="btn btn-sm">
-                                <span class="auth"><i class="fas fa-user-shield"></i> Dashboard</span>
-                            </a>
-                        @else
-                            <a href="{{ url('/home') }}" class="btn btn-sm">
-                                <span class="auth"><i class="fas fa-tachometer-alt"></i>Dashboard</span>
-                            </a>
-                        @endif
-                        <a href="{{ route('logout') }}" class="btn btn-sm"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <span class="auth"> <i class="fas fa-sign-out-alt"></i> LogOut</span>
+                        <a href="{{ Auth::user()->is_admin ? url('/admin/home') : url('/home') }}" class="btn btn-sm text-white">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                        <a href="{{ route('logout') }}" class="btn btn-sm text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt"></i> LogOut
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="btn btn-sm">
-                            <span class="auth"><i class="fas fa-sign-in-alt"></i>Log in</span>
+                        <a href="{{ route('login') }}" class="btn btn-sm text-white">
+                            <i class="fas fa-sign-in-alt"></i> Log in
                         </a>
-                        @if (Route::has('register'))
-                            {{-- <a href="{{ route('register') }}" class="btn btn-sm">
-                                <span class="auth"><i class="fas fa-user-plus"></i>Register</span>
-                            </a> --}}
-                        @endif
-                        @if (Route::has('admin.login'))
-                            {{-- <a href="{{ route('admin.login') }}" class="btn btn-sm">
-                                <span class="auth"><i class="fas fa-user-shield"></i></span>
-                            </a> --}}
-                        @endif
                     @endauth
                 @endif
-                <div class="dropdown search-container">
-                    <button class="search-button dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right p-3" aria-labelledby="dropdownMenuButton">
-                        <form action="{{ route('search.index') }}" method="GET" class="form-inline">
-                            <input id="search-input" class="form-control mr-sm-2 search-input" type="search" name="query" placeholder="Search" aria-label="Search">
-                            <ul id="autocomplete-results" class="list-group"></ul>
-                        </form>
-                    </div>
-                </div>
-                <a class="icon-cart" href="{{ route('wishlist.index') }}"><i class="fas fa-heart"></i></a>
+
+
+
                 <a class="icon-cart" href="{{ route('cart.index') }}">
                     <i class="fas fa-shopping-cart"></i>
+                </a>
+                <a class="icon-cart" href="{{ route('wishlist.index') }}">
+                    <i class="fas fa-heart"></i>
                 </a>
             </div>
         </div>
     </nav>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+           <!-- Search Modal -->
+           <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-white" id="searchModalLabel">Search</h5>
+                        <button type="button" class="btn-close text-white "data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('search.index') }}" method="GET">
+                            <input id="search-input" class="form-control search-input" type="search" name="query" placeholder="Search">
+                            <ul id="autocomplete-results" class="list-group"></ul>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark text-white" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button onclick="topFunction()" id="myBtn" title="Go to top"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+          </svg>
+
+           </button>
+           <div id="loader" class="loader"></div>
+
     <script>
-        $(document).ready(function() {
-            $('#search-input').on('input', function() {
-                let query = $(this).val();
-                if (query.length > 2) { // Minimum length for suggestions
-                    $.ajax({
-                        url: '{{ route('search.autocomplete') }}',
-                        method: 'GET',
-                        data: { query: query },
-                        success: function(data) {
-                            $('#autocomplete-results').empty();
-                            if (data.length > 0) {
-                                data.forEach(item => {
-                                    $('#autocomplete-results').append(
-                                        `<li class="list-group-item">${item.title}</li>`
-                                    );
-                                });
-                            } else {
-                                $('#autocomplete-results').append(
-                                    `<li class="list-group-item">No results found</li>`
-                                );
-                            }
-                        }
-                    });
-                } else {
-                    $('#autocomplete-results').empty();
-                }
-            });
 
-            // Hide suggestions on item click or when clicking outside
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('#search-input').length) {
-                    $('#autocomplete-results').empty();
-                }
-            });
-        });
+     // Hide the loader once the page is fully loaded
+     window.addEventListener('load', function() {
+       var loader = document.getElementById('loader');
+       loader.style.display = 'none';
+     });
 
-        $(window).scroll(function() {
-            if ($(this).scrollTop() > 50) {
-                $('.navbar-custom').addClass('scrolled');
-            } else {
-                $('.navbar-custom').removeClass('scrolled');
-            }
-        });
+    let mybutton = document.getElementById("myBtn");
 
-        document.querySelector('.search-button').addEventListener('click', function() {
-            document.querySelector('.search-container').classList.toggle('show');
-        });
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
     </script>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-KzZiUl2mIMeDTAe2bC0p1jAqDNbOo1en1bsy5ntONT6kflEXb+hPYlA/I5mWrEr7" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-VPRA4cU5bhboS0mP38R7rw9wwyDiBp3y7lg7tZq2mYbDxFlImv2xCc3/l5Lnb/TM" crossorigin="anonymous"></script>
 </body>
 </html>

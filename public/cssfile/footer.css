@@ -1,63 +1,71 @@
 .footer {
     background-color: #690500;
     color: white;
-    padding: 5px 0;
+
+    height: auto;
 }
+
 .contain {
     padding: 30px;
-    margin: 30px;
+    margin: 0 auto;
 }
+
 .footer .logofooter {
     max-width: 150px;
     margin-bottom: 20px;
 }
+
+.footer p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
 .footer h5 {
+    color: white;
     font-size: 18px;
     margin-bottom: 15px;
     font-weight: bold;
 }
-.footer p, .footer ul, .footer span {
-    font-size: 14px;
-    line-height: 1.6;
+
+.footer ul {
+    padding: 0;
 }
+
+.footer ul li {
+    margin-bottom: 10px;
+}
+.quick-links{
+
+text-align:left ;
+}
+
 .footer a {
-    color: #adb5bd;
+
+    color: rgb(255, 255, 255);
     text-decoration: none;
 }
+
 .footer a:hover {
-    color: #fff;
+    text-decoration: none;
+    color: #130f0f;
     text-decoration: underline;
 }
+
 .footer .social-icons a {
     display: inline-block;
     margin-right: 15px;
-    color: #adb5bd;
+    color: #ffffff;
     font-size: 18px;
     transition: color 0.3s;
 }
+
 .footer .social-icons a:hover {
     color: #fff;
 }
-.footer .collapse-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 0;
-    margin: 0;
-}
-.btn{
-    text-decoration: none;
-}
-.btn:hover{
-    text-decoration: none;
-}
-.footer .collapse-button:focus {
-    outline: none;
-}
+
 @media (max-width: 768px) {
-    .footer .col-md-2, .footer .col-md-3 {
+    .footer .row {
         text-align: center;
     }
 }

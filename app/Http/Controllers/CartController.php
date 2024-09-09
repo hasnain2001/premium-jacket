@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Cart;
 use App\Models\Gender;
+use App\Models\Categories;
 
 class CartController extends Controller
 {
@@ -14,13 +15,13 @@ class CartController extends Controller
         $user = auth()->user();
         $size = $request->input('size');
         $color = $request->input('color');
-    
+
         $cart = Cart::where('user_id', $user->id)
                     ->where('product_id', $productId)
                     ->where('size', $size)
                     ->where('color', $color)
                     ->first();
-    
+
         if ($cart) {
             $cart->quantity += $request->input('quantity');
             $cart->save();
@@ -33,10 +34,10 @@ class CartController extends Controller
                 'color' => $color,
             ]);
         }
-    
+
         return redirect()->back()->with('success', 'Product added to cart!');
     }
-    
+
 
     public function update(Request $request, $productId)
     {
@@ -44,20 +45,20 @@ class CartController extends Controller
         $quantity = $request->input('quantity');
         $size = $request->input('size');
         $color = $request->input('color');
-        
+
         // Validate quantity
         if ($quantity < 1) {
             return redirect()->route('cart.index')->with('error', 'Quantity must be at least 1.');
         }
-    
+
         // Find the cart item
         $cart = Cart::where('user_id', $user->id)
                     ->where('product_id', $productId)
                     ->where('size', $size)
                     ->where('color', $color)
                     ->first();
-    
-       
+
+
         Log::info('Updating cart item:', [
             'user_id' => $user->id,
             'product_id' => $productId,
@@ -66,7 +67,7 @@ class CartController extends Controller
             'quantity' => $quantity,
             'cart' => $cart
         ]);
-    
+
         // Update cart item
         if ($cart) {
             $cart->quantity = $quantity;
@@ -77,15 +78,18 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Cart item not found.');
         }
     }
-    
+
 
     public function index()
     {
         $user = auth()->user();
         $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
         $genders = Gender::all();
+        foreach ($genders as $gender) {
+            $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
+        }
 
-        return view('cart', compact('cartItems', 'genders'));
+        return view('cart', compact('cartItems', 'genders','categoriesByGender'));
     }
 
     public function removeFromCart($productId)

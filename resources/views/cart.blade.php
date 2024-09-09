@@ -29,7 +29,12 @@
 <div class="container mt-4">
     <h1>Your Cart</h1>
     @if($cartItems->isEmpty())
-        <p>Your cart is empty.</p>
+    <div class="alert alert-warning text-center">
+        <h4 class="alert-heading">Your Cart is Empty</h4>
+        <p>It looks like you haven't added anything to your cart yet. Start shopping to fill it up!</p>
+        <hr>
+        <p class="mb-0">Explore our products and find something you love.</p>
+    </div>
     @else
         <table class="table table-striped">
             <thead>
@@ -59,7 +64,7 @@
 
                     <tr>
                         <td>
-                            
+
                             @php
                                 $images = json_decode($item->product->productimage);
                             @endphp
@@ -73,22 +78,14 @@
                         <td>
                             <form action="{{ route('cart.update', $item->product_id) }}" method="POST" class="d-inline">
                                 @csrf
-                                @method('Put') 
+                                @method('Put')
                                 <input type="number" name="quantity" value="{{ $item->quantity }}" min="1" max="{{ $item->product->quantity }}" class="form-control d-inline" style="width: 80px;">
                         </td>
+                        <td>{{ $item->size }}</td>
                         <td>
-                            <select name="size" class="form-select" aria-label="Select size" required>
-                                <option value="S" {{ old('size', $item->size) == 'S' ? 'selected' : '' }}>S (US 4-6)</option>
-                                <option value="M" {{ old('size', $item->size) == 'M' ? 'selected' : '' }}>M (US 8-10)</option>
-                                <option value="L" {{ old('size', $item->size) == 'L' ? 'selected' : '' }}>L (US 12-14)</option>
-                                <option value="XL" {{ old('size', $item->size) == 'XL' ? 'selected' : '' }}>XL (US 16-18)</option>
-                                <option value="2XL" {{ old('size', $item->size) == '2XL' ? 'selected' : '' }}>2XL</option>
-                                <option value="3XL" {{ old('size', $item->size) == '3XL' ? 'selected' : '' }}>3XL</option>
-                                <option value="4XL" {{ old('size', $item->size) == '4XL' ? 'selected' : '' }}>4XL</option>
-                                <option value="5XL" {{ old('size', $item->size) == '5XL' ? 'selected' : '' }}>5XL</option>
-                            </select>
+
                             <input type="hidden" name="color" value="{{ $item->color }}">
-                       
+
                         </td>
                         <td>{{ $item->color }}</td>
                         <td>${{ number_format($item->product->price, 2) }}</td>
@@ -96,7 +93,7 @@
                         <td>
                             <button type="submit" class="btn btn-primary btn-sm mt-2">Update</button>
                         </form>
-                            
+
                             <form action="{{ route('cart.remove', $item->product_id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
