@@ -11,60 +11,7 @@
     <link rel="stylesheet" href="{{ asset('cssfile/navbar.css') }}">
     <title>Navbar</title>
     <style>
-        nav {
-            background-color: #690500;
-            height: 150px;
-            width: 100%;
-            z-index: 10;
-        }
-        .navbar-transparent {
-            background-color: transparent;
-        }
-        .nav-link, .auth {
-            color: rgb(255, 255, 255) !important;
-        }
-        .dark .nav-link,
-        .dark .auth,
-        .dark .auth i,
-        .dark .search-button,
-        .dark .icon-cart.icons {
-            color: #333 !important;
-        }
 
-        /* public/css/app.css */
-        #autocomplete-results {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #fff;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 1000;
-        }
-
-        #autocomplete-results .list-group-item {
-            cursor: pointer;
-        }
-
-        #autocomplete-results .list-group-item:hover {
-            background-color: #f1f1f1;
-        }
-
-        .search-container.show .dropdown-menu {
-            display: block;
-        }
-
-        .navbar-custom .left-items,
-        .navbar-custom .right-items {
-            transition: color 0.3s ease;
-        }
-
-        .scrolled .left-items .nav-link,
-        .scrolled .right-items .nav-link,
-        .scrolled .auth,
-        .scrolled .search-button,
-        .scrolled .icon-cart {
-            color: #333 !important;
-        }
     </style>
 </head>
 <body>
@@ -81,7 +28,7 @@
                         <a class="nav-link" href="{{ route('gender_details', ['name' => Str::slug($gender->name)]) }}">{{ $gender->name }}</a>
                     </li>
                 @endforeach
-                
+
                 {{-- <li class="nav-item {{ Request::routeIs('categories') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('categories') }}">Categories</a>
                 </li> --}}

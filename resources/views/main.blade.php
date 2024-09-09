@@ -2,6 +2,70 @@
 
 @section('main-content')
 <link rel="stylesheet" href="{{ asset('cssfile/home.css') }}">
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Lato:100&display=swap');
+
+.center {
+  width: 180px;
+  height: 60px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-read {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 40px;
+  cursor: pointer;
+  background: brown;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  outline: none;
+  text-decoration: none;
+  position: relative;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  overflow: hidden;
+  transition: background 3.3s, color 0.3s;
+}
+
+.button-read:hover {
+    text-decoration:none;
+  background: #951d1d;
+  color: #fff;
+}
+
+.button-read svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-dasharray: 150 480;
+  stroke-dashoffset: 150;
+  transition: stroke-dashoffset 3.4s ease-in-out;
+}
+
+.button-read:hover svg {
+  stroke-dashoffset: -480;
+}
+
+.button-read span {
+  position: relative;
+  z-index: 1;
+}
+
+</style>
 <!-- Carousel Start -->
 <div id="carouselExampleIndicators" class="carousel slide">
     <div class="carousel-indicators">
@@ -79,11 +143,13 @@
     <div class="row mt-3">
       <div class="col-md-4">
         <div class="card">
+            <a href="{{ route('blog') }}">
           <img src="{{ asset('images/image3.jpg') }}" class="card-img" alt="Blog">
           <div class="overlay">
             <span class="card-product">BLOG</span>
             <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
           </div>
+        </a>
         </div>
       </div>
       <div class="col-md-4">
@@ -174,7 +240,19 @@
             <div class="col-lg-6">
                 <h2 class="about_taital">About Us</h2>
                 <p class="about_text">We are a premier store offering a wide range of products to meet all your needs. Our mission is to provide high-quality items at affordable prices with exceptional customer service.</p>
-                <div class="read_bt"><a href="{{ url('/about') }}">Read More</a></div>
+
+                <div class="center">
+                    <a href="{{ route('about') }}" class="button-read">
+                      <svg width="180px" height="60px" viewBox="0 0 180 60" class="border">
+                        <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
+                        <polyline points="179,1 179,59 1,59 1,1 179,1" class="hl-line" />
+                      </svg>
+                      <span>Read Me</span>
+                    </a>
+                  </div>
+
+
+
             </div>
         </div>
     </div>

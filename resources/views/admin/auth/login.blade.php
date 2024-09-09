@@ -9,17 +9,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
             <!-- App favicon -->
-            <link rel="shortcut icon" href="{{asset('assets/images/favicon.ico')}}" type="image/x-icon">
+            <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
 
             <!-- Theme Config Js -->
             <script src="{{asset('assets/js/head.js')}}"></script>
-    
+
             <!-- Bootstrap css -->
             <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
-    
+
             <!-- App css -->
             <link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
-    
+
             <!-- Icons css -->
             <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 
@@ -33,7 +33,7 @@
             height: 150vh;
             justify-content: center;
             align-items: center;
-          
+
         }
     </style>
 </head>
@@ -45,14 +45,14 @@
                     <div class="card bg-pattern">
 
                         <div class="card-body p-4">
-                            
+
                             <div class="text-center w-75 m-auto">
                                 <div class="auth-brand">
       <span class="logo-lg">
     <h3 class="py-2 bg-dark text-white text-center">{{ __('Admin Login') }}</h3>
                                         </span>
-                               
-                
+
+
                                     <a href="index.html" class="logo logo-light text-center">
                                         <span class="logo-lg">
                                             <img src="assets/images/logo-light.png" alt="" height="22">
