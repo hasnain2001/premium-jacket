@@ -21,7 +21,7 @@ class Home extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.navbar');
+////
     }
     public function footer(): View|Closure|string
     {

@@ -15,11 +15,11 @@ class MainController extends Controller
 
     public function notfound()
     {
-        $genders = Gender::all();
+
         $products = Product::latest()->take(25)->get();
         $blogs = Blog::paginate(10);
 
-        // Fetch categories based on the gender column in the categories table
+        $genders = Gender::all();
         $categoriesByGender = [];
         foreach ($genders as $gender) {
             $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();

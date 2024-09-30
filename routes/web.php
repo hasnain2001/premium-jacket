@@ -35,7 +35,9 @@ Route::get('/session-destroy', function () {
     return redirect()->back()->with('success', 'Product deletted Successfully');
 })->name('destroy-session');
 
-
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
 
 
 

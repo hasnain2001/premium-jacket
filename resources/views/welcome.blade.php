@@ -47,6 +47,6 @@ header("X-Robots-Tag:index, follow");?>
 <footer>
     @include('components.footer')
 </footer>
-<script src="{{ asset('bootstrap-5.0.2/js/bootstrap.min.js') }}"></script>
+
 </body>
 </html>

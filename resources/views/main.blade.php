@@ -179,7 +179,7 @@
                                         </div>
                                     @endif
                                     <div class="card-body text-center">
-                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                        <span class="card-title">{{ $product->name }}</span>
                                         <b>${{ number_format($product->price, 2) }} USD</b>
                                         @if($product->offprice)
                                             <span class="text-muted me-2">

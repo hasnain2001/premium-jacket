@@ -15,8 +15,12 @@
     <style>
         nav {
             background-color: #690500;
-            height: 150px;
+            height: 100px;
             width: 100%;
+        }
+        .logo{
+height: 120px;
+width: 100%;
         }
         .navbar-custom .nav-link {
             color: #fff !important;
@@ -134,7 +138,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
         <a class="navbar-brand" href="/">
-            <img class="logo-nav" src="{{ asset('images/logo.png') }}" alt="Logo">
+            <img class=" logo" src="{{ asset('images/logo.png') }}" alt="Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -203,7 +207,7 @@
             <div class="modal-content bg">
                 <div class="modal-header">
                     <h5 class="modal-title text-white" id="searchModalLabel">Search</h5>
-                   
+
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('search.index') }}" method="GET">
@@ -249,5 +253,6 @@
             document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
         }
     </script>
+
 </body>
 </html>
