@@ -1,94 +1,98 @@
+<?php
+header("X-Robots-Tag:index, follow");?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Product</title>
+    <title>Premium Leather Jackets | Stylish & Durable Outerwear | Product</title>
+
+    <meta name="description" content="Explore a wide range of premium leather jackets for men and women. Shop stylish, durable outerwear and elevate your fashion with top-quality designs.">
+
+
+    <meta name="keywords" content="leather jackets, premium jackets, men's jackets, women's jackets, stylish outerwear, durable jackets, fashion, leatherwear">
+
+    <meta name="author" content="Premium Leather Style">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.premiumleatherstyle.com/product">
 
 <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <style>
-         /* Custom styles for specific elements */
-         .nav-logo {
-            font-size: 44px; /* Adjust as needed */
-            font-weight: 300;
-            color: white;
-            text-decoration: none;
-        }
-        nav {
-            background-color: black;
-            height: auto;
-        }
-        .text {
-            color: white;
-        }
-        .conain{
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-image: url('{{ asset('images/banner.jpg') }}');
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDLGRGJN3V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-        }
-        .shop-text{
-            text-align: center;
-            color: white;
-            padding-top: 5%;
-        }
+  gtag('config', 'G-PDLGRGJN3V');
+</script>
+
+  <style>
+.nav-logo,.shop-text,.text{color:#fff}.nav-logo{font-size:44px;font-weight:300;text-decoration:none}nav{background-color:#000;height:auto}.conain{background-position:center;background-size:cover;background-repeat:no-repeat;background-image:url('{{ asset('images/banner.jpg') }}');height:300px;max-height:350px}.shop-text{text-align:center;padding-top:12%;font-size:3rem;font-weight:600;text-shadow:2px 2px 5px rgba(0,0,0,.5)}.product{height:200px;object-fit:cover}.card{transition:transform .3s,box-shadow .3s}.card:hover{box-shadow:0 10px 20px rgba(0,0,0,.2)}.btn-dark{background-color:#343a40;border:none;transition:background-color .3s,transform .3s}.btn-dark:hover{background-color:#23272b;transform:translateY(-3px)}@media (max-width:767.98px){.col-md-6{flex:0 0 50%;max-width:50%}}
+
   </style>
 </head>
 <body>
     <nav>
         @include('components.navbar')
     </nav>
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
-
-
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
     <div class="conain">
-
         <h1 class="shop-text">Shop</h1>
     </div>
-<br>
-    <p class="h5 m-3 font-weight-bold    text-center text-dark">Total Product: <span class="fw-bold">{{ $products->total() }}</span></p>
+    <br>
+    <p class="h5 m-3 font-weight-bold text-center text-dark">Total Products: <span class="fw-bold">{{ $products->total() }}</span></p>
     <br>
     <div class="container">
         <div class="row">
             @if ($products->isEmpty())
-            <div class="alert alert-success" role="alert">
-                <h4 class="alert-heading">Sorry!</h4>
-                <p>No products available at the moment. Please check back later.</p>
-                <hr>
-                <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
-            </div>
-        @else
-        <div class="row">
-            @foreach ($products as $product)
-
-                <div class="col-md-3">
-                    <div class="card mb-4 shadow-sm h-100">
-                        <div class="card-header p-0">
-                            @php
-                                $images = json_decode($product->productimage);
-                            @endphp
-                            @if(is_array($images) && !empty($images))
-                                <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-fluid shadow product" style="height: 200px;">
-                            @else
-                                <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="img-fluid stores shadow rounded-circle">
-                            @endif
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ $product->name }}</h5>
-                            <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-dark mt-auto">View Details</a>
+                <div class="alert alert-success text-center" role="alert">
+                    <h4 class="alert-heading">Sorry!</h4>
+                    <p>No products available at the moment. Please check back later.</p>
+                    <hr>
+                    <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
+                </div>
+            @else
+            <div class="row">
+                @foreach ($products as $product)
+                    <div class="col-6 col-md-4 col-lg-3 col-xl-5th">
+                        <div class="card mb-4 shadow-sm h-100">
+                            <div class="card-header p-0">
+                                <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}">
+                                    @php
+                                        $images = json_decode($product->productimage);
+                                    @endphp
+                                    @if(is_array($images) && !empty($images))
+                                        <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-fluid shadow product">
+                                    @else
+                                        <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="img-fluid shadow rounded-circle">
+                                    @endif
+                                </a>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-dark mt-auto">View Product</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
 
-        @endif
-
+            @endif
         </div>
     </div>
+
     <br>
 {{ $products->links('vendor.pagination.custom') }}
 

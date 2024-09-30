@@ -1,14 +1,22 @@
+<?php
+header("X-Robots-Tag:index, follow");?>
 <!DOCTYPE html>
 <html lang="en" data-topbar-color="dark">
 <head>
     <meta charset="utf-8" />
-    <title>Error Page | 404 | Page not Found | Ubold - Responsive Bootstrap 5 Admin Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
+    <title>Error Page | 404 |  Premium Leather Jackets for Men & Women | Premium Leather Style</title>
+    <title></title>
+
+    <meta name="description" content="Explore a wide range of premium leather jackets. Discover stylish and durable outerwear designed for men and women. Shop now and elevate your fashion with our top-quality leather jackets.">
+
+    <meta name="keywords" content="leather jackets, premium jackets, men's jackets, women's jackets, stylish outerwear, durable jackets, fashion, leatherwear">
+
+    <meta name="author" content="Premium Leather Style">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.premiumleatherstyle.com/">
 
     <!-- App favicon -->
-<link rel="shortcut icon" href="{{ asset('images/') }}" type="image/x-icon">
+<link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
 
     <!-- Theme Config Js -->
     <script src="{{ asset('assets/js/head.js') }}"></script>

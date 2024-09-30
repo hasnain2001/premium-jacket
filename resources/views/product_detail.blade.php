@@ -1,9 +1,17 @@
-<!DOCTYPE html>
+<?php
+header("X-Robots-Tag:index, follow");?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Detail</title>
+    <title>{{ $product->title }}</title>
+    <link rel="canonical" href="https://www.premiumleatherstyle.com/product/{{ Str::slug($product->slug) }}">
+         <meta name="description" content="{!! $product->meta_description !!}">
+
+  <meta name="keywords" content="{!! $product->meta_keyword !!}">
+    <meta name="author" content="john">
+  <meta name="robots" content="index, follow">
+
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -182,7 +190,20 @@
     background-color: #0056b3;
 }
 
-    </style>
+                                    .product-color {
+                                        width: 50px;
+                                        height: 50px;
+                                        cursor: pointer;
+                                        border: 2px solid transparent;
+                                        border-radius: 50%;
+                                    }
+
+                                    .product-color.active {
+                                        border: 2px solid black;
+                                    }
+
+
+        </style>
     @livewireStyles
 </head>
 <body>
@@ -323,22 +344,41 @@
                                 <h5 class="">Colors</h5>
                                 <hr>
                                 <div class="image-selector">
-                                    <img src="{{ asset('images/black.jfif') }}" class="product-color active" alt="black" data-color="black">
-                                    <img src="{{ asset('images/brown.png') }}" class="product-color" alt="brown" data-color="brown">
-                                    <select name="color" class="form-select" aria-label="Default select example" required style="width: 100px;">
-                                        <option value="black">Black</option>
-                                        <option value="brown">Brown</option>
-                                    </select>
+                                    <!-- Color options as images -->
+                                    <img src="{{ asset('images/black.jfif') }}" class="product-color active" alt="black" data-color="black" onclick="selectColor('black')">
+                                    <img src="{{ asset('images/brown.png') }}" class="product-color" alt="brown" data-color="brown" onclick="selectColor('brown')">
+
+                                    <!-- Hidden input to store the selected color value -->
+                                    <input type="hidden" id="selected-color" name="color" value="black"> <!-- Default value -->
                                 </div>
+
+                                <script>
+                                    // Function to select color when an image is clicked
+                                    function selectColor(color) {
+                                        // Set the hidden input's value to the selected color
+                                        document.getElementById('selected-color').value = color;
+
+                                        // Remove 'active' class from all images
+                                        var colorImages = document.querySelectorAll('.product-color');
+                                        colorImages.forEach(function(img) {
+                                            img.classList.remove('active');
+                                        });
+
+                                        // Add 'active' class to the clicked image
+                                        document.querySelector('img[data-color="' + color + '"]').classList.add('active');
+                                    }
+                                </script>
+
+
 
                                 <hr>
                                 <h5 class="">Sizes</h5>
                                 <select name="size" class="form-select" aria-label="Default select example" required>
                                     <option selected disabled value="">Select Size</option>
-                                    <option value="S">S (US 4-6)</option>
-                                    <option value="M">M (US 8-10)</option>
-                                    <option value="L">L (US 12-14)</option>
-                                    <option value="XL">XL (US 16-18)</option>
+                                    <option value="S (US 4-6)">S (US 4-6)</option>
+                                    <option value="M (US 8-10)">M (US 8-10)</option>
+                                    <option value="L (US 12-14)">L (US 12-14)</option>
+                                    <option value="XL (US 16-18)">XL (US 16-18)</option>
                                     <option value="2XL">2XL</option>
                                     <option value="3XL">3XL</option>
                                     <option value="4XL">4XL</option>
@@ -355,10 +395,10 @@
                                         <button type="submit" class="btn-cart">Add to Cart</button>
                                     </form>
 
-                                    <form action="{{ route('wishlist.add', $product->id) }}" method="POST">
+                                    {{-- <form action="{{ route('wishlist.add', $product->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-dark ">Add to Wishlist</button>
-                                    </form>
+                                    </form> --}}
                                 </div>
 
 

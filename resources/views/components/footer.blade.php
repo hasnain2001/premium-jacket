@@ -64,7 +64,6 @@
         </div>
     </div>
 </footer>
-
-<script src="{{ asset('bootstrap-5.0.2/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('bootstrap-5.0.2/js/bootstrap.min.js') }}"></script>
 </body>
 </html>

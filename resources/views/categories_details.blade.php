@@ -105,5 +105,6 @@ header("X-Robots-Tag:index, follow");?>
 <footer>
     @include('components.footer')
 </footer>
+
 </body>
 </html>

@@ -16,6 +16,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Frontend\WishListController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\CheckoutController;
 
 
 
@@ -23,6 +24,16 @@ use App\Http\Controllers\SearchController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/session', function () {
+    $session = session()->all();
+    echo '<pre>';
+    print_r($session);
+    echo '</pre>';
+});
+Route::get('/session-destroy', function () {
+    session()->flush();
+    return redirect()->back()->with('success', 'Product deletted Successfully');
+})->name('destroy-session');
 
 
 
@@ -41,14 +52,19 @@ Route :: prefix('admin')->name('admin.')->group(function( ){
         Route::post('/login', [AdminLoginController::class, 'login'])->name('login.submit');
     });
 
-
-
     Route:: middleware(['auth',AdminMiddleware::class])->group(function(){
     Route::get('/home', [AdminHomeController::class, 'index'])->name('home');
 });
 }) ;
 
 Auth::routes();
+
+
+Route::get('/checkouts', [CheckoutController::class, 'index'])->name('checkout');
+
+
+
+
 Route::get('/search', [SearchController::class, 'searchResults'])->name('search.index');
 Route::get('/autocomplete', [SearchController::class, 'autocomplete'])->name('search.autocomplete');
 
@@ -68,17 +84,16 @@ Route::get('/blog/{slug}',  'blog_show')->name('blog-details');});
 
 
 
+Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+        Route::delete('/cart/remove/{product}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+        Route::put('/cart/update/{productId}', [CartController::class, 'update'])->name('cart.update');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home')
     ->middleware(UserMiddleware::class);
 
     Route::middleware('auth')->group(function () {
 
-
-        Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
-        Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-        Route::delete('/cart/remove/{product}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-        Route::put('/cart/update/{productId}', [CartController::class, 'update'])->name('cart.update');
         Route::get('/wishlist', [App\Http\Controllers\Frontend\WishListController::class, 'showWishlist'])->name('wishlist.index');
         Route::post('/wishlist/add/{product}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
         Route::delete('/wishlist/remove/{product}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');

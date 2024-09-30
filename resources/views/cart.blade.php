@@ -28,7 +28,8 @@
 
 <div class="container mt-4">
     <h1>Your Cart</h1>
-    @if($cartItems->isEmpty())
+
+    @if((is_object($cartItems) && $cartItems->isEmpty()) || (is_array($cartItems) && empty($cartItems)))
     <div class="alert alert-warning text-center">
         <h4 class="alert-heading">Your Cart is Empty</h4>
         <p>It looks like you haven't added anything to your cart yet. Start shopping to fill it up!</p>
@@ -64,7 +65,6 @@
 
                     <tr>
                         <td>
-
                             @php
                                 $images = json_decode($item->product->productimage);
                             @endphp
@@ -76,29 +76,26 @@
                         </td>
                         <td>{{ $item->product->name }}</td>
                         <td>
-                            <form action="{{ route('cart.update', $item->product_id) }}" method="POST" class="d-inline">
-                                @csrf
+                            {{-- <form action="{{ route('cart.update', $item->product_id) }}" method="POST" class="d-inline">
+                                @csrf --}}
                                 @method('Put')
-                                <input type="number" name="quantity" value="{{ $item->quantity }}" min="1" max="{{ $item->product->quantity }}" class="form-control d-inline" style="width: 80px;">
+                           {{$item->quantity}}
                         </td>
                         <td>{{ $item->size }}</td>
-                        <td>
-
-                            <input type="hidden" name="color" value="{{ $item->color }}">
-
-                        </td>
                         <td>{{ $item->color }}</td>
                         <td>${{ number_format($item->product->price, 2) }}</td>
                         <td>${{ number_format($itemTotal, 2) }}</td>
                         <td>
-                            <button type="submit" class="btn btn-primary btn-sm mt-2">Update</button>
-                        </form>
+                            {{-- <button type="submit" class="btn btn-primary btn-sm mt-2">Update</button>
+                        </form> --}}
+                        {{-- <form action="{{ route('cart.remove', ['product' => $item->product->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                        </form> --}}
+                        <a href="{{route('destroy-session')}}"><button type="submit" class="btn btn-danger btn-sm">Remove</button></a>
 
-                            <form action="{{ route('cart.remove', $item->product_id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                            </form>
+
                         </td>
                     </tr>
                 @endforeach
@@ -117,9 +114,26 @@
             </tfoot>
         </table>
     @endif
+    <div class="container mt-4">
+        <!-- Existing Cart Table Code -->
+        @if(empty($cartItems))
+        <div class="alert alert-danger text-center">
+            Your cart is empty. Please add products to proceed to checkout.
+        </div>
+    @else
+        <a href="{{ route('checkout') }}" class="text-center btn btn-success btn-sm">Proceed to Checkout</a>
+    @endif
+
+
+
+    </div>
 </div>
 
+    </div>
 
+</div>
+
+<br>
     <footer>
         @include('components.footer')
     </footer>

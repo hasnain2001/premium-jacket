@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ asset('cssfile/home.css') }}">
 
 <style>
-@import url(https://fonts.googleapis.com/css?family=Lato:100&display=swap);.button-read,.center{display:flex;position:relative}.button-read,.button-read:hover{text-decoration:none;color:#fff}.center{width:180px;height:60px;justify-content:center;align-items:center}.button-read{justify-content:center;align-items:center;width:140px;height:40px;cursor:pointer;background:brown;border:2px solid #fff;border-radius:20px;outline:0;font-size:18px;font-weight:700;overflow:hidden;transition:background 3.3s,color .3s}.button-read:hover{background:#951d1d}.button-read svg{position:absolute;left:0;top:0;width:100%;height:100%;fill:none;stroke:#fff;stroke-width:2;stroke-dasharray:150 480;stroke-dashoffset:150;transition:stroke-dashoffset 3.4s ease-in-out}.button-read:hover svg{stroke-dashoffset:-480}.button-read span{position:relative;z-index:1}.product-img-container{overflow:hidden;height:200px}.product-img{padding:10px;height:100%;width:auto;object-fit:cover;object-position:center}.card-img{border-radius:5%}
+@import url(https://fonts.googleapis.com/css?family=Lato:100&display=swap);.button-read,.center{display:flex;position:relative}.button-read,.button-read:hover{text-decoration:none;color:#fff}.center{width:180px;height:60px;justify-content:center;align-items:center}.button-read{justify-content:center;align-items:center;width:140px;height:40px;cursor:pointer;background:brown;border:2px solid #fff;border-radius:20px;outline:0;font-size:18px;font-weight:700;overflow:hidden;transition:background 3.3s,color .3s}.button-read:hover{background:#951d1d}.button-read svg{position:absolute;left:0;top:0;width:100%;height:100%;fill:none;stroke:#fff;stroke-width:2;stroke-dasharray:150 480;stroke-dashoffset:150;transition:stroke-dashoffset 3.4s ease-in-out}.button-read:hover svg{stroke-dashoffset:-480}.button-read span{position:relative;z-index:1}.product-img-container{overflow:hidden;height:300px}.product-img{padding:10px;height:100%;width:auto;object-fit:cover;object-position:center}.card-img{border-radius:5%}
 
 
 </style>
@@ -138,76 +138,76 @@
     </div>
 
     <!-- Check if there are no products -->
-    @if ($products->isEmpty())
-        <div class="alert alert-warning" role="alert">
-            <h4 class="alert-heading">Sorry!</h4>
-            <p>No products available at the moment. Please check back later.</p>
-            <hr>
-            <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
+@if ($products->isEmpty())
+    <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">Sorry!</h4>
+        <p>No products available at the moment. Please check back later.</p>
+        <hr>
+        <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
+    </div>
+@else
+    <!-- Carousel for displaying products -->
+    <div id="storeCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            @foreach ($products->chunk(3) as $key => $chunk)
+                <button type="button" data-bs-target="#storeCarousel" data-bs-slide-to="{{ $key }}" class="bg-dark {{ $key === 0 ? 'active' : '' }}" aria-current="{{ $key === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $key + 1 }}"></button>
+            @endforeach
         </div>
-    @else
-        <!-- Carousel for displaying products -->
-        <div id="storeCarousel" class="carousel slide" data-bs-ride="carousel">
-            <!-- Carousel Indicators -->
-            <div class="carousel-indicators">
-                @foreach ($products->chunk(3) as $key => $chunk)
-                    <button type="button" data-bs-target="#storeCarousel" data-bs-slide-to="{{ $key }}" class="bg-dark {{ $key === 0 ? 'active' : '' }}" aria-current="{{ $key === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $key + 1 }}"></button>
-                @endforeach
-            </div>
 
-            <!-- Carousel Inner -->
-            <div class="carousel-inner">
-                <!-- Loop through products in chunks of 3 -->
-                @foreach ($products->chunk(3) as $key => $chunk)
-                    <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                        <div class="row">
-                            <!-- Loop through each product in the chunk -->
-                            @foreach ($chunk as $product)
-                                <div class="col-md-4 mb-4 d-flex justify-content-center">
-                                    <div class="card product-card shadow" style="width: 18rem;">
-                                        @php
-                                            $images = json_decode($product->productimage);
-                                        @endphp
-                                        <!-- Display product image with cropped view -->
-                                        @if(is_array($images) && !empty($images))
-                                            <div class="product-img-container">
-                                                <img src="{{ asset($images[0]) }}" alt="Product Image" class="card-img-top product-img text-center" style="" loading="lazy">
-                                            </div>
-                                        @else
-                                            <div class="product-img-container">
-                                                <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="card-img-top img-fluid" loading="lazy">
-                                            </div>
-                                        @endif
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $product->name }}</h5>
-                                            <b>${{ number_format($product->price, 2) }} USD</b>
-                                            @if($product->offprice)
-                                                <span class="text-muted me-2">
-                                                    <del>${{ number_format($product->offprice, 2) }} USD</del>
-                                                </span>
-                                            @endif
+        <!-- Carousel Inner -->
+        <div class="carousel-inner">
+            <!-- Loop through products in chunks of 3 -->
+            @foreach ($products->chunk(3) as $key => $chunk)
+                <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                    <div class="row">
+                        <!-- Loop through each product in the chunk -->
+                        @foreach ($chunk as $product)
+                            <div class="col-12 col-sm-6 col-md-4 mb-4 d-flex justify-content-center">
+                                <div class="card product-card shadow" style="width: 18rem;">
+                                    @php
+                                        $images = json_decode($product->productimage);
+                                    @endphp
+                                    <!-- Display product image with cropped view -->
+                                    @if(is_array($images) && !empty($images))
+                                        <div class="product-img-container">
+                                            <img src="{{ asset($images[0]) }}" alt="Product Image" class="card-img-top product-img text-center" style="" loading="lazy">
                                         </div>
-                                        <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-dark">View Product</a>
+                                    @else
+                                        <div class="product-img-container">
+                                            <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="card-img-top img-fluid" loading="lazy">
+                                        </div>
+                                    @endif
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                        <b>${{ number_format($product->price, 2) }} USD</b>
+                                        @if($product->offprice)
+                                            <span class="text-muted me-2">
+                                                <del>${{ number_format($product->offprice, 2) }} USD</del>
+                                            </span>
+                                        @endif
                                     </div>
+                                    <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-dark">View Product</a>
                                 </div>
-                            @endforeach
-                        </div>
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
-            </div>
-
-            <!-- Carousel controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#storeCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#storeCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+                </div>
+            @endforeach
         </div>
-    @endif
-</div>
+
+        <!-- Carousel controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#storeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#storeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+@endif
+
 
 
    <!-- store slider end -->

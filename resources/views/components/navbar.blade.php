@@ -13,9 +13,122 @@
     <link rel="stylesheet" href="{{ asset('cssfile/navbar.css') }}">
 
     <style>
-nav{background-color:#690500;height:150px;width:100%}.navbar-custom .auth,.navbar-custom .icon-cart,.navbar-custom .nav-link,.navbar-custom .search-button{color:#fff!important}.navbar-brand{position:absolute;left:50%;transform:translateX(-50%)}.navbar-collapse{justify-content:space-between}.nav-item{font-family:Arial,Helvetica,sans-serif;font-weight:700;padding-right:15px;margin-right:10px}.nav-item.dropdown:hover .dropdown-menu{display:block;margin-top:0;background-color:#0c0c0c}.dropdown-item:hover{background-color:#0c0c0c;color:#fff}.search-container .search-input{width:300px}.search-container .search-button{border:none;background:0 0;color:#fff}.bg{background-color:transparent}#autocomplete-results{border:1px solid #ccc;border-radius:4px;background-color:#fff;max-height:200px;overflow-y:auto;z-index:1000;position:absolute;width:200px}#autocomplete-results .list-group-item{cursor:pointer}#autocomplete-results .list-group-item:hover{background-color:#f1f1f1}@media (max-width:768px){nav{height:auto}.navbar-brand{position:static;transform:none}.navbar-right{flex-direction:column;align-items:flex-start}}
-#myBtn,.loader{position:fixed}::-webkit-scrollbar{width:20px}::-webkit-scrollbar-track{box-shadow:inset 0 0 5px grey;border-radius:10px}::-webkit-scrollbar-thumb{background:#990c0c;border-radius:10px}::-webkit-scrollbar-thumb:hover{background:#ca3b3b}.loader{width:120px;height:20px;background:linear-gradient(#990c0c 0 0) 0/0 no-repeat #ddd;animation:2s linear infinite l1;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999}@keyframes l1{100%{background-size:100%}}#myBtn{display:none;bottom:20px;right:30px;z-index:99;border:none;outline:0;background-color:#990c0c;color:#fff;cursor:pointer;padding:15px;border-radius:10px;font-size:18px}#myBtn:hover{background-color:#555}
+        nav {
+            background-color: #690500;
+            height: 150px;
+            width: 100%;
+        }
+        .navbar-custom .nav-link {
+            color: #fff !important;
+        }
+        .navbar-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
+        .navbar-collapse {
+            justify-content: space-between;
+        }
+
+        .nav-item {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 700;
+            padding-right: 15px;
+            margin-right: 10px;
+        }
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block; /* Show dropdown on hover */
+        }
+
+
+        .search-container .search-input {
+            width: 300px;
+        }
+        .search-container .search-button {
+            border: none;
+            background: 0 0;
+            color: #fff;
+        }
+        #autocomplete-results {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            position: absolute;
+            width: 200px;
+        }
+        #autocomplete-results .list-group-item {
+            cursor: pointer;
+        }
+        #autocomplete-results .list-group-item:hover {
+            background-color: #f1f1f1;
+        }
+        #myBtn,
+.loader {
+    position: fixed;
+}
+::-webkit-scrollbar {
+    width: 20px;
+}
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #990c0c;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ca3b3b;
+}
+.loader {
+    width: 120px;
+    height: 20px;
+    background: linear-gradient(#990c0c 0 0) 0/0 no-repeat #ddd;
+    animation: 2s linear infinite l1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+@keyframes l1 {
+    100% {
+        background-size: 100%;
+    }
+}
+#myBtn {
+    display: none;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: 0;
+    background-color: #990c0c;
+    color: #fff;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+#myBtn:hover {
+    background-color: #555;
+}
+        @media (max-width: 768px) {
+            nav {
+                height: auto;
+            }
+            .navbar-brand {
+                position: static;
+                transform: none;
+            }
+            .navbar-right {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
     </style>
 </head>
 <body>
@@ -31,13 +144,13 @@ nav{background-color:#690500;height:150px;width:100%}.navbar-custom .auth,.navba
             <ul class="navbar-nav me-auto left-items">
                 @foreach ($genders as $gender)
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{{ route('gender_details', ['name' => Str::slug($gender->name)]) }}" id="navbarDropdown{{ $gender->id }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown{{ $gender->id }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ $gender->name }}
                     </a>
                     @if(isset($categoriesByGender[$gender->name]) && $categoriesByGender[$gender->name]->isNotEmpty())
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown{{ $gender->id }}">
+                        <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown{{ $gender->id }}">
                             @foreach ($categoriesByGender[$gender->name] as $category)
-                                <li><a href="{{ route('category_details', ['slug' => Str::slug($category->slug)]) }}" class="dropdown-item text-white">{{ $category->title }}</a></li>
+                                <li><a href="{{ route('category_details', ['slug' => Str::slug($category->slug)]) }}" class="dropdown-item text-white ">{{ $category->title }}</a></li>
                             @endforeach
                         </ul>
                     @endif
@@ -59,7 +172,6 @@ nav{background-color:#690500;height:150px;width:100%}.navbar-custom .auth,.navba
                     </button>
                 </div>
 
-                </div>
                 @if (Route::has('login'))
                     @auth
                         <a href="{{ Auth::user()->is_admin ? url('/admin/home') : url('/home') }}" class="btn btn-sm text-white">
@@ -78,71 +190,64 @@ nav{background-color:#690500;height:150px;width:100%}.navbar-custom .auth,.navba
                     @endauth
                 @endif
 
-
-
                 <a class="icon-cart" href="{{ route('cart.index') }}">
                     <i class="fas fa-shopping-cart"></i>
-                </a>
-                <a class="icon-cart" href="{{ route('wishlist.index') }}">
-                    <i class="fas fa-heart"></i>
                 </a>
             </div>
         </div>
     </nav>
 
-           <!-- Search Modal -->
-           <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content bg">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-white" id="searchModalLabel">Search</h5>
-                        <button type="button" class="btn-close text-white "data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('search.index') }}" method="GET">
-                            <input id="search-input" class="form-control search-input" type="search" name="query" placeholder="Search">
-                            <ul id="autocomplete-results" class="list-group"></ul>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-dark text-white" data-bs-dismiss="modal">Close</button>
-                    </div>
+    <!-- Search Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg">
+                <div class="modal-header">
+                    <h5 class="modal-title text-white" id="searchModalLabel">Search</h5>
+                   
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('search.index') }}" method="GET">
+                        <input id="search-input" class="form-control search-input" type="search" name="query" placeholder="Search">
+                        <ul id="autocomplete-results" class="list-group"></ul>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark text-white" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-        <button onclick="topFunction()" id="myBtn" title="Go to top"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
-          </svg>
+    </div>
 
-           </button>
-           <div id="loader" class="loader"></div>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+        </svg>
+    </button>
+    <div id="loader" class="loader"></div>
 
     <script>
+        // Hide the loader once the page is fully loaded
+        window.addEventListener('load', function() {
+            var loader = document.getElementById('loader');
+            loader.style.display = 'none';
+        });
 
-     // Hide the loader once the page is fully loaded
-     window.addEventListener('load', function() {
-       var loader = document.getElementById('loader');
-       loader.style.display = 'none';
-     });
+        // Scroll to top button functionality
+        let mybutton = document.getElementById("myBtn");
+        window.onscroll = function() { scrollFunction() };
 
-    let mybutton = document.getElementById("myBtn");
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
 
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollFunction()};
-
-function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    mybutton.style.display = "block";
-  } else {
-    mybutton.style.display = "none";
-  }
-}
-
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-  document.body.scrollTop = 0; // For Safari
-  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-}
+        function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+        }
     </script>
 </body>
 </html>

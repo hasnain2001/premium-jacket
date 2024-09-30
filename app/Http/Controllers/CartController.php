@@ -4,44 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Models\Cart;
-use App\Models\Gender;
 use App\Models\Categories;
+use App\Models\Gender;
+use App\Models\Product;
 
 class CartController extends Controller
 {
     public function add(Request $request, $productId)
     {
-        $user = auth()->user();
         $size = $request->input('size');
         $color = $request->input('color');
+        $quantity = $request->input('quantity');
 
-        $cart = Cart::where('user_id', $user->id)
-                    ->where('product_id', $productId)
-                    ->where('size', $size)
-                    ->where('color', $color)
-                    ->first();
+        $cart = session()->get('cart', []);
 
-        if ($cart) {
-            $cart->quantity += $request->input('quantity');
-            $cart->save();
+        $cartKey = $productId . '-' . $size . '-' . $color;
+
+        if (isset($cart[$cartKey])) {
+                $cart[$cartKey]['quantity'] += $quantity;
         } else {
-            Cart::create([
-                'user_id' => $user->id,
+
+            $cart[$cartKey] = [
                 'product_id' => $productId,
-                'quantity' => $request->input('quantity'),
+                'quantity' => $quantity,
                 'size' => $size,
                 'color' => $color,
-            ]);
+            ];
         }
+
+        session()->put('cart', $cart);
 
         return redirect()->back()->with('success', 'Product added to cart!');
     }
 
-
     public function update(Request $request, $productId)
     {
-        $user = auth()->user();
         $quantity = $request->input('quantity');
         $size = $request->input('size');
         $color = $request->input('color');
@@ -51,58 +48,78 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Quantity must be at least 1.');
         }
 
-        // Find the cart item
-        $cart = Cart::where('user_id', $user->id)
-                    ->where('product_id', $productId)
-                    ->where('size', $size)
-                    ->where('color', $color)
-                    ->first();
+        // Update for guests
+        $cart = session()->get('cart', []);
+        $cartKey = $productId . '-' . $size . '-' . $color;
 
-
-        Log::info('Updating cart item:', [
-            'user_id' => $user->id,
-            'product_id' => $productId,
-            'size' => $size,
-            'color' => $color,
-            'quantity' => $quantity,
-            'cart' => $cart
-        ]);
-
-        // Update cart item
-        if ($cart) {
-            $cart->quantity = $quantity;
-            $cart->save();
+        if (isset($cart[$cartKey])) {
+            $cart[$cartKey]['quantity'] = $quantity; // Update quantity
+            session()->put('cart', $cart); // Save updated cart to session
             return redirect()->route('cart.index')->with('success', 'Cart updated successfully!');
         } else {
-            // Handle case where cart item is not found
             return redirect()->route('cart.index')->with('error', 'Cart item not found.');
         }
     }
 
+ // app/Http/Controllers/CartController.php
 
-    public function index()
-    {
-        $user = auth()->user();
-        $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
-        $genders = Gender::all();
-        foreach ($genders as $gender) {
-            $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-        }
+public function index()
+{
+    $cartItems = [];
+    $genders = Gender::all();
+    $categoriesByGender = [];
 
-        return view('cart', compact('cartItems', 'genders','categoriesByGender'));
+    // Fetch categories by gender
+    foreach ($genders as $gender) {
+        $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
     }
 
-    public function removeFromCart($productId)
-    {
-        $cartItem = Cart::where('user_id', auth()->id())
-                        ->where('product_id', $productId)
-                        ->first();
-
-        if ($cartItem) {
-            $cartItem->delete();
+    if (auth()->check()) {
+        // Logged-in user: Fetch cart items from the database
+        $cartItems = Cart::where('user_id', auth()->id())->get();
+    } else {
+        // Guest user: Fetch cart items from the session
+        $cartSession = session()->get('cart', []);
+        foreach ($cartSession as $cartData) {
+            $product = Product::find($cartData['product_id']); // Fetch product details
+            if ($product) {
+                $cartItems[] = (object)[
+                    'product' => $product,
+                    'quantity' => $cartData['quantity'],
+                    'size' => $cartData['size'],
+                    'color' => $cartData['color'],
+                ];
+            }
         }
-
-        return redirect()->route('cart.index')->with('success', 'Product removed from cart!');
     }
 
+    return view('cart', compact('cartItems', 'genders', 'categoriesByGender'));
 }
+
+
+    public function removeFromCart(Request $request, $productId)
+    {
+
+        $product = $request->input('product_id');
+        $quantity = $request->input('quantity');
+        $size = $request->input('size');
+        $color = $request->input('color');
+
+        $cart = session()->get('cart', []);
+
+        $cartKey = $productId . '-' . $size . '-' . $color;
+
+             if (isset($cart[$cartKey])) {
+
+            unset($cart[$cartKey]);
+            session()->put('cart', $cart);
+
+            return redirect()->back()->with('success', 'Product removed from cart!');
+        }
+
+        return redirect()->back()->with('error', 'Product not found in cart!');
+    }
+}
+
+
+

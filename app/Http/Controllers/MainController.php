@@ -25,11 +25,7 @@ class MainController extends Controller
             $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
         }
 
-        return view('404', [
-            'products' => $products,
-            'blogs' => $blogs,
-            'genders' => $genders,
-            'categoriesByGender' => $categoriesByGender
+ return view('404', ['products' => $products, 'blogs' => $blogs, 'genders' => $genders,'categoriesByGender' => $categoriesByGender
         ]);
     }
 
