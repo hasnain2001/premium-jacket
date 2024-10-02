@@ -7,7 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Dashboard</title>
+    <title>@yield('datatable-title')  </title>
+    <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -159,7 +160,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="{{route('admin.home')}}" class="menu-link">
+                                <a href="{{route('admin.order')}}" class="menu-link">
                                     <span class="menu-text">Orders</span>
                                 </a>
                             </li>

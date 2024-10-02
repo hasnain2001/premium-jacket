@@ -1,6 +1,6 @@
 @extends('admin.layouts.guest')
 @section('datatable-title')
-    create
+    Product
 @endsection
 @section('main-content')
 

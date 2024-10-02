@@ -14,7 +14,7 @@ class Categories extends Model
         'meta_tag',
         'meta_keyword',
         'meta_description',
-      'gender',
+        'gender',
         'authentication',
     ];
 }

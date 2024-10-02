@@ -135,7 +135,7 @@
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="{{route('admin.home')}}" class="menu-link">
+                                    <a href="{{route('admin.order')}}" class="menu-link">
                                         <span class="menu-text">Orders</span>
                                     </a>
                                 </li>

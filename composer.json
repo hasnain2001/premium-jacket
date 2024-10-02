@@ -12,7 +12,8 @@
         "laravel/socialite": "*",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",
-        "livewire/livewire": "^3.5"
+        "livewire/livewire": "^3.5",
+        "stripe/stripe-php": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

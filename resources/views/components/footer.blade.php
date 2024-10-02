@@ -30,9 +30,8 @@
         }
         .footer a:hover {
             text-decoration: none;
-            color: #ccc;
-            background-color: rgb(129, 119, 119);
-        }
+            color: #181414;
+               }
         .social-icons a {
             display: inline-block;
             margin-right: 15px;
@@ -41,7 +40,8 @@
             transition: color 0.3s;
         }
         .social-icons a:hover {
-            color: #ddd;
+            color: #050505;
+
         }
         .logofooter {
             max-width: 150px;
@@ -55,6 +55,7 @@
     </style>
 </head>
 <body>
+    <br>
 <!-- Footer -->
 <footer class="footer pt-5 pb-6">
     <div class="container">

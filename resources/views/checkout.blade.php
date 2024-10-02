@@ -10,6 +10,26 @@
 </style>
 <div class="container mt-4">
     <h1>Checkout</h1>
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="position: relative; padding: 15px; font-size: 16px; border-radius: 5px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+        <i class="fa fa-check-circle" style="margin-right: 10px;"></i>
+        <strong>Success!</strong> {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="position: absolute; right: 15px; top: 15px;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger" style="padding: 15px; font-size: 16px; border-radius: 5px; box-shadow: 0 4px 12px rgba(255, 0, 0, 0.1);">
+        <strong>Error!</strong> Please fix the following issues:
+        <ul style="margin-top: 10px;">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <div class="row">
         <!-- Left side - Checkout Form -->
@@ -21,8 +41,7 @@
             </div>
 
             <hr />
-
-            {{-- <form method="POST" action="{{ route('checkout.store') }}"> --}}
+            <form action="{{ route('checkout.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Contact Information -->
@@ -286,6 +305,7 @@
                     </select>
 
 
+
                 </div>
 
                 <div class="form-row">
@@ -311,7 +331,7 @@
                     </div>
                     <div class="col">
                         <label for="state">State</label>
-                        <input type="text" name="State" class="form-control" id="city" placeholder="define your State" required>
+                        <input type="text" name="state" class="form-control" id="city" placeholder="define your State" required>
                     </div>
                     <div class="col">
                         <label for="zip">ZIP Code</label>
@@ -345,7 +365,7 @@
                         Credit/Debit Card
                     </label>
                 </div>
-                <div class="form-row">
+                {{-- <div class="form-row">
                     <div class="col">
                         <input type="text" class="form-control" placeholder="Card number" required>
                     </div>
@@ -355,7 +375,7 @@
                     <div class="col">
                         <input type="text" class="form-control" placeholder="CVC" required>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-check mt-3">
                     <input class="form-check-input" type="radio" name="payment_option" id="paypal" value="paypal">
@@ -363,6 +383,12 @@
                         PayPal
                     </label>
                 </div>
+                @foreach($cartItems as $item)
+                <input type="hidden" name="items[{{ $loop->index }}][product_id]" value="{{ $item->product->id }}">
+                <input type="hidden" name="items[{{ $loop->index }}][quantity]" value="{{ $item->quantity }}">
+                <input type="hidden" name="items[{{ $loop->index }}][price]" value="{{ $item->product->price }}">
+            @endforeach
+
 
                 <!-- Place Order Button -->
                 <button type="submit" class="btn btn-primary mt-4">Place Order</button>

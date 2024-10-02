@@ -32,7 +32,7 @@ Route::get('/session', function () {
 });
 Route::get('/session-destroy', function () {
     session()->flush();
-    return redirect()->back()->with('success', 'Product deletted Successfully');
+    return redirect()->back()->with('success', 'Product deleted Successfully');
 })->name('destroy-session');
 
 Route::get('/contact', function () {
@@ -40,12 +40,6 @@ Route::get('/contact', function () {
 })->name('contact');
 
 
-
-
-
-Route::prefix('admin')->group(function () {
-
-});
 
 Route :: prefix('admin')->name('admin.')->group(function( ){
 
@@ -61,8 +55,15 @@ Route :: prefix('admin')->name('admin.')->group(function( ){
 
 Auth::routes();
 
+Route::controller(CheckoutController::class)->group(function (){
+    Route::get('/checkouts', 'index')->name('checkout');
+    Route::post('/checkouts/store',  'store')->name('checkout.store');
+    Route::get('/checkout/success/{order_number}', 'showSuccess')->name('checkout.success');
 
-Route::get('/checkouts', [CheckoutController::class, 'index'])->name('checkout');
+
+
+});
+
 
 
 
@@ -144,7 +145,14 @@ Route::controller(BlogController::class)->prefix('dashboard')->group(function ()
     Route::delete('/admin/Blog/{id}',  'destroy')->name('admin.blog.delete');
     Route::post('/blog/deleteSelected',  'deleteSelected')->name('admin.blog.deleteSelected');
     Route::delete('/blog/bulk-delete',  'deleteSelected')->name('admin.blog.bulkDelete');
-    Route::delete('/blog/bulk-delete', 'deleteSelected')->name('admin.blog.bulkDelete');});
+    Route::delete('/blog/bulk-delete', 'deleteSelected')->name('admin.blog.bulkDelete');
+});
+Route::controller(CheckoutController::class)->prefix('dashboard')->group(function () {
+
+    Route::get('/order', 'order')->name('admin.order');
+    Route::get('/order/{order_number}', 'orderdetail')->name('admin.order-detail');
+
+});
 });
 
 

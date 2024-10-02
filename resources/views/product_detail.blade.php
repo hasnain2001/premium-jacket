@@ -279,7 +279,7 @@ header("X-Robots-Tag:index, follow");?><!DOCTYPE html>
                             <h2 class="card-title">{{ $product->name }}</h2>
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <span class="text-dark text-uppercase">
-                                    {{ number_format((($product->offprice - $product->price) / $product->offprice) * 100, 2) }}% Off
+           {{ number_format((($product->offprice - $product->price) / $product->offprice) * 100, 2) }}% Off
                                     (Save ${{ number_format($product->offprice - $product->price, 2) }} USD)
                                 </span>
                                 <span class="text-right">
@@ -349,7 +349,7 @@ header("X-Robots-Tag:index, follow");?><!DOCTYPE html>
                                     <img src="{{ asset('images/brown.png') }}" class="product-color" alt="brown" data-color="brown" onclick="selectColor('brown')">
 
                                     <!-- Hidden input to store the selected color value -->
-                                    <input type="hidden" id="selected-color" name="color" value="black"> <!-- Default value -->
+                                    <input type="hidden" id="selected-color" name="color" value="black">
                                 </div>
 
                                 <script>
@@ -459,16 +459,6 @@ function toggleImage() {
 }
 
 
-    function selectColor(img) {
-        // Deselect all images
-        const colorImages = document.querySelectorAll('.product-color');
-        colorImages.forEach(image => {
-            image.classList.remove('active');
-        });
-
-        // Select the clicked image
-        img.classList.add('active');
-    }
 
 
 const imageSelector = document.querySelector('.image-selector');

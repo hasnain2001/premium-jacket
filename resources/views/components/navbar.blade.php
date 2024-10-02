@@ -133,6 +133,23 @@ width: 100%;
                 align-items: flex-start;
             }
         }
+        .icon-cart {
+    font-size: 24px; /* Increase icon size */
+    color: #ffffff; /* Set a default color for the icon */
+    transition: color 0.3s, transform 0.3s; /* Add transition for smooth hover effect */
+}
+
+.icon-cart:hover {
+    color: #302d2d; /* Change color on hover */
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.icon-cart .badge {
+    font-size: 14px; /* Adjust badge font size */
+    padding: 0.5em; /* Add some padding */
+    border-radius: 50%; /* Ensure the badge is circular */
+}
+
     </style>
 </head>
 <body>
@@ -194,9 +211,16 @@ width: 100%;
                     @endauth
                 @endif
 
-                <a class="icon-cart" href="{{ route('cart.index') }}">
+                <a class="icon-cart position-relative text-decoration-none" href="{{ route('cart.index') }}">
                     <i class="fas fa-shopping-cart"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{ $cartCount }}
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
                 </a>
+
+
+
             </div>
         </div>
     </nav>
@@ -230,6 +254,7 @@ width: 100%;
     <div id="loader" class="loader"></div>
 
     <script>
+
         // Hide the loader once the page is fully loaded
         window.addEventListener('load', function() {
             var loader = document.getElementById('loader');
