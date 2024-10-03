@@ -140,7 +140,7 @@
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{route('admin.home')}}" class="menu-link">
+                                    <a href="{{route('customer')}}" class="menu-link">
                                         <span class="menu-text">Customers</span>
                                     </a>
                                 </li>

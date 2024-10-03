@@ -86,7 +86,7 @@
                                     <span class="mdi mdi-star text-warning"></span>
                                     <span class="mdi mdi-star"></span>
                                 </p>
-                                <p class="mb-4"><a href="#" class="text-muted">( 36 Customer Reviews )</a></p>
+                                {{-- <p class="mb-4"><a href="#" class="text-muted">( 36 Customer Reviews )</a></p> --}}
                                 <h6 class="text-danger text-uppercase">
                                     {{ number_format((($product->offprice - $product->price) / $product->offprice) * 100, 2) }}% Off
                                     (Save ${{ number_format($product->offprice - $product->price, 2) }} USD)

@@ -441,9 +441,7 @@ header("X-Robots-Tag:index, follow");?><!DOCTYPE html>
         @include('components.footer')
     </footer>
 
-    @livewireScripts
-    <!-- Bootstrap JS and Custom Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
 function toggleImage() {
     var inchesImage = document.getElementById('inchesImage');

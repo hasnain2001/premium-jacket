@@ -18,6 +18,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\UsersController;
+
+
 
 
 
@@ -154,6 +157,12 @@ Route::controller(CheckoutController::class)->prefix('dashboard')->group(functio
 
     Route::get('/order', 'order')->name('admin.order');
     Route::get('/order/{order_number}', 'orderdetail')->name('admin.order-detail');
+
+});
+Route::controller(UsersController::class)->prefix('dashboard')->group(function () {
+Route::get('/customer', 'index')->name('customer');
+Route::get('/customer', 'index')->name('customer');
+Route::delete('/customer', 'destroy')->name('user.destroy');
 
 });
 });
