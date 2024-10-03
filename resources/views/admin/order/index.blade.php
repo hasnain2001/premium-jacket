@@ -13,7 +13,7 @@
                 <th>Order Number</th>
                 <th>Customer Name</th>
                 <th>Total Amount</th>
-                <th>Status</th>
+                <th>Payment/Status</th>
                 <th>Created At</th>
                 <th>Actions</th>
             </tr>

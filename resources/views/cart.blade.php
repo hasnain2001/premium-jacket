@@ -117,8 +117,8 @@
     <div class="container mt-4">
         <!-- Existing Cart Table Code -->
         @if(empty($cartItems))
-        <div class="alert alert-danger text-center">
-            Your cart is empty. Please add products to proceed to checkout.
+        <div class="alert alert-primary text-center">
+            Please add products to proceed to checkout.
         </div>
     @else
         <a href="{{ route('checkout') }}" class="text-center btn btn-success btn-sm">Proceed to Checkout</a>

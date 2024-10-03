@@ -5,7 +5,7 @@ header("X-Robots-Tag:index, follow");?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Premium Leather Jackets for Men & Women | Premium Leather Style</title>
+  <title> @yield('title') Premium Leather Jackets for Men & Women | Premium Leather Style</title>
 
 <meta name="description" content="Explore a wide range of premium leather jackets. Discover stylish and durable outerwear designed for men and women. Shop now and elevate your fashion with our top-quality leather jackets.">
 

@@ -30,8 +30,9 @@
         }
         .footer a:hover {
             text-decoration: none;
-            color: #181414;
-               }
+            color: #ccc;
+            background-color: rgb(129, 119, 119);
+        }
         .social-icons a {
             display: inline-block;
             margin-right: 15px;
@@ -40,8 +41,8 @@
             transition: color 0.3s;
         }
         .social-icons a:hover {
-            color: #050505;
-
+            background-color: transparent;
+            color: #1f1b1b;
         }
         .logofooter {
             max-width: 150px;
@@ -55,7 +56,6 @@
     </style>
 </head>
 <body>
-    <br>
 <!-- Footer -->
 <footer class="footer pt-5 pb-6">
     <div class="container">
@@ -105,7 +105,7 @@ Welcome to Hide Leather Style, your destination for premium leather jackets. Dis
 
         <div class="row mt-4">
             <div class="col text-center">
-                <p>developed by <a href="https://alphaisoft.com/" target="_blank" class="text-primary">alpha ai solution.</a></p>
+                <p>Developed By <a href="https://alphaisoft.com/" target="_blank" class="text-primary">alpha ai solution.</a></p>
             </div>
         </div>
     </div>

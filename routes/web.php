@@ -17,6 +17,7 @@ use App\Http\Controllers\Frontend\WishListController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\StripeController;
 
 
 
@@ -59,10 +60,12 @@ Route::controller(CheckoutController::class)->group(function (){
     Route::get('/checkouts', 'index')->name('checkout');
     Route::post('/checkouts/store',  'store')->name('checkout.store');
     Route::get('/checkout/success/{order_number}', 'showSuccess')->name('checkout.success');
-
-
-
 });
+Route::controller(StripeController::class)->group(function(){
+    Route::get('/stripe', 'stripe');
+    Route::post('/stripe', 'stripePost')->name('stripe.post');
+});
+
 
 
 

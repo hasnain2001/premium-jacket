@@ -5,7 +5,12 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Gender;
 use App\Models\Categories;
+use App\Models\Product;
+use App\Models\Cashier\User;
+use Laravel\Cashier\Cashier;
 use Illuminate\Support\Facades\Session;
+use App\Models\Cashier\Subscription;
+use App\Models\Cashier\SubscriptionItem;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,5 +50,8 @@ class AppServiceProvider extends ServiceProvider
       view()->share('categoriesByGender', $categoriesByGender);
       view()->share('cartCount', $cartCount);
       view()->share('cartItems', $cartItems); // Share cart items with all views
+      Cashier::calculateTaxes();
+      Cashier::useSubscriptionModel(Subscription::class);
+      Cashier::useSubscriptionItemModel(SubscriptionItem::class);
   }
 }

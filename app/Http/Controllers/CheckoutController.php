@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Gender;
 use App\Models\Product;
 use App\Models\Categories;
+use Stripe\Stripe;
+use Stripe\Charge;
+use Illuminate\Support\Facades\Session;
 
 
 class CheckoutController extends Controller
@@ -51,22 +54,17 @@ public function index()
     $subtotal = collect($cartItems)->sum(function($cartItem) {
         return $cartItem->product->price * $cartItem->quantity;
     });
-    $total = $subtotal; // Add taxes/shipping if necessary
+    $total = $subtotal;
 
     return view('checkout', compact('cartItems', 'subtotal', 'total', 'genders', 'categoriesByGender'));
 }
 
+
 public function store(Request $request)
 {
-    // Log request data
     Log::info('Checkout Request Data: ', $request->all());
 
-    // Check if items field is empty or null
-    if (empty($request->items) || count($request->items) === 0) {
-        return back()->withErrors(['error' => 'Please add some products to your cart before proceeding with checkout.']);
-    }
-
-    // Validate incoming request data
+    // Validate request data
     $request->validate([
         'email' => 'required|email',
         'first_name' => 'required|string|max:255',
@@ -77,16 +75,17 @@ public function store(Request $request)
         'zip' => 'required|string',
         'phone' => 'required|string|max:15',
         'country' => 'required|string',
-        'shipping_option' => 'required|string|in:free',
-        'payment_option' => 'required|string|in:credit_card,paypal',
+        'shipping_option' => 'nullable|string|in:free',
         'items' => 'required|array',
         'items.*.product_id' => 'required|exists:products,id',
         'items.*.price' => 'required|numeric',
         'items.*.quantity' => 'required|integer|min:1',
+
     ]);
 
-    // Begin transaction for order processing
+    // Start a transaction to handle the checkout
     DB::beginTransaction();
+
     try {
         // Calculate total amount
         $totalAmount = collect($request->items)->sum(function ($item) {
@@ -109,10 +108,10 @@ public function store(Request $request)
             'phone' => $request->phone,
             'country' => $request->country,
             'shipping_option' => $request->shipping_option,
-            'payment_option' => $request->payment_option,
+            'payment_option' => 'credit_card',
         ]);
 
-        // Create Order Items and update product quantity
+        // Create Order Items
         foreach ($request->items as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
@@ -121,27 +120,46 @@ public function store(Request $request)
                 'price' => $item['price'],
             ]);
 
-            // Update product quantity in the products table
+            // Decrement the product quantity
             $product = Product::find($item['product_id']);
-            if ($product) {
-                if ($product->quantity < $item['quantity']) {
-                    throw new \Exception('Insufficient quantity for product: ' . $product->name);
-                }
-
+            if ($product && $product->quantity >= $item['quantity']) {
                 $product->decrement('quantity', $item['quantity']);
+            } else {
+                throw new \Exception('Insufficient quantity for product: ' . $product->name);
             }
         }
 
-        // Commit the transaction
+
+
+        // Stripe Payment
+        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+        $getCardtoken = ($stripe);
+        $stripe->charges->create([
+            "amount" => $totalAmount * 100,
+            "currency" => "usd",
+            "source" => $getCardtoken->id,
+            "description" => "Order payment test purpose  from website",
+        ]);
+
+
+        $order->update(['status' => 'paid']);
+
+        // Commit transaction
         DB::commit();
+
+        // Success message
+        Session::flash('success', 'Payment and order successful!');
 
         return redirect()->route('checkout.success', ['order_number' => $order->order_number]);
 
+    } catch (\Stripe\Exception\CardException $e) {
+        DB::rollback();
+        Log::error('Stripe Error: ' . $e->getMessage());
+        return back()->withErrors(['error' => 'Payment failed: ' . $e->getMessage()]);
+
     } catch (\Exception $e) {
-        // Rollback the transaction on error
         DB::rollback();
         Log::error('Order Processing Error: ' . $e->getMessage());
-        Log::error($e->getTraceAsString()); // Log the stack trace for debugging
         return back()->withErrors(['error' => 'There was an error processing your order: ' . $e->getMessage()]);
     }
 }
