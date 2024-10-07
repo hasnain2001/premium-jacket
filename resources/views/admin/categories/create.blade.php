@@ -16,12 +16,15 @@
     <section class="content">
         <div class="container-fluid">
             @if(session('success'))
-                <div class="alert alert-success alert-dismissable">
-                    <i class="fa fa-ban"></i>
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <b>{{ session('success') }}</b>
-                </div>
-            @endif
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; position: relative; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 5px;">
+                <i class="fa fa-check-circle" style="margin-right: 8px;"></i>
+                <strong>{{ session('success') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="position: absolute; top: 10px; right: 10px;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        
             @if($errors->any())
             <div class="alert alert-danger">
                 <ul>

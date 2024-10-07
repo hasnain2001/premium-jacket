@@ -162,9 +162,11 @@ Route::controller(CheckoutController::class)->prefix('dashboard')->group(functio
 Route::controller(UsersController::class)->prefix('dashboard')->group(function () {
 Route::get('/customer', 'index')->name('customer');
 Route::get('/customer', 'index')->name('customer');
-Route::delete('/customer', 'destroy')->name('user.destroy');
+Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
 
 });
+
+
 });
 
 
