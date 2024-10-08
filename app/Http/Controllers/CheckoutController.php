@@ -80,10 +80,9 @@ public function store(Request $request)
         'items.*.product_id' => 'required|exists:products,id',
         'items.*.price' => 'required|numeric',
         'items.*.quantity' => 'required|integer|min:1',
-
+        // 'payment_method' => 'required|string', // Capture Stripe payment method ID
     ]);
 
-    // Start a transaction to handle the checkout
     DB::beginTransaction();
 
     try {
@@ -129,25 +128,19 @@ public function store(Request $request)
             }
         }
 
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
-
-        // Stripe Payment
-        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
-        $getCardtoken = ($stripe);
-        $stripe->charges->create([
-            "amount" => $totalAmount * 100,
+        $charge = \Stripe\Charge::create([
+            "amount" => $totalAmount * 100, // Amount in cents
             "currency" => "usd",
-            "source" => $getCardtoken->id,
-            "description" => "Order payment test purpose  from website",
+            "source" => $request->stripeToken,
+            "description" => "Order payment from premiumleather."
         ]);
+        
 
 
-        $order->update(['status' => 'paid']);
-
-        // Commit transaction
         DB::commit();
 
-        // Success message
         Session::flash('success', 'Payment and order successful!');
 
         return redirect()->route('checkout.success', ['order_number' => $order->order_number]);
@@ -156,13 +149,13 @@ public function store(Request $request)
         DB::rollback();
         Log::error('Stripe Error: ' . $e->getMessage());
         return back()->withErrors(['error' => 'Payment failed: ' . $e->getMessage()]);
-
     } catch (\Exception $e) {
         DB::rollback();
         Log::error('Order Processing Error: ' . $e->getMessage());
         return back()->withErrors(['error' => 'There was an error processing your order: ' . $e->getMessage()]);
     }
 }
+
 
 
 public function showSuccess($order_number)

@@ -117,8 +117,9 @@
                 <hr />
 
                 <!-- Checkout Form -->
-                <form action="{{ route('checkout.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+            
+<form id="payment-form" action="{{ route('checkout.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
 
                     <!-- Contact Information -->
                     <h4 class="mb-3">Contact Information</h4>
@@ -225,12 +226,12 @@
                         </div>
                     </div>
 
-                    <!-- Submit Button -->
-                    <div class="row mt-4">
-                        <div class="col-xs-12">
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now (${{ $total }})</button>
-                        </div>
-                    </div>
+                 <!-- Submit Button -->
+    <div class="row mt-4">
+        <div class="col-xs-12">
+            <button id="submit-button" class="btn btn-primary btn-lg btn-block" type="submit">Pay Now (${{ $total }})</button>
+        </div>
+    </div>
                 </form>
             </div>
         </div>
@@ -268,30 +269,65 @@
     </div>
 </div>
 
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    Stripe.setPublishableKey('{{ env("STRIPE_KEY") }}');
+<script src="https://js.stripe.com/v3/"></script>
 
-    $('#payment-form').submit(function(e) {
-        var $form = $(this);
-        if (!$form.data('cc-on-file')) {
-            e.preventDefault();
-            Stripe.createToken({
-                number: $('.card-number').val(),
-                cvc: $('.card-cvc').val(),
-                exp_month: $('.card-expiry-month').val(),
-                exp_year: $('.card-expiry-year').val()
-            }, function(status, response) {
-                if (response.error) {
-                    alert(response.error.message);
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var stripe = Stripe("{{ env('STRIPE_KEY') }}");
+        var elements = stripe.elements();
+
+        var style = {
+            base: {
+                color: "#32325d",
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: "antialiased",
+                fontSize: "16px",
+                "::placeholder": {
+                    color: "#aab7c4"
+                }
+            },
+            invalid: {
+                color: "#fa755a",
+                iconColor: "#fa755a"
+            }
+        };
+
+        var card = elements.create("card", { style: style });
+        card.mount("#card-element");
+
+        card.addEventListener('change', function (event) {
+            var displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            stripe.createPaymentMethod({
+                type: 'card',
+                card: card,
+            }).then(function (result) {
+                if (result.error) {
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
                 } else {
-                    var token = response['id'];
-                    $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-                    $form.get(0).submit();
+                    // Append payment_method ID to form
+                    var hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', 'hidden');
+                    hiddenInput.setAttribute('name', 'payment_method');
+                    hiddenInput.setAttribute('value', result.paymentMethod.id);
+                    form.appendChild(hiddenInput);
+
+                    // Submit the form
+                    form.submit();
                 }
             });
-        }
+        });
     });
 </script>
 @endsection

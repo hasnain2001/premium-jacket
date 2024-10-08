@@ -81,7 +81,7 @@ header("X-Robots-Tag:index, follow");?>
                                 </a>
                             </div>
                             <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <span class="card-title">{{ $product->name }}</span>
                                 <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-dark mt-auto">View Product</a>
                             </div>
                         </div>
