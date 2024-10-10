@@ -19,7 +19,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UsersController;
-
+use App\Http\Controllers\ContactController;
 
 
 
@@ -39,9 +39,7 @@ Route::get('/session-destroy', function () {
     return redirect()->back()->with('success', 'Product deleted Successfully');
 })->name('destroy-session');
 
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
+
 
 
 
@@ -70,6 +68,11 @@ Route::controller(StripeController::class)->group(function(){
 });
 
 
+Route::get('/contact', [ContactController::class, 'showForm'])->name('contact');
+Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
+
+
+
 
 
 
@@ -95,8 +98,10 @@ Route::get('/blog/{slug}',  'blog_show')->name('blog-details');});
 
 Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-        Route::delete('/cart/remove/{product}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-        Route::put('/cart/update/{productId}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove/{product}', [CartController::class, 'remove'])->name('cart.remove');
+
+Route::patch('cart/update/{product}', [CartController::class, 'update'])->name('cart.update');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home')
     ->middleware(UserMiddleware::class);

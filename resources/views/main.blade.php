@@ -245,11 +245,13 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <div class="about_img"><img src="{{ asset('images/about.jpg') }}" class="img-fluid" alt="About Us Image"></div>
+                <div class="about_img"><img src="{{ asset('images/about.jpg') }}" class="img-fluid rounded" alt="About Us Image"></div>
             </div>
             <div class="col-lg-6">
                 <h2 class="about_taital">About Us</h2>
-                <p class="about_text">We are a premier store offering a wide range of products to meet all your needs. Our mission is to provide high-quality items at affordable prices with exceptional customer service.</p>
+                <p class="about_text">We are a premier store offering a wide range of products to meet all your needs. Our mission is to provide high-quality items at affordable prices with exceptional customer service. Whether you're shopping for the latest trends or everyday essentials, we've got you covered. Our team is dedicated to ensuring that your shopping experience is smooth and enjoyable. We continually strive to expand our product offerings, stay ahead of market trends, and bring you the best deals. Trust us to be your one-stop destination for all your shopping needs. Your satisfaction is our top priority, and we're always here to assist you.</p>
+
+
 
                 <div class="center">
                     <a href="{{ route('about') }}" class="button-read">

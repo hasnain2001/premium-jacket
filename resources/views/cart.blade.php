@@ -57,6 +57,7 @@
                 @endphp
 
                 @foreach($cartItems as $item)
+                {{-- {{ dd($item) }}  --}}
                     @php
                         $itemTotal = $item->product->price * $item->quantity;
                         $totalQuantity += $item->quantity;
@@ -76,24 +77,30 @@
                         </td>
                         <td>{{ $item->product->name }}</td>
                         <td>
-                            {{-- <form action="{{ route('cart.update', $item->product_id) }}" method="POST" class="d-inline">
-                                @csrf --}}
-                                @method('Put')
-                           {{$item->quantity}}
+                            <form action="{{ route('cart.update', ['product' => $item->product]) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+<input type="number"  name="quantity" value="{{ old('quantity', $item->quantity) }}" min="1" max="{{ $item->product->quantity }}" required>
+                         
                         </td>
                         <td>{{ $item->size }}</td>
                         <td>{{ $item->color }}</td>
                         <td>${{ number_format($item->product->price, 2) }}</td>
                         <td>${{ number_format($itemTotal, 2) }}</td>
                         <td>
-                            {{-- <button type="submit" class="btn btn-primary btn-sm mt-2">Update</button>
-                        </form> --}}
-                        {{-- <form action="{{ route('cart.remove', ['product' => $item->product->id]) }}" method="POST">
+                         
+                
+                                <button type="submit" class="btn btn-primary btn-sm mt-2">Update</button>
+                            </form>
+                        <form action="{{ route('cart.remove', ['product' => $item->product]) }}" method="POST">
                             @csrf
                             @method('DELETE')
+                            <input type="hidden" name="size" value="{{ $item->size }}">
+                            <input type="hidden" name="color" value="{{ $item->color }}">
                             <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                        </form> --}}
-                        <a href="{{route('destroy-session')}}"><button type="submit" class="btn btn-danger btn-sm">Remove</button></a>
+                        </form>
+{{-- 
+                        <a href="{{route('destroy-session')}}"><button type="submit" class="btn btn-danger btn-sm">Remove</button></a> --}}
 
 
                         </td>
@@ -137,6 +144,6 @@
     <footer>
         @include('components.footer')
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>
 </html>

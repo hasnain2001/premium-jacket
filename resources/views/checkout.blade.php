@@ -9,8 +9,8 @@
 
 <style>
     .product-logo {
-        width: 80px;
-        height: 40px;
+        width: 100%;
+        height: 100px;
         margin-right: 10px;
     }
     .card-header {
@@ -38,7 +38,7 @@
     }
     .express-checkout img {
         margin-right: 10px;
-        max-width: 100px;
+      
     }
     .img-thumbnail {
         border: 1px solid #ddd;
@@ -111,8 +111,8 @@
         <div class="col-lg-8">
             <div class="card p-4">
                 <div class="express-checkout mb-3">
-                    <img src="{{ asset('images/paypal.png') }}" alt="PayPal" class="img-fluid">
-                    <img src="{{ asset('images/venmo.png') }}" alt="Venmo" class="img-fluid">
+                    <img src="{{ asset('images/secure-stripe-payment-logo.png') }}" alt="Stripe" class=" product-logo ">
+                 
                 </div>
                 <hr />
 

@@ -58,7 +58,7 @@
 <body>
 <!-- Footer -->
 <br>
-<footer class="footer pt-5 pb-6">
+<footer class="footer pt-3 pb-3">
     <div class="container">
         <div class="row align-items-start">
             <div class="col-12 col-md-2 text-md-end text-center mb-4">
@@ -90,7 +90,7 @@ Welcome to Hide Leather Style, your destination for premium leather jackets. Dis
                 <ul class="list-unstyled">
                     <li><span>Email : info@premiumleatherstyle.com</span></li>
                     {{-- <li><span>Phone : +123 456 7890</span></li> --}}
-                    <li><span>address : 3000 Hoffman dr, Plano, Tx USA</span></li>
+                    <li><span>address :  Plano, Tx USA</span></li>
                 </ul>
             </div>
 

@@ -120,19 +120,76 @@ width: 100%;
 #myBtn:hover {
     background-color: #555;
 }
-        @media (max-width: 768px) {
-            nav {
-                height: auto;
-            }
-            .navbar-brand {
-                position: static;
-                transform: none;
-            }
-            .navbar-right {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
+    /* For mobile devices (up to 576px) */
+@media (max-width: 576px) {
+    nav {
+        height: auto;
+    }
+    .navbar-brand {
+        position: static;
+        transform: none;
+    }
+    .navbar-right {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* For tablets and small devices (between 576px and 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+    nav {
+        height: auto;
+    }
+    .navbar-brand {
+        position: static;
+        transform: none;
+    }
+    .navbar-right {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* For medium devices (between 769px and 992px) */
+@media (min-width: 769px) and (max-width: 992px) {
+    nav {
+        height: auto;
+    }
+    .navbar-brand {
+        position: static;
+        transform: none;
+    }
+    .navbar-right {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .navbar-toggler-icon {
+background-color: white;
+    color: white;
+}
+}
+
+/* For large devices (between 993px and 1200px) */
+@media (min-width: 993px) and (max-width: 1200px) {
+    nav {
+        height: auto;
+    }
+    .navbar-brand {
+        position: relative;
+        transform: translateY(0);
+    }
+    .navbar-right {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .navbar-toggler-icon {
+background-color: white;
+    color: white;
+}
+}
+
+
+
         .icon-cart {
     font-size: 24px; /* Increase icon size */
     color: #ffffff; /* Set a default color for the icon */
@@ -149,10 +206,7 @@ width: 100%;
     padding: 0.5em; /* Add some padding */
     border-radius: 50%; /* Ensure the badge is circular */
 }
-.navbar-toggler-icon {
-background-color: white;
-    color: white;
-}
+
 
 
     </style>
@@ -215,15 +269,16 @@ background-color: white;
                         </a>
                     @endauth
                 @endif
-
                 <a class="icon-cart position-relative text-decoration-none" href="{{ route('cart.index') }}">
                     <i class="fas fa-shopping-cart"></i>
+                   
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                         {{ $cartCount }}
-                        <span class="visually-hidden">unread messages</span>
+   
                     </span>
                 </a>
-
+                
+                
 
 
             </div>

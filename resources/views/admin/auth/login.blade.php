@@ -6,141 +6,143 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login | Admin</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-            <!-- App favicon -->
-            <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
-
-            <!-- Theme Config Js -->
-            <script src="{{asset('assets/js/head.js')}}"></script>
-
-            <!-- Bootstrap css -->
-            <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
-
-            <!-- App css -->
-            <link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
-
-            <!-- Icons css -->
-            <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{asset('bootstrap-5.0.2/css/bootstrap.min.css')}}">
+    <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css">
 
     <style>
-        body{
+        body {
             background-color: #f8f9fa;
-            background-image: url('{{ asset('images/a56d8f3f8a.jpg') }}');
+            background-image: url('{{ asset('images/loginadmin.jpg') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            height: 150vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
+            border: none;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #000dff 0%, #6b73ff 100%);
+        }
+        .social-list-item {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
             justify-content: center;
             align-items: center;
-
+            border-radius: 50%;
+            font-size: 18px;
+        }
+        .input-group-text {
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="account-pages mt-4 mb-4">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6 col-xl-4">
-                    <div class="card bg-pattern">
+    <br>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-2 col-lg-6">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <img src="{{ asset('images/logo.png') }}" alt="Logo" height="150">
+                            <h3 class="text-dark">{{ __('Admin Login') }}</h3>
+                        </div>
+                        <p class="text-muted text-center">Enter your email address and password to access the admin panel.</p>
 
-                        <div class="card-body p-4">
-
-                            <div class="text-center w-75 m-auto">
-                                <div class="auth-brand">
-      <span class="logo-lg">
-    <h3 class="py-2 bg-dark text-white text-center">{{ __('Admin Login') }}</h3>
-                                        </span>
-
-
-                                    <a href="index.html" class="logo logo-light text-center">
-                                        <span class="logo-lg">
-                                            <img src="assets/images/logo-light.png" alt="" height="22">
-                                        </span>
-                                    </a>
-                                </div>
-                                <p class="text-muted mb-4 mt-3">Enter your email address and password to access admin panel.</p>
-                            </div>
-
-                            <form method="POST" action="{{ route('admin.login.submit') }}">
-                                @csrf
-
-                                <div class="mb-3">
-                                    <label for="emailaddress" class="form-label">{{ __('Email Address') }}</label>
-                                    <input class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" type="email" id="emailaddress" required="" placeholder="Enter your email"  autocomplete="email" autofocus>
-                                    @error('email')
+                        <form method="POST" action="{{ route('admin.login.submit') }}">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="emailaddress" class="form-label">{{ __('Email Address') }}</label>
+                                <input class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" type="email" id="emailaddress" required placeholder="Enter your email" autocomplete="email" autofocus>
+                                @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <div class="input-group input-group-merge">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                                        <div class="input-group-text" data-password="false">
-                                            <span class="password-eye"></span>
-                                        </div>
-                                        @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="checkbox-signin" checked>
-                                        <label class="form-check-label" for="checkbox-signin">Remember me</label>
-                                    </div>
-                                </div>
-
-                                <div class="text-center d-grid">
-                                    <button class="btn btn-primary" type="submit"> Log In </button>
-                                </div>
-
-                            </form>
-
-                            <div class="text-center">
-                                <h5 class="mt-3 text-muted">Sign in with</h5>
-                                <ul class="social-list list-inline mt-3 mb-0">
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="social-list-item border-info text-info"><i class="mdi mdi-twitter"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                    </li>
-                                </ul>
                             </div>
 
-                        </div> <!-- end card-body -->
-                    </div>
-                    <!-- end card -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                    <div class="input-group-text" onclick="togglePassword()">
+                                        <i id="password-icon" class="mdi mdi-eye-off-outline"></i>
+                                    </div>
+                                </div>
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
 
-                    <div class="row mt-3">
-                        <div class="col-12 text-center">
-                            <p> <a href="auth-recoverpw.html" class="text-white-50 ms-1">Forgot your password?</a></p>
-                            <p class="text-white-50">Don't have an account? <a href="auth-register.html" class="text-white ms-1"><b>Sign Up</b></a></p>
-                        </div> <!-- end col -->
-                    </div>
-                    <!-- end row -->
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="checkbox-signin" checked>
+                                <label class="form-check-label" for="checkbox-signin">Remember me</label>
+                            </div>
 
-                </div> <!-- end col -->
+                            <div class="text-center d-grid">
+                                <button class="btn btn-primary btn-lg" type="submit">Log In</button>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-4">
+                            <h6 class="text-muted">Sign in with</h6>
+                            <ul class="social-list list-inline mt-2 mb-0">
+                                <li class="list-inline-item">
+                                    <a href="#" class="social-list-item border-primary text-primary">
+                                        <i class="mdi mdi-facebook"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="social-list-item border-danger text-danger">
+                                        <i class="mdi mdi-google"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="social-list-item border-info text-info">
+                                        <i class="mdi mdi-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="social-list-item border-secondary text-secondary">
+                                        <i class="mdi mdi-github"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                      
+                    </div>
+                </div>
             </div>
-            <!-- end row -->
         </div>
-        <!-- end container -->
     </div>
 
-            <!-- Authentication js -->
-            <script src="{{asset('assets/js/pages/authentication.init.js')}}"></script>
+    <script src="{{asset('bootstrap-5.0.2/js/bootstrap.min.js')}}"></script>
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const passwordIcon = document.getElementById('password-icon');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+
+            if (type === 'password') {
+                passwordIcon.classList.remove('mdi-eye-outline');
+                passwordIcon.classList.add('mdi-eye-off-outline');
+            } else {
+                passwordIcon.classList.remove('mdi-eye-off-outline');
+                passwordIcon.classList.add('mdi-eye-outline');
+            }
+        }
+    </script>
 </body>
 </html>

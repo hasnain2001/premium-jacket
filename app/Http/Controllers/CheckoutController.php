@@ -23,13 +23,6 @@ class CheckoutController extends Controller
 public function index()
 {
     $cartItems = [];
-    $genders = Gender::all();
-    $categoriesByGender = [];
-
-    // Fetch categories by gender
-    foreach ($genders as $gender) {
-        $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-    }
 
     if (auth()->check()) {
         // Logged-in user: Fetch cart items from the database
@@ -56,7 +49,7 @@ public function index()
     });
     $total = $subtotal;
 
-    return view('checkout', compact('cartItems', 'subtotal', 'total', 'genders', 'categoriesByGender'));
+    return view('checkout', compact('cartItems', 'subtotal', 'total'));
 }
 
 
@@ -80,6 +73,7 @@ public function store(Request $request)
         'items.*.product_id' => 'required|exists:products,id',
         'items.*.price' => 'required|numeric',
         'items.*.quantity' => 'required|integer|min:1',
+        'status' => 'required',
         // 'payment_method' => 'required|string', // Capture Stripe payment method ID
     ]);
 
@@ -93,7 +87,7 @@ public function store(Request $request)
 
         // Create the Order
         $order = Order::create([
-            'user_id' => auth()->id(),
+          
             'order_number' => uniqid('Order-'),
             'total_amount' => $totalAmount,
             'status' => 'pending',
@@ -107,6 +101,7 @@ public function store(Request $request)
             'phone' => $request->phone,
             'country' => $request->country,
             'shipping_option' => $request->shipping_option,
+            'status' => $request->status,
             'payment_option' => 'credit_card',
         ]);
 
@@ -137,8 +132,6 @@ public function store(Request $request)
             "description" => "Order payment from premiumleather."
         ]);
         
-
-
         DB::commit();
 
         Session::flash('success', 'Payment and order successful!');

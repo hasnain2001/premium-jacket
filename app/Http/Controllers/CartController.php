@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Models\Categories;
-use App\Models\Gender;
 use App\Models\Product;
 
 class CartController extends Controller
@@ -36,39 +34,57 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Product added to cart!');
     }
+    public function remove(Request $request, $productId)
+{
+    $size = $request->input('size');
+    $color = $request->input('color');
 
-    public function update(Request $request, $productId)
-    {
-        $quantity = $request->input('quantity');
-        $size = $request->input('size');
-        $color = $request->input('color');
-        if ($quantity < 1) {
-            return redirect()->route('cart.index')->with('error', 'Quantity must be at least 1.');
-        }
-        $cart = session()->get('cart', []);
-        $cartKey = $productId . '-' . $size . '-' . $color;
-        if (isset($cart[$cartKey])) {
-            $cart[$cartKey]['quantity'] = $quantity;
-            session()->put('cart', $cart);
-            return redirect()->route('cart.index')->with('success', 'Cart updated successfully!');
-        } else {
-            return redirect()->route('cart.index')->with('error', 'Cart item not found.');
+    $cart = session()->get('cart', []);
+    $cartKey = $productId . '-' . $size . '-' . $color;
+
+    // Check if the item exists in the cart
+    if (isset($cart[$cartKey])) {
+        unset($cart[$cartKey]); // Remove the item from the cart
+        session()->put('cart', $cart); // Update the session
+        return redirect()->back()->with('success', 'Product removed from cart!');
+    }
+
+    return redirect()->back()->with('error', 'Product not found in cart!');
+}
+
+
+public function update(Request $request, $productId)
+{
+    // Validate the quantity input
+    $request->validate([
+        'quantity' => 'required|integer|min:1',
+    ]);
+
+    // Get the current cart from the session
+    $cart = session()->get('cart', []);
+
+    // Loop through the cart items to find the one to update
+    foreach ($cart as $key => $item) {
+        if ($item['product_id'] == $productId) {
+            // Update the quantity
+            $cart[$key]['quantity'] = $request->input('quantity');
+            break; // Exit the loop once the item is found
         }
     }
+
+    // Save the updated cart back to the session
+    session()->put('cart', $cart);
+
+    return redirect()->back()->with('success', 'Cart updated successfully!');
+}
+
 
 
 
  public function index()
  {
      $cartItems = [];
-     $genders = Gender::all();
-     $categoriesByGender = [];
-
-     foreach ($genders as $gender) {
-         $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-     }
-
-     $cartSession = session()->get('cart', []);
+    $cartSession = session()->get('cart', []);
      foreach ($cartSession as $cartData) {
          $product = Product::find($cartData['product_id']);
          if ($product) {
@@ -81,32 +97,11 @@ class CartController extends Controller
          }
      }
 
-     return view('cart', compact('cartItems', 'genders', 'categoriesByGender'));
+     return view('cart', compact('cartItems', ));
  }
 
 
-    public function removeFromCart(Request $request, $productId)
-    {
-
-        $product = $request->input('product_id');
-        $quantity = $request->input('quantity');
-        $size = $request->input('size');
-        $color = $request->input('color');
-
-        $cart = session()->get('cart', []);
-
-        $cartKey = $productId . '-' . $size . '-' . $color;
-
-             if (isset($cart[$cartKey])) {
-
-            unset($cart[$cartKey]);
-            session()->put('cart', $cart);
-
-            return redirect()->back()->with('success', 'Product removed from cart!');
-        }
-
-        return redirect()->back()->with('error', 'Product not found in cart!');
-    }
+   
 }
 
 

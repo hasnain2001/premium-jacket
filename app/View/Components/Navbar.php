@@ -10,16 +10,13 @@ class Navbar extends Component
 {
     public $genders;
     public $categoriesByGender;
-    public $cartCount;
-    public $cartItems;
+    public $cartCount; // Add this property
 
-
-    public function __construct($genders = [], $categoriesByGender = [], $cartCount = 0, $cartItems = [])
+    public function __construct($genders = [], $categoriesByGender = [], $cartCount = 0) // Add cartCount to the constructor
     {
         $this->genders = $genders;
         $this->categoriesByGender = $categoriesByGender;
-        $this->cartCount = $cartCount;
-        $this->cartItems = $cartItems;
+        $this->cartCount = $cartCount; // Initialize cartCount
     }
 
     public function render(): View|Closure|string
@@ -27,8 +24,7 @@ class Navbar extends Component
         return view('components.navbar', [
             'genders' => $this->genders,
             'categoriesByGender' => $this->categoriesByGender,
-            'cartCount' => $this->cartCount,
-            'cartItems' => $this->cartItems, 
+            'cartCount' => $this->cartCount, // Pass cartCount to the view
         ]);
     }
 }
