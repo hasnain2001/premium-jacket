@@ -20,6 +20,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PayPalController;
 
 
 
@@ -62,6 +63,12 @@ Route::controller(CheckoutController::class)->group(function (){
     Route::post('/checkouts/store',  'store')->name('checkout.store');
     Route::get('/checkout/success/{order_number}', 'showSuccess')->name('checkout.success');
 });
+
+Route::get('paypal', [PayPalController::class, 'index'])->name('paypal');
+Route::get('paypal/payment', [PayPalController::class, 'payment'])->name('paypal.payment');
+Route::post('paypal/create', [PayPalController::class, 'create'])->name('create.paypal');
+Route::get('paypal/payment/success', [PayPalController::class, 'paymentSuccess'])->name('paypal.payment.success');
+Route::get('paypal/payment/cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.payment/cancel');
 Route::controller(StripeController::class)->group(function(){
     Route::get('/stripe', 'stripe');
     Route::post('/stripe', 'stripePost')->name('stripe.post');

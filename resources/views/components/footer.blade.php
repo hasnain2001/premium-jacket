@@ -90,7 +90,7 @@ Welcome to Hide Leather Style, your destination for premium leather jackets. Dis
                 <ul class="list-unstyled">
                     <li><span>Email : info@premiumleatherstyle.com</span></li>
                     {{-- <li><span>Phone : +123 456 7890</span></li> --}}
-                    <li><span>address :  Plano, Tx USA</span></li>
+                    <li><span>Address :  Plano, Tx USA</span></li>
                 </ul>
             </div>
 

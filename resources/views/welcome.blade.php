@@ -7,13 +7,13 @@ header("X-Robots-Tag:index, follow");?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   <title> @yield('title') Premium Leather Jackets for Men & Women | Premium Leather Style</title>
 
-<meta name="description" content="Explore a wide range of premium leather jackets. Discover stylish and durable outerwear designed for men and women. Shop now and elevate your fashion with our top-quality leather jackets.">
+  <meta name="description" content="Explore a wide range of premium leather jackets for men and women. Shop stylish, durable outerwear and elevate your fashion with top-quality designs.">
 
 <meta name="keywords" content="leather jackets, premium jackets, men's jackets, women's jackets, stylish outerwear, durable jackets, fashion, leatherwear">
 
 <meta name="author" content="Premium Leather Style">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.premiumleatherstyle.com/">
+<link rel="canonical" href="https://premiumleatherstyle.com/">
 
       <!-- Bootstrap css -->
       <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />

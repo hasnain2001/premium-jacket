@@ -118,121 +118,6 @@
 
                 <!-- Checkout Form -->
             
-<form id="payment-form" action="{{ route('checkout.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-
-                    <!-- Contact Information -->
-                    <h4 class="mb-3">Contact Information</h4>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
-                        <small class="form-text text-muted">We'll send order updates to this email.</small>
-                    </div>
-
-                    <!-- Shipping Address -->
-                    <h4 class="mt-4">Shipping Address</h4>
-                    <div class="form-group">
-                        <label for="country">Country/Region</label>
-                        <select name="country" id="country" class="form-control" required>
-                            <option value="">Select a country</option>
-                            <option value="AF">Afghanistan</option>
-                            <option value="AL">Albania</option>
-                            <option value="DZ">Algeria</option>
-                        </select>
-                    </div>
-                    @foreach($cartItems as $item)
-                    <input type="hidden" name="items[{{ $loop->index }}][product_id]" value="{{ $item->product->id }}">
-                    <input type="hidden" name="items[{{ $loop->index }}][quantity]" value="{{ $item->quantity }}">
-                    <input type="hidden" name="items[{{ $loop->index }}][price]" value="{{ $item->product->price }}">
-                @endforeach
-
-                    <div class="form-row">
-                        <div class="col">
-                            <label for="first_name">First Name</label>
-                            <input type="text" name="first_name" class="form-control" id="first_name" placeholder="First Name" required>
-                        </div>
-                        <div class="col">
-                            <label for="last_name">Last Name</label>
-                            <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Last Name" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group mt-3">
-                        <label for="address">Address</label>
-                        <input type="text" name="address" class="form-control" id="address" placeholder="Address" required>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="col">
-                            <label for="city">City</label>
-                            <input type="text" name="city" class="form-control" id="city" placeholder="City" required>
-                        </div>
-                        <div class="col">
-                            <label for="state">State</label>
-                            <input type="text" name="state" class="form-control" id="state" placeholder="State" required>
-                        </div>
-                        <div class="col">
-                            <label for="zip">ZIP Code</label>
-                            <input type="text" name="zip" class="form-control" id="zip" placeholder="ZIP Code" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group mt-3">
-                        <label for="phone">Phone Number</label>
-                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone Number" required>
-                    </div>
-
-                    <!-- Billing Address Checkbox -->
-                    <div class="form-check mt-3">
-                        <input type="checkbox" class="form-check-input" id="same-address">
-                        <label class="form-check-label" for="same-address">Use same address for billing</label>
-                    </div>
-
-                    <!-- Shipping Options -->
-                    <h4 class="mt-4">Shipping Options</h4>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="shipping_option" id="free_shipping" value="free" checked>
-                        <label class="form-check-label" for="free_shipping">Free Shipping</label>
-                    </div>
-
-                    <!-- Payment Section -->
-                    <h4 class="mt-4">Payment Information</h4>
-                    <div class='form-row row'>
-                        <div class='col-xs-12 form-group required'>
-                            <label class='control-label'>Name on Card</label>
-                            <input class='form-control' size='4' type='text'>
-                        </div>
-                    </div>
-
-                    <div class='form-row row'>
-                        <div class='col-xs-12 form-group card required'>
-                            <label class='control-label'>Card Number</label>
-                            <input autocomplete='off' class='form-control card-number' size='20' type='text'>
-                        </div>
-                    </div>
-
-                    <div class='form-row row'>
-                        <div class='col-xs-12 col-md-4 form-group cvc required'>
-                            <label class='control-label'>CVC</label>
-                            <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' size='4' type='text'>
-                        </div>
-                        <div class='col-xs-12 col-md-4 form-group expiration required'>
-                            <label class='control-label'>Expiration Month</label>
-                            <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
-                        </div>
-                        <div class='col-xs-12 col-md-4 form-group expiration required'>
-                            <label class='control-label'>Expiration Year</label>
-                            <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
-                        </div>
-                    </div>
-
-                 <!-- Submit Button -->
-    <div class="row mt-4">
-        <div class="col-xs-12">
-            <button id="submit-button" class="btn btn-primary btn-lg btn-block" type="submit">Pay Now (${{ $total }})</button>
-        </div>
-    </div>
-                </form>
             </div>
         </div>
 
@@ -268,66 +153,60 @@
         </div>
     </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript">
+    $(function() {
+        var $form = $(".require-validation");
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var stripe = Stripe("{{ env('STRIPE_KEY') }}");
-        var elements = stripe.elements();
+        $('form.require-validation').bind('submit', function(e) {
+            var $form = $(".require-validation"),
+                inputSelector = ['input[type=email]', 'input[type=password]',
+                    'input[type=text]', 'input[type=file]',
+                    'textarea'
+                ].join(', '),
+                $inputs = $form.find(inputSelector),
+                $errorMessage = $form.find('div.error'),
+                valid = true;
+            $errorMessage.addClass('hide');
+            $('.has-error').removeClass('has-error');
 
-        var style = {
-            base: {
-                color: "#32325d",
-                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                fontSmoothing: "antialiased",
-                fontSize: "16px",
-                "::placeholder": {
-                    color: "#aab7c4"
-                }
-            },
-            invalid: {
-                color: "#fa755a",
-                iconColor: "#fa755a"
-            }
-        };
-
-        var card = elements.create("card", { style: style });
-        card.mount("#card-element");
-
-        card.addEventListener('change', function (event) {
-            var displayError = document.getElementById('card-errors');
-            if (event.error) {
-                displayError.textContent = event.error.message;
-            } else {
-                displayError.textContent = '';
-            }
-        });
-
-        var form = document.getElementById('payment-form');
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            stripe.createPaymentMethod({
-                type: 'card',
-                card: card,
-            }).then(function (result) {
-                if (result.error) {
-                    var errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = result.error.message;
-                } else {
-                    // Append payment_method ID to form
-                    var hiddenInput = document.createElement('input');
-                    hiddenInput.setAttribute('type', 'hidden');
-                    hiddenInput.setAttribute('name', 'payment_method');
-                    hiddenInput.setAttribute('value', result.paymentMethod.id);
-                    form.appendChild(hiddenInput);
-
-                    // Submit the form
-                    form.submit();
+            $inputs.each(function(i, el) {
+                var $input = $(el);
+                if ($input.val() === '') {
+                    $input.parent().addClass('has-error');
+                    $errorMessage.removeClass('hide');
+                    e.preventDefault();
                 }
             });
+
+            if (!$form.data('cc-on-file')) {
+                e.preventDefault();
+                Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+
+                Stripe.createToken({
+                    number: $('.card-number').val(),
+                    cvc: $('.card-cvc').val(),
+                    exp_month: $('.card-expiry-month').val(),
+                    exp_year: $('.card-expiry-year').val()
+                }, stripeResponseHandler);
+            }
         });
+
+        function stripeResponseHandler(status, response) {
+            if (response.error) {
+                $('.error')
+                    .removeClass('hide')
+                    .find('.alert')
+                    .text(response.error.message);
+            } else {
+                var token = response['id'];
+                $form.find('input[type=text]').empty();
+                $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+                $form.get(0).submit();
+            }
+        }
     });
 </script>
+
 @endsection

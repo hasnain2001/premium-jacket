@@ -13,65 +13,61 @@
     <link rel="stylesheet" href="{{ asset('cssfile/navbar.css') }}">
 
     <style>
-        nav {
-            background-color: #690500;
-            height: 100px;
-            width: 100%;
-        }
-        .logo{
-height: 120px;
-width: 100%;
-        }
-        .navbar-custom .nav-link {
-            color: #fff !important;
-        }
-        .navbar-brand {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .navbar-collapse {
-            justify-content: space-between;
-        }
-
-        .nav-item {
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: 700;
-            padding-right: 15px;
-            margin-right: 10px;
-        }
-        .nav-item.dropdown:hover .dropdown-menu {
-            display: block; /* Show dropdown on hover */
-        }
-
-
-        .search-container .search-input {
-            width: 300px;
-        }
-        .search-container .search-button {
-            border: none;
-            background: 0 0;
-            color: #fff;
-        }
-        #autocomplete-results {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #fff;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 1000;
-            position: absolute;
-            width: 200px;
-        }
-        #autocomplete-results .list-group-item {
-            cursor: pointer;
-        }
-        #autocomplete-results .list-group-item:hover {
-            background-color: #f1f1f1;
-        }
-        #myBtn,
-.loader {
+.logo, nav {
+    width: 100%}
+#autocomplete-results .list-group-item, #myBtn {
+    cursor: pointer;
+}
+nav {
+    background-color: #690500;
+    height: 100px;
+    padding: 7px;
+}
+.logo {
+    height: 120px;
+}
+.navbar-custom .nav-link {
+    color: #fff!important;
+}
+.navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.navbar-collapse {
+    justify-content: space-between;
+}
+.nav-item {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    padding-right: 15px;
+    margin-right: 10px;
+}
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+.search-container .search-input {
+  margin: 0;
+}
+.search-container .search-button {
+    border: none;
+    background: 0 0;
+    color: #fff;
+}
+#autocomplete-results {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    position: absolute;
+    width: 200px;
+}
+#autocomplete-results .list-group-item:hover {
+    background-color: #f1f1f1;
+}
+#myBtn, .loader {
     position: fixed;
 }
 ::-webkit-scrollbar {
@@ -100,10 +96,8 @@ width: 100%;
 }
 @keyframes l1 {
     100% {
-        background-size: 100%;
-    }
-}
-#myBtn {
+    background-size: 100%}
+}#myBtn {
     display: none;
     bottom: 20px;
     right: 30px;
@@ -112,7 +106,6 @@ width: 100%;
     outline: 0;
     background-color: #990c0c;
     color: #fff;
-    cursor: pointer;
     padding: 15px;
     border-radius: 10px;
     font-size: 18px;
@@ -120,94 +113,75 @@ width: 100%;
 #myBtn:hover {
     background-color: #555;
 }
-    /* For mobile devices (up to 576px) */
-@media (max-width: 576px) {
+@media (max-width:576px) {
     nav {
-        height: auto;
-    }
-    .navbar-brand {
-        position: static;
-        transform: none;
-    }
-    .navbar-right {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+    height: auto;
 }
-
-/* For tablets and small devices (between 576px and 768px) */
-@media (min-width: 577px) and (max-width: 768px) {
+.navbar-brand {
+    position: static;
+    transform: none;
+}
+.navbar-right {
+    flex-direction: column;
+    align-items: flex-start;
+}
+}@media (min-width:577px) and (max-width:768px) {
     nav {
-        height: auto;
-    }
-    .navbar-brand {
-        position: static;
-        transform: none;
-    }
-    .navbar-right {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+    height: auto;
 }
-
-/* For medium devices (between 769px and 992px) */
-@media (min-width: 769px) and (max-width: 992px) {
+.navbar-brand {
+    position: static;
+    transform: none;
+}
+.navbar-right {
+    flex-direction: column;
+    align-items: flex-start;
+}
+}@media (min-width:769px) and (max-width:992px) {
     nav {
-        height: auto;
-    }
-    .navbar-brand {
-        position: static;
-        transform: none;
-    }
-    .navbar-right {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    .navbar-toggler-icon {
-background-color: white;
-    color: white;
+    height: auto;
 }
+.navbar-brand {
+    position: static;
+    transform: none;
 }
-
-/* For large devices (between 993px and 1200px) */
-@media (min-width: 993px) and (max-width: 1200px) {
+.navbar-right {
+    flex-direction: row;
+    justify-content: space-between;
+}
+.navbar-toggler-icon {
+    background-color: #fff;
+    color: #fff;
+}
+}@media (min-width:993px) and (max-width:1200px) {
     nav {
-        height: auto;
-    }
-    .navbar-brand {
-        position: relative;
-        transform: translateY(0);
-    }
-    .navbar-right {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-    .navbar-toggler-icon {
-background-color: white;
-    color: white;
+    height: auto;
 }
+.navbar-brand {
+    position: relative;
+    transform: translateY(0);
 }
-
-
-
-        .icon-cart {
-    font-size: 24px; /* Increase icon size */
-    color: #ffffff; /* Set a default color for the icon */
-    transition: color 0.3s, transform 0.3s; /* Add transition for smooth hover effect */
+.navbar-right {
+    flex-direction: row;
+    justify-content: space-around;
 }
-
+.navbar-toggler-icon {
+    background-color: #fff;
+    color: #fff;
+}
+}.icon-cart {
+    font-size: 20px;
+    color: #fff;
+    transition: color .3s, transform .3s;
+}
 .icon-cart:hover {
-    color: #302d2d; /* Change color on hover */
-    transform: scale(1.1); /* Slightly enlarge on hover */
+    color: #302d2d;
+    transform: scale(1.1);
 }
-
 .icon-cart .badge {
-    font-size: 14px; /* Adjust badge font size */
-    padding: 0.5em; /* Add some padding */
-    border-radius: 50%; /* Ensure the badge is circular */
-}
-
-
+    font-size: 14px;
+    padding: .5em;
+    border-radius: 50%}
 
     </style>
 </head>
@@ -241,10 +215,12 @@ background-color: white;
                 </li>
             </ul>
 
-            <div class="navbar-right right-items">
-                <a class="nav-link" href="{{ route('blog') }}">
-                    <i class="fas fa-blog"></i> Blogs
-                </a>
+            <div class="navbar-right ">
+                <div class="nav-item"><a class="nav-link" href="{{ route('blog') }}">
+                    <i class="fas fa-blog"></i> BLOGS
+                </a></div>
+                  
+
 
                 <div class="search-container">
                     <button class="search-button" type="button" data-bs-toggle="modal" data-bs-target="#searchModal">
@@ -264,15 +240,16 @@ background-color: white;
                             @csrf
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="btn btn-sm text-white">
-                            <i class="fas fa-sign-in-alt"></i> Log in
-                        </a>
+                    <div class="nav-item">   
+                        <a href="{{ route('login') }}" class=" nav-link">
+                            <i class="fas fa-sign-in-alt"></i> lOGIN
+                        </a></div>
                     @endauth
                 @endif
                 <a class="icon-cart position-relative text-decoration-none" href="{{ route('cart.index') }}">
                     <i class="fas fa-shopping-cart"></i>
                    
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    <span class="top-0 start-100 translate-middle badge  bg-dark">
                         {{ $cartCount }}
    
                     </span>

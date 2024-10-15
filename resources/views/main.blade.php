@@ -1,7 +1,7 @@
 @extends('welcome')
 
 @section('main-content')
-<link rel="stylesheet" href="{{ asset('cssfile/home.css') }}">
+
 
 <style>
 @import url(https://fonts.googleapis.com/css?family=Lato:100&display=swap);.button-read,.center{display:flex;position:relative}.button-read,.button-read:hover{text-decoration:none;color:#fff}.center{width:180px;height:60px;justify-content:center;align-items:center}.button-read{justify-content:center;align-items:center;width:140px;height:40px;cursor:pointer;background:brown;border:2px solid #fff;border-radius:20px;outline:0;font-size:18px;font-weight:700;overflow:hidden;transition:background 3.3s,color .3s}.button-read:hover{background:#951d1d}.button-read svg{position:absolute;left:0;top:0;width:100%;height:100%;fill:none;stroke:#fff;stroke-width:2;stroke-dasharray:150 480;stroke-dashoffset:150;transition:stroke-dashoffset 3.4s ease-in-out}.button-read:hover svg{stroke-dashoffset:-480}.button-read span{position:relative;z-index:1}.product-img-container{overflow:hidden;height:300px}.product-img{padding:10px;height:100%;width:auto;object-fit:cover;object-position:center}.card-img{border-radius:5%}
@@ -81,31 +81,33 @@
         </div>
       </div>
       <div class="col-md-3">
-        <div class="card">
-            <a href="https://www.premiumleatherstyle.com/category/men-bomber-jacket">
-          <img src="{{ asset('images/image1.jpeg') }}" class="card-img" alt="Bomber Jacket" >
-          <div class="overlay">
-            <span class="card-product">BOMBER JACKET</span>
-            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-          </div></a>
+        <div class="card card1" style="background-image: url('{{ asset('images/image1.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
+            <a href="https://www.premiumleatherstyle.com/category/men-bomber-jacket" class="text-dark text-decoration-none">
+              <div class="card-content" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%;">
+                <span class="card-product">BOMBER JACKET</span>
+                <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
+              </div>
+            </a>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card">
-            <a href="https://www.premiumleatherstyle.com/category/men-varsity-jackets">
-              <img src="{{ asset('images/image2.jpeg') }}" class="card-img" alt="Varsity Jacket">
-          <div class="overlay">
-            <span class="card-product">VARSITY JACKET</span>
-            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-          </div></a>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card card2" style="background-image: url('{{ asset('images/image2.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
+            <a href="https://www.premiumleatherstyle.com/category/men-varsity-jackets" class="text-dark text-decoration-none">
+              <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%;">
+                <span class="card-product">VARSITY JACKET</span>
+                <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
+              </div>
+            </a>
         </div>
-      </div>
+    </div>
+    
       <div class="col-md-3">
-        <div class="card">
-         <a href="{{ route('product') }}">
-          <img src="{{ asset('images/image6.jpeg') }}" class="card-img" alt="Sale">
-          <div class="overlay">
-            <span class="card-product">SALE</span>
+        <div class="card" style="background-image: url('{{ asset('images/image6.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
+         <a href="{{ route('product') }}" class="text-dark text-decoration-none">
+ 
+            <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%;text-align:center;">
+            <span class="card-product ">SALE</span>
             <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
           </div></a>
         </div>
@@ -114,30 +116,30 @@
 
     <div class="row mt-3">
       <div class="col-md-4">
-        <div class="card">
-            <a href="{{ route('blog') }}">
-          <img src="{{ asset('images/image3.jpeg') }}" class="card-img" alt="Blog">
-          <div class="overlay">
+        <div class="card" style="background-image: url('{{ asset('images/image3.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
+          
+            <a href="{{ route('blog') }}" class="text-dark text-decoration-none">
+                <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%; text-align:center;" >
             <span class="card-product">BLOG</span>
             <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
           </div></a>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card">
+        <div class="card" style="background-image: url('{{ asset('images/image4.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
             <a href="{{ route('about') }}">
-          <img src="{{ asset('images/image4.jpeg') }}" class="card-img" alt="Our Stories">
-          <div class="overlay">
+         
+          <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%; text-align:center;" >
             <span class="card-product">OUR STORIES</span>
             <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
           </div></a>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card">
-            <a href="/">
-                <img src="{{ asset('images/image5.jpeg') }}" class="card-img" alt="Contact">
-                <div class="overlay">
+        <div class="card" style="background-image: url('{{ asset('images/image5.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
+            <a href="{{route('contact')}}">
+            
+                <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%; text-align:center;" >
                     <span class="card-product">CONTACT</span>
                     <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
                 </div>

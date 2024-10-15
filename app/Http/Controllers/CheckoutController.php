@@ -6,13 +6,11 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\Gender;
 use App\Models\Product;
 use App\Models\Categories;
-use Stripe\Stripe;
-use Stripe\Charge;
+use Stripe;
 use Illuminate\Support\Facades\Session;
 
 
@@ -23,6 +21,13 @@ class CheckoutController extends Controller
 public function index()
 {
     $cartItems = [];
+    $genders = Gender::all();
+    $categoriesByGender = [];
+
+    // Fetch categories by gender
+    foreach ($genders as $gender) {
+        $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
+    }
 
     if (auth()->check()) {
         // Logged-in user: Fetch cart items from the database
@@ -49,7 +54,7 @@ public function index()
     });
     $total = $subtotal;
 
-    return view('checkout', compact('cartItems', 'subtotal', 'total'));
+    return view('checkout', compact('cartItems', 'subtotal', 'total', 'genders', 'categoriesByGender'));
 }
 
 
@@ -73,7 +78,7 @@ public function store(Request $request)
         'items.*.product_id' => 'required|exists:products,id',
         'items.*.price' => 'required|numeric',
         'items.*.quantity' => 'required|integer|min:1',
-        'status' => 'required',
+        // 'status' => 'required',
         // 'payment_method' => 'required|string', // Capture Stripe payment method ID
     ]);
 
@@ -101,7 +106,7 @@ public function store(Request $request)
             'phone' => $request->phone,
             'country' => $request->country,
             'shipping_option' => $request->shipping_option,
-            'status' => $request->status,
+            // 'status' => $request->status,
             'payment_option' => 'credit_card',
         ]);
 
@@ -123,18 +128,7 @@ public function store(Request $request)
             }
         }
 
-        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        $charge = \Stripe\Charge::create([
-            "amount" => $totalAmount * 100, // Amount in cents
-            "currency" => "usd",
-            "source" => $request->stripeToken,
-            "description" => "Order payment from premiumleather."
-        ]);
         
-        DB::commit();
-
-        Session::flash('success', 'Payment and order successful!');
 
         return redirect()->route('checkout.success', ['order_number' => $order->order_number]);
 
