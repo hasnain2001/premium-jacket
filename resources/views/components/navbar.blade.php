@@ -242,7 +242,7 @@ nav {
                     @else
                     <div class="nav-item">   
                         <a href="{{ route('login') }}" class=" nav-link">
-                            <i class="fas fa-sign-in-alt"></i> lOGIN
+                            <i class="fas fa-sign-in-alt"></i> LOGIN
                         </a></div>
                     @endauth
                 @endif
