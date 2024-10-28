@@ -1,6 +1,27 @@
     @extends('welcome')
 
     @section('main-content')
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa fa-check-circle" style="margin-right: 10px;"></i>
+        <strong>Success!</strong> {{ session('success') }}
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        <strong>Error!</strong> Please fix the following issues:
+        <ul class="mt-2">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
         <div class="container my-5">
             <div class="card shadow-lg">
                 <div class="card-header bg-dark text-white text-center py-4">

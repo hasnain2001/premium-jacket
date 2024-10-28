@@ -1,103 +1,55 @@
 <?php
 
 namespace App\Http\Controllers;
-use Srmklive\PayPal\Services\PayPal as PayPalClient;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 class PayPalController extends Controller
 {
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
-    public function index()
+    public function payment()
     {
-        return view('paypal');
-    }
-  
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
-    public function payment(Request $request)
-    {
-        $provider = new PayPalClient;
-        $provider->setApiCredentials(config('paypal'));
-        $paypalToken = $provider->getAccessToken();
-  
-        $response = $provider->createOrder([
-            "intent" => "CAPTURE",
-            "application_context" => [
-                "return_url" => route('paypal.payment.success'),
-                "cancel_url" => route('paypal.payment/cancel'),
-            ],
-            "purchase_units" => [
-                0 => [
-                    "amount" => [
-                        "currency_code" => "USD",
-                        "value" => "100.00"
-                    ]
-                ]
-            ]
-        ]);
-  
-        if (isset($response['id']) && $response['id'] != null) {
-  
-            foreach ($response['links'] as $links) {
-                if ($links['rel'] == 'approve') {
-                    return redirect()->away($links['href']);
-                }
-            }
-  
-            return redirect()
-                ->route('cancel.payment')
-                ->with('error', 'Something went wrong.');
-  
-        } else {
-            return redirect()
-                ->route('create.paypal')
-                ->with('error', $response['message'] ?? 'Something went wrong.');
-        }
-    
-    }
-    public function create(Request $request)
-    {
-        return view('paypalcreate');
-    }
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
-    public function paymentCancel()
-    {
-        return redirect()
-              ->route('paypal')
-              ->with('error', $response['message'] ?? 'You have canceled the transaction.');
-    }
-  
-    /**
-     * Write code on Method 
-     * Written by Appfinz Technologies
-     * @return response()
-     */
-    public function paymentSuccess(Request $request)
-    {
+        // Initialize the PayPal client
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $provider->getAccessToken();
-        $response = $provider->capturePaymentOrder($request['token']);
-  
-        if (isset($response['status']) && $response['status'] == 'COMPLETED') {
-            return redirect()
-                ->route('paypal')
-                ->with('success', 'Transaction complete.');
-        } else {
-            return redirect()
-                ->route('paypal')
-                ->with('error', $response['message'] ?? 'Something went wrong.');
+    
+        // Set up the order data
+        $orderData = [
+            "intent" => "CAPTURE",
+            "purchase_units" => [
+                [
+                    "amount" => [
+                        "currency_code" => "USD",
+                        "value" => "400.00"
+                    ],
+                    "description" => "Product 1 Purchase"
+                ]
+            ],
+            "application_context" => [
+                "return_url" => route('payment.success'),
+                "cancel_url" => route('payment.cancel')
+            ]
+        ];
+    
+        // Create the order
+        $response = $provider->createOrder($orderData);
+    
+        // Redirect the user to PayPal if the order is created successfully
+        if (isset($response['links'][1]['href'])) {
+            return redirect($response['links'][1]['href']);
         }
+    
+        // Handle error if any
+        return redirect()->back()->with('error', 'Something went wrong.');
+    }
+    
+    public function cancel()
+    {
+        // Handle cancellation
+    }
+    
+    public function success(Request $request)
+    {
+        // Handle successful transaction
     }
 }

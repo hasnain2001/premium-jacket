@@ -30,9 +30,7 @@
                         </div>
                     @endif
                           
-                    <center>
-                        <a href="{{ route('cashier.payment') }}" class="btn btn-success">Pay with PayPal </a>
-                    </center>
+                   
   
                 </div>
             </div>

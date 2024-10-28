@@ -40,17 +40,17 @@
     </div>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="{{ asset('images/slider2.jpeg') }}" class="slider" alt="...">
+            <img src="{{ asset('images/slider2.jpeg') }}" class="slider-image " alt="...">
 
         </div>
         <div class="carousel-item">
-            <img src="{{ asset('images/slider1.jpeg') }}" class="slider" alt="...">
+            <img src="{{ asset('images/slider1.jpeg') }}" class="slider-image " alt="...">
         </div>
         <div class="carousel-item">
-            <img src="{{ asset('images/slider.jpeg') }}" class="slider" alt="...">
+            <img src="{{ asset('images/slider.jpeg') }}" class="slider-image " alt="...">
         </div>
         <div class="carousel-item">
-            <img src="{{ asset('images/slider3.jpeg') }}" class="slider" alt="...">
+            <img src="{{ asset('images/slider3.jpeg') }}" class="slider-image " alt="...">
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

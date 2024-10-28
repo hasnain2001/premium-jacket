@@ -58,17 +58,24 @@ Route :: prefix('admin')->name('admin.')->group(function( ){
 
 Auth::routes();
 
-Route::controller(CheckoutController::class)->group(function (){
+Route::controller(CheckoutController::class)->group(function () {
     Route::get('/checkouts', 'index')->name('checkout');
-    Route::post('/checkouts/store',  'store')->name('checkout.store');
+    Route::post('/checkouts', 'store')->name('checkout.store'); // Change the route to handle POST
+    Route::post('/checkouts/stripe', 'processStripePayment')->name('checkout.stripe');
+    Route::post('/checkout/paypal/{order}/{totalAmount}', [CheckoutController::class, 'processPayPalPayment'])
+        ->name('checkout.paypal');
     Route::get('/checkout/success/{order_number}', 'showSuccess')->name('checkout.success');
+    Route::get('/checkout/cancel', 'cancel')->name('checkout.cancel');
 });
 
-Route::get('paypal', [PayPalController::class, 'index'])->name('paypal');
-Route::get('paypal/payment', [PayPalController::class, 'payment'])->name('paypal.payment');
-Route::post('paypal/create', [PayPalController::class, 'create'])->name('create.paypal');
-Route::get('paypal/payment/success', [PayPalController::class, 'paymentSuccess'])->name('paypal.payment.success');
-Route::get('paypal/payment/cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.payment/cancel');
+
+
+Route::controller(PayPalController::class)->group(function () {
+    Route::get('payment', 'payment')->name('payment');
+Route::get('cancel', 'cancel')->name('payment.cancel');
+Route::get('payment/success', 'success')->name('payment.success');
+});
+
 Route::controller(StripeController::class)->group(function(){
     Route::get('/stripe', 'stripe');
     Route::post('/stripe', 'stripePost')->name('stripe.post');

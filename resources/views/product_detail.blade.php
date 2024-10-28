@@ -221,7 +221,8 @@ header("X-Robots-Tag:index, follow");?><!DOCTYPE html>
         <!-- Alerts for Success and Error -->
         @if (session('success'))
             <div class="alert alert-success">
-                {{ session('success') }}
+
+               {{ $product->name }} :{{ session('success') }}
             </div>
         @endif
 
