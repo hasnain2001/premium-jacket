@@ -202,6 +202,20 @@ header("X-Robots-Tag:index, follow");?><!DOCTYPE html>
                                         border: 2px solid black;
                                     }
 
+                                    .breadcrumb-item a {
+  font-weight: 500;
+  color: #007bff; /* Custom link color */
+}
+
+.breadcrumb-item a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.breadcrumb .fas {
+  margin-right: 5px; /* Adds space between icons and text */
+  color: #6c757d;
+}
 
         </style>
     @livewireStyles
@@ -214,7 +228,24 @@ header("X-Robots-Tag:index, follow");?><!DOCTYPE html>
     <div class="conain">
         <h1 class="shop-text">Shop</h1>
     </div>
-
+    <header class="bg-light py-3 px-4 rounded shadow-sm" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">
+            <a href="/" class="text-decoration-none text-primary">
+              <i class="fas fa-home"></i> Home
+            </a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{{route('product')}}" class="text-decoration-none text-primary">
+              <i class="fas fa-box"></i> Product
+            </a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <i class="fas fa-tag"></i> {{$product->categories}}
+          </li>
+        </ol>
+      </header>
+      
     <div class="container mt-4">
         <h1 class="card bg-dark text-white text-center py-2 mb-4">{{$product->name}}</h1>
 

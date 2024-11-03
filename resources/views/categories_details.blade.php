@@ -54,6 +54,27 @@ header("X-Robots-Tag:index, follow");?>
         <h1 class="shop-text">{{ $category->title }}</h1>
     </div>
 <br>
+<header class="bg-light py-3 px-4 rounded shadow-sm" aria-label="breadcrumb">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a href="/" class="text-decoration-none text-primary">
+          <i class="fas fa-home"></i> Home
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="{{ route('categories') }}" class="text-decoration-none text-primary">
+          <i class="fas fa-th-large"></i> Categories
+        </a>
+      </li>
+      {{-- <li class="breadcrumb-item active" aria-current="page">
+        <i class="fas fa-th-large"></i>  Category
+          </li> --}}
+      <li class="breadcrumb-item active" aria-current="page">
+        <i class="fas fa-tag"></i> {{ $category->title }}
+      </li>
+    </ol>
+  </header>
+  
 <div class="container">
     <h1 class="text-center">{{ $category->title }}</h1>
     <div class="row">

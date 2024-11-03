@@ -137,7 +137,8 @@ class BlogController extends Controller
         $blog->save();
 
 
-        return redirect()->back()->with('success', 'Blog updated successfully.');
+        return redirect()->route('admin.blog')->with('success', 'Blog updated successfully.');
+
     }
 
 

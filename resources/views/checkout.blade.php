@@ -7,6 +7,8 @@
     <title>CheckOut</title>
     <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('bootstrap-5.0.2/css/bootstrap.min.css')}}">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
         /* Improved Styling */
         body {
@@ -77,6 +79,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+        @session('success')
+        <div class="alert alert-success" role="alert"> 
+            {{ $value }}
+        </div>
+    @endsession
 
         @if($errors->any())
             <div class="alert alert-danger">
@@ -100,7 +107,10 @@
                     <hr/>
 
                     <!-- Checkout Form -->
-                    <form id="payment-form" action="{{ route('checkout.store') }}" method="POST" enctype="multipart/form-data">
+ <form   role="form"  action="{{ route('checkout.store') }}" method="post"   class="require-validation" data-cc-on-file="false"
+                    data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                    id="payment-form">
+                      
                         @csrf
 
                         @foreach($cartItems as $item)
@@ -199,26 +209,43 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="mb-3">
-                                            <label>Name on Card</label>
-                                            <input type="text" class="form-control" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label>Card Number</label>
-                                            <input type="text" class="form-control card-number" required>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label>CVC</label>
-                                                <input type="text" class="form-control card-cvc" required>
+                                        <div class='form-row row'>
+                                            <div class='col-xs-12 form-group required'>
+                                                <label class='control-label'>Name on Card</label> <input
+                                                    class='form-control' size='4' type='text'>
                                             </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label>Expiration Month</label>
-                                                <input type="text" class="form-control card-expiry-month" required>
+                                        </div>
+                    
+                                        <div class='form-row row'>
+                                            <div class='col-xs-12 form-group card required'>
+                                                <label class='control-label'>Card Number</label> <input
+                                                    autocomplete='off' class='form-control card-number' size='20'
+                                                    type='text'>
                                             </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label>Expiration Year</label>
-                                                <input type="text" class="form-control card-expiry-year" required>
+                                        </div>
+                    
+                                        <div class='form-row row'>
+                                            <div class='col-xs-12 col-md-4 form-group cvc required'>
+                                                <label class='control-label'>CVC</label> <input autocomplete='off'
+                                                    class='form-control card-cvc' placeholder='ex. 311' size='4'
+                                                    type='text'>
+                                            </div>
+                                            <div class='col-xs-12 col-md-4 form-group expiration required'>
+                                                <label class='control-label'>Expiration Month</label> <input
+                                                    class='form-control card-expiry-month' placeholder='MM' size='2'
+                                                    type='text'>
+                                            </div>
+                                            <div class='col-xs-12 col-md-4 form-group expiration required'>
+                                                <label class='control-label'>Expiration Year</label> <input
+                                                    class='form-control card-expiry-year' placeholder='YYYY' size='4'
+                                                    type='text'>
+                                            </div>
+                                        </div>
+                    
+                                        <div class='form-row row'>
+                                            <div class='col-md-12 error form-group hide'>
+                                                <div class='alert-danger alert'>Please correct the errors and try
+                                                    again.</div>
                                             </div>
                                         </div>
                                     </div>
@@ -270,26 +297,73 @@
         @include('components.footer')
     </footer>
     <script src="{{asset('bootstrap-5.0.2/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+
     <script>
+        const stripe = Stripe('STRIPE_KEY'); // Replace with your own key
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+    
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            const { paymentMethod, error } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+            });
+    
+            if (error) {
+                // Show error to your customer
+                console.error(error);
+                alert(error.message);
+            } else {
+                // Send paymentMethod.id to your server
+                const stripeToken = paymentMethod.id; // This is the token you need to send
+                const formData = new FormData(form);
+                formData.append('stripeToken', stripeToken); // Add the token to the form data
+    
+                // Submit the form with the token
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                }).then(response => response.json()).then(data => {
+                    // Handle the response
+                    console.log(data);
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        });
         function submitForm(paymentMethod) {
             document.getElementById('payment_method').value = paymentMethod;
             document.getElementById('payment-form').submit();
         }
 
-            document.addEventListener("DOMContentLoaded", function () {
-                fetch('https://restcountries.com/v3.1/all')
-                    .then(response => response.json())
-                    .then(countries => {
-                        const countrySelect = document.getElementById('country');
-                        countries.forEach(country => {
-                            const option = document.createElement('option');
-                            option.value = country.name.common;
-                            option.textContent = country.name.common;
-                            countrySelect.appendChild(option);
-                        });
-                    })
-                    .catch(error => console.error('Error fetching countries:', error));
-            });
+      
         </script>
+        <script>
+              document.addEventListener("DOMContentLoaded", function () {
+        fetch('https://restcountries.com/v3.1/all')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(countries => {
+                const countrySelect = document.getElementById('country');
+                countries.forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country.cca2; // Using country code as value for better compatibility
+                    option.textContent = country.name.common;
+                    countrySelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching countries:', error));
+    });
+        </script>
+
 </body>
 </html>

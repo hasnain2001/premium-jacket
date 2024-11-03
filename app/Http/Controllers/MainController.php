@@ -134,16 +134,14 @@ public function blog_show($title) {
 }
    public function  categories(){
     $categories = Categories::latest()->get();
-    $genders =Gender::all();
-    foreach ($genders as $gender) {
-        $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-    }
-    return view('categories', compact('categories','genders','categoriesByGender'));
+  
+    return view('categories', compact('categories',));
    }
 
 
 
    public function viewcategory($name) {
+ 
     $slug = Str::slug($name);
     $title = ucwords(str_replace('-', ' ', $slug));
 

@@ -11,6 +11,8 @@ use App\Models\Gender;
 use App\Models\Product;
 use App\Models\Categories;
 use Stripe;
+use Stripe\Charge;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
@@ -63,9 +65,10 @@ public function index()
 
 public function store(Request $request)
 {
+
+   
     Log::info('Checkout Request Data: ', $request->all());
 
-    // Validate request data
     $request->validate([
         'email' => 'required|email',
         'first_name' => 'required|string|max:255',
@@ -80,21 +83,17 @@ public function store(Request $request)
         'items.*.product_id' => 'required|exists:products,id',
         'items.*.price' => 'required|numeric',
         'items.*.quantity' => 'required|integer|min:1',
-        // 'payment_option' => 'required|string|in:paypal,stripe', // Add required payment_method validation
     ]);
 
     DB::beginTransaction();
 
     try {
-        // Calculate total amount
         $totalAmount = collect($request->items)->sum(function ($item) {
             return $item['price'] * $item['quantity'];
         });
 
-        // Set the payment option based on the selected method
         $paymentOption = $request->payment_method;
 
-        // Create the Order
         $order = Order::create([
             'order_number' => uniqid('Order-'),
             'total_amount' => $totalAmount,
@@ -109,10 +108,9 @@ public function store(Request $request)
             'phone' => $request->phone,
             'country' => $request->country,
             'shipping_option' => $request->shipping_option,
-            'payment_option' => $paymentOption, // Save the selected payment option
+            'payment_option' => $paymentOption,
         ]);
 
-        // Create Order Items and update product quantities
         foreach ($request->items as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
@@ -121,7 +119,6 @@ public function store(Request $request)
                 'price' => $item['price'],
             ]);
 
-            // Decrement the product quantity
             $product = Product::find($item['product_id']);
             if ($product && $product->quantity >= $item['quantity']) {
                 $product->decrement('quantity', $item['quantity']);
@@ -129,16 +126,13 @@ public function store(Request $request)
                 throw new \Exception('Insufficient quantity for product: ' . $product->name);
             }
         }
-
         if ($paymentOption === 'paypal') {
-            $this->clearCart($request);
-            DB::commit();
             return $this->processPayPalPayment($order, $totalAmount);
         } elseif ($paymentOption === 'stripe') {
-            $this->clearCart($request);
-            DB::commit();
-            return $this->processStripePayment($order, $totalAmount, $request->stripeToken);
+            return $this->processStripePayment($request, $order, $totalAmount, $request->stripeToken);
+
         }
+       
 
         DB::commit();
         $this->clearCart($request);
@@ -148,102 +142,93 @@ public function store(Request $request)
     } catch (\Exception $e) {
         DB::rollback();
         Log::error('Order Processing Error: ' . $e->getMessage());
+        $order->update(['payment_option' => 'pending']);
         return back()->withErrors(['error' => 'There was an error processing your order: ' . $e->getMessage()]);
     }
 }
 
+// Separate method for PayPal payment processing
+public function processPayPalPayment($order, $totalAmount)
+{
+    $provider = new PayPalClient;
+    $provider->setApiCredentials(config('paypal'));
+    $provider->getAccessToken();
 
-   // Separate method for PayPal payment processing
-   public function processPayPalPayment($order, $totalAmount)
-   {
-
-            // Initialize the PayPal client
-            $provider = new PayPalClient;
-            $provider->setApiCredentials(config('paypal'));
-            $provider->getAccessToken();
-        
-            // Set up the order data
-            $orderData = [
-                "intent" => "CAPTURE",
-                "purchase_units" => [
-                    [
-                        "amount" => [
-                            "currency_code" => "USD",
-                            "value" => $totalAmount,
-                        ],
-                        "description" => "Order #" . $order->order_number,
-                    ]
+    $orderData = [
+        "intent" => "CAPTURE",
+        "purchase_units" => [
+            [
+                "amount" => [
+                    "currency_code" => "USD",
+                    "value" => $totalAmount,
                 ],
-                "application_context" => [
-                    "return_url" => route('payment.success'),
-                    "cancel_url" => route('payment.cancel')
-                ]
-            ];
-        
-            // Create the order
-            $response = $provider->createOrder($orderData);
-        
-            // Redirect the user to PayPal if the order is created successfully
-            if (isset($response['links'][1]['href'])) {
-                return redirect($response['links'][1]['href']);
-            }
-        
-            // Handle error if any
-            return redirect()->back()->with('error', 'Something went wrong.');
-       $provider = new PayPalClient;
-       $provider->setApiCredentials(config('paypal'));
-       $provider->getAccessToken();
+                "description" => "Order #" . $order->order_number,
+            ]
+        ],
+        "application_context" => [
+            "return_url" => route('checkout'),
+            "cancel_url" => route('checkout.cancel')
+        ]
+    ];
 
-       $orderData = [
-           "intent" => "CAPTURE",
-           "purchase_units" => [
-               [
-                   "amount" => [
-                       "currency_code" => "USD",
-                       "value" => $totalAmount,
-                   ],
-                   "description" => "Order #" . $order->order_number,
-               ]
-           ],
-           "application_context" => [
-               "return_url" => route('checkout.success', ['order_number' => $order->order_number]),
-               "cancel_url" => route('checkout.cancel'),
-           ]
-       ];
+    try {
+        $response = $provider->createOrder($orderData);
 
-       $response = $provider->createOrder($orderData);
+        if (isset($response['links'][1]['href'])) {
+            return redirect($response['links'][1]['href']);
+        }
 
-       if (isset($response['links'][1]['href'])) {
-           return redirect($response['links'][1]['href']);
-       }
+        throw new \Exception('Error creating PayPal order.');
 
-       throw new \Exception('Error creating PayPal order.');
-   }
+    } catch (\Exception $e) {
+        Log::error('PayPal Payment Error: ' . $e->getMessage());
+        $order->update(['payment_option' => 'pending']);
+        return back()->withErrors(['error' => 'Payment error: ' . $e->getMessage()]);
+    }
+}
 
-   // Separate method for Stripe payment processing
-   public function processStripePayment($order, $totalAmount, $stripeToken)
-   {
-       Stripe\Stripe::setApiKey(env('STRIPE_KEY'));
+public function processStripePayment($order, $totalAmount, $stripeToken)
+{
+    try {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
-       $charge = Stripe\Charge::create([
-           "amount" => $totalAmount * 100, 
-           "currency" => "usd",
-           "source" => $stripeToken,
-           "description" => "Order #" . $order->order_number,
-       ]);
+        $charge = \Stripe\Charge::create([
+            "amount" => 100 * 100,
+            'currency' => 'usd',
+            'description' => "Order #" . $order->order_number,
+            'source' => $stripeToken, // Ensure this is valid
+        ]);
 
-       if (!$charge || $charge->status !== 'succeeded') {
-           throw new \Exception('Error processing Stripe payment.');
-       }
+        // If the charge is successful
+        Session::flash('success', 'Payment successful!');
+        return redirect()->route('checkout.success', ['order_number' => $order->order_number])
+            ->with('success', 'Payment successful!');
 
-       return redirect()->route('checkout.success', ['order_number' => $order->order_number]);
-   }
+    } catch (\Stripe\Exception\CardException $e) {
+        // Handle card errors
+        Log::error('Stripe Card Exception: ' . $e->getMessage());
+        Session::flash('error', 'Card error: ' . $e->getMessage());
+        return redirect()->route('checkout')->with('error', 'Payment failed: ' . $e->getMessage());
+
+    } catch (\Exception $e) {
+        // Handle other errors
+        Log::error('Stripe Exception: ' . $e->getMessage());
+        Session::flash('error', 'Payment processing failed: ' . $e->getMessage());
+        return redirect()->route('checkout')->with('error', 'Payment processing failed: ' . $e->getMessage());
+    }
+}
+
+
+
+
+
+
    private function clearCart(Request $request)
    {
        // Check if the user is authenticated
        if (Auth::check()) {
            // Clear cart items from the database for logged-in users
-           Cart::where('user_id', auth()->id())->delete();
+           Cart::where('user_id', Auth::id())->delete();
        } else {
            // Clear session cart for guest users
            if (session()->has('cart')) {
@@ -267,25 +252,19 @@ public function showSuccess($order_number)
     return view('checkoutsuccess', compact('order'));
 }
 
-
-
-public function order()
+public function checkout(Request $request)
 {
-    // Retrieve all orders from the database, ordering by latest created first
-    $orders = Order::orderBy('created_at', 'desc')->get();
+    $status = $request->query('status');
+    
+    if ($status === 'success') {
+        session()->flash('message', 'Payment was successful!');
+    } elseif ($status === 'cancel') {
+        session()->flash('message', 'Payment was canceled.');
+    }
 
-    // Pass the orders to the view
-    return view('admin.order.index', compact('orders'));
+    return view('payment'); 
 }
 
-public function orderDetail($order_number)
-{
-    // Find the order by its order number
-    $order = Order::where('order_number', $order_number)->firstOrFail();
-
-    // Pass the order to the view
-    return view('admin.order.order-detail', compact('order'));
-}
 
 
 }

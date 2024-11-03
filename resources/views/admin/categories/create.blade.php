@@ -104,7 +104,7 @@
                              
                                 <div class="form-group">
                                     <label for="authentication">Authentication</label><br>
-                                    <input type="checkbox" name="authentication" id="authentication" value="top_stores">&nbsp;<label for="authentication">Top Store</label>
+                                    <input type="checkbox" name="authentication" id="authentication" value="top_stores">&nbsp;<label for="authentication">Top Category</label>
                                     @error('authentication')
                                     <span class="text-danger">{{ $message }}</span>
                                                                        @enderror

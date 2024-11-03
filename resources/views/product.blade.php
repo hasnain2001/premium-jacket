@@ -30,7 +30,20 @@ header("X-Robots-Tag:index, follow");?>
 
   <style>
 .nav-logo,.shop-text,.text{color:#fff}.nav-logo{font-size:44px;font-weight:300;text-decoration:none}nav{background-color:#000;height:auto}.conain{background-position:center;background-size:cover;background-repeat:no-repeat;background-image:url('{{ asset('images/banner.jpg') }}');height:300px;max-height:350px}.shop-text{text-align:center;padding-top:12%;font-size:3rem;font-weight:600;text-shadow:2px 2px 5px rgba(0,0,0,.5)}.product{height:200px;object-fit:cover}.card{transition:transform .3s,box-shadow .3s}.card:hover{box-shadow:0 10px 20px rgba(0,0,0,.2)}.btn-dark{background-color:#343a40;border:none;transition:background-color .3s,transform .3s}.btn-dark:hover{background-color:#23272b;transform:translateY(-3px)}@media (max-width:767.98px){.col-md-6{flex:0 0 50%;max-width:50%}}
+.breadcrumb-item a {
+  font-weight: 500;
+  color: #007bff; /* Custom link color */
+}
 
+.breadcrumb-item a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.breadcrumb .fas {
+  margin-right: 5px; /* Adds space between icons and text */
+  color: #6c757d;
+}
   </style>
 </head>
 <body>
@@ -48,9 +61,25 @@ header("X-Robots-Tag:index, follow");?>
         {{ session('error') }}
     </div>
 @endif
-    <div class="conain">
-        <h1 class="shop-text">Shop</h1>
-    </div>
+<div class="conain">
+    <h1 class="shop-text">Shop</h1>
+</div>
+<header class="bg-light py-3 px-4 rounded shadow-sm" aria-label="breadcrumb">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a href="/" class="text-decoration-none text-primary">
+          <i class="fas fa-home"></i> Home
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="{{route('product')}}" class="text-decoration-none text-primary">
+            <i class="fas fa-shopping-cart"></i>Shop
+        </a>
+      </li>
+    
+    </ol>
+  </header>
+   
     <br>
     <p class="h5 m-3 font-weight-bold text-center text-dark">Total Products: <span class="fw-bold">{{ $products->total() }}</span></p>
     <br>

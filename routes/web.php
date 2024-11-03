@@ -21,6 +21,7 @@ use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\OrderController;
 
 
 
@@ -60,12 +61,14 @@ Auth::routes();
 
 Route::controller(CheckoutController::class)->group(function () {
     Route::get('/checkouts', 'index')->name('checkout');
-    Route::post('/checkouts', 'store')->name('checkout.store'); // Change the route to handle POST
+    Route::post('/checkouts', 'store')->name('checkout.store'); 
     Route::post('/checkouts/stripe', 'processStripePayment')->name('checkout.stripe');
-    Route::post('/checkout/paypal/{order}/{totalAmount}', [CheckoutController::class, 'processPayPalPayment'])
+    Route::post('/checkout/paypal/{order}/{totalAmount}', 'processPayPalPayment')
         ->name('checkout.paypal');
-    Route::get('/checkout/success/{order_number}', 'showSuccess')->name('checkout.success');
-    Route::get('/checkout/cancel', 'cancel')->name('checkout.cancel');
+        Route::get('/checkout/success/{order_number}', [CheckoutController::class, 'showSuccess'])->name('checkout.success');
+    Route::get('/checkout/cancel', 'checkout')->name('checkout.cancel');
+    Route::get('/cancel', 'checkout')->name('payments.cancel');
+    Route::get('payment/success', 'checkout')->name('payments.success');
 });
 
 
@@ -106,7 +109,8 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/gender/{name}', 'viewgender')->name('gender_details');
     Route::fallback( 'notfound')->name('notfound');
     Route::get('/blog',  'blog_home')->name('blog');
-Route::get('/blog/{slug}',  'blog_show')->name('blog-details');});
+Route::get('/blog/{slug}',  'blog_show')->name('blog-details');
+});
 
 
 
@@ -172,7 +176,7 @@ Route::controller(BlogController::class)->prefix('dashboard')->group(function ()
     Route::delete('/blog/bulk-delete',  'deleteSelected')->name('admin.blog.bulkDelete');
     Route::delete('/blog/bulk-delete', 'deleteSelected')->name('admin.blog.bulkDelete');
 });
-Route::controller(CheckoutController::class)->prefix('dashboard')->group(function () {
+Route::controller(OrderController::class)->prefix('dashboard')->group(function () {
 
     Route::get('/order', 'order')->name('admin.order');
     Route::get('/order/{order_number}', 'orderdetail')->name('admin.order-detail');

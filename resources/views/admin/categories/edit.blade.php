@@ -84,7 +84,7 @@
                                 <div class="form-group">
                                     <label for="authentication" class="font-weight-bold">Authentication</label><br>
                                     <input type="checkbox" name="authentication" id="authentication" {{ $categories->authentication == 'top_stores' ? 'checked' : '' }} value="top_stores">&nbsp;
-                                    <label for="authentication">Top Store</label>
+                                    <label for="authentication">Top Category</label>
                                 </div>
                             </div>
                         </div>

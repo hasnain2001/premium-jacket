@@ -26,19 +26,18 @@ header("X-Robots-Tag:index, follow");?>
    <!-- Bootstrap CSS -->
    <!-- Add Swiper CSS -->
    <link rel="stylesheet" href="{{ asset('bootstrap-4.6.2-dist/css/bootstrap.min.css') }}">
-
-       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
 </head>
 <body>
     <nav>
         @include('components.navbar')
     </nav>
+    <br>
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-8 mb-4">
                 <div class="blog-post card shadow rounded-lg border border-light">
-                    <img class="img-fluid" src="{{ asset($blog->category_image) }}" alt="Blog Image" style="width: 100%; height: auto;">
+                    <img class="img-fluid" src="{{ asset($blog->category_image) }}" alt="Blog Image" style="width: 800px; height: 450px;">
                     <div class="card-body">
                         <h1 class="card-title text-3xl font-semibold text-gray-800 mb-4">{{ $blog->title }}</h1>
                         <p class=" ">{!! $blog->content !!}</p>

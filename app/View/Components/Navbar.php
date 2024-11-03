@@ -12,7 +12,7 @@ class Navbar extends Component
     public $categoriesByGender;
     public $cartCount; // Add this property
 
-    public function __construct($genders = [], $categoriesByGender = [], $cartCount = 0) // Add cartCount to the constructor
+    public function __construct($genders = [], $categoriesByGender = [], $cartCount = 0) 
     {
         $this->genders = $genders;
         $this->categoriesByGender = $categoriesByGender;

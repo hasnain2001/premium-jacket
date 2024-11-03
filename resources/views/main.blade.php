@@ -1,33 +1,46 @@
 @extends('welcome')
 
 @section('main-content')
-
-
 <style>
-@import url(https://fonts.googleapis.com/css?family=Lato:100&display=swap);.button-read,.center{display:flex;position:relative}.button-read,.button-read:hover{text-decoration:none;color:#fff}.center{width:180px;height:60px;justify-content:center;align-items:center}.button-read{justify-content:center;align-items:center;width:140px;height:40px;cursor:pointer;background:brown;border:2px solid #fff;border-radius:20px;outline:0;font-size:18px;font-weight:700;overflow:hidden;transition:background 3.3s,color .3s}.button-read:hover{background:#951d1d}.button-read svg{position:absolute;left:0;top:0;width:100%;height:100%;fill:none;stroke:#fff;stroke-width:2;stroke-dasharray:150 480;stroke-dashoffset:150;transition:stroke-dashoffset 3.4s ease-in-out}.button-read:hover svg{stroke-dashoffset:-480}.button-read span{position:relative;z-index:1}.product-img-container{overflow:hidden;height:300px}.product-img{padding:10px;height:100%;width:auto;object-fit:cover;object-position:center}.card-img{border-radius:5%}
-  .btn-attractive {
-        background-color: #5a67d8; /* Custom purple background */
-        color: white;
-        border-radius: 25px;
-        padding: 10px 20px;
-        font-size: 16px;
-        font-weight: 600;
-        transition: all 0.3s ease-in-out;
-    }
+    .shop-now {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    border: 1px solid white;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-    .btn-attractive:hover {
-        background-color: white;
-        color: #5a67d8;
-        border: 2px solid #5a67d8;
+.shop-now:hover {
+    background-color:#690500;
+    color: white;
+}
+.tab-navigation a {
+        font-weight: bold;
+        color: #fff;
+        margin: 0 5px;
+        transition: 0.3s;
     }
-
-    .card-footer {
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        height: 100%;
+    .carousel-item h2 {
+        font-size: 2rem;
+        color: #333;
     }
-
+    .carousel-item p {
+        font-size: 1rem;
+        color: #555;
+        margin: 10px 0;
+    }
+    .carousel-item img {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+    .btn-dark:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+     
 
 </style>
 <!-- Carousel Start -->
@@ -65,95 +78,120 @@
 
 <hr>
 <!-- Carousel End -->
-<div class="container">
+<div class="contain">
     <div class="header">
-      <h1>Premium Jackets. Dutch Designed, Sustainably Made</h1>
+      <h1 class="heading-1">Welcome to Premium Leather Style: A Tradition of Excellence in Leather :</h1>
       <div class="line">
         <hr>
       </div>
     </div>
-
     <div class="row">
-      <div class="col-md-3">
+    <div class="col-md-6">
         <div class="Feeling">
-          <span>Feeling Free</span>
-          <p>Searching for a premium leather style for men? Hide leather style has been writing history in leather jackets since 1860. As fashion evolved, so did we. Now more than 150 years later and 2500 points of sale further, we feel that it is time to profile ourselves. Donders 1860: the producer of real leather jackets.</p>
+        
+          <p>Premium Leather Style has established a solid reputation for high-end leather jackets since 1860. We offer a carefully selected variety of luxury jackets that creatively blend tradition with innovation to produce jackets that are not only fashionable but also environmentally friendly. With more than 150 years of combined experience, we take great pride in designing luxurious leather jackets that balance durability, style, and environmental responsibility. </p>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="card card1" style="background-image: url('{{ asset('images/image1.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
-            <a href="https://www.premiumleatherstyle.com/category/men-bomber-jacket" class="text-dark text-decoration-none">
-              <div class="card-content" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%;">
-                <span class="card-product">BOMBER JACKET</span>
-                <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-              </div>
-            </a>
+      <div class="col-md-5">
+        <div class="Feeling">
+            <br>
+        
+          <p>Our collection has everything from vintage styles like bomber and biker jackets to the newest innovations in leather and shearling. Every piece is expertly made to offer the best comfort and quality possible while enhancing the elegance of your overall appearance.. </p>
         </div>
-    </div>
-    
-    <div class="col-md-3">
-        <div class="card card2" style="background-image: url('{{ asset('images/image2.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
-            <a href="https://www.premiumleatherstyle.com/category/men-varsity-jackets" class="text-dark text-decoration-none">
-              <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%;">
-                <span class="card-product">VARSITY JACKET</span>
-                <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-              </div>
-            </a>
-        </div>
-    </div>
-    
-      <div class="col-md-3">
-        <div class="card" style="background-image: url('{{ asset('images/image6.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
-         <a href="{{ route('product') }}" class="text-dark text-decoration-none">
- 
-            <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%;text-align:center;">
-            <span class="card-product ">SALE</span>
-            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-          </div></a>
-        </div>
-      </div>
-    </div>
+      </div></div>
 
-    <div class="row mt-3">
-      <div class="col-md-4">
+      <div class="line">
+        <hr>
+      </div>
+    <div class="row">
+   
+        <div class="col-md-6">
+            <div class="card card1" style="background-image: url('{{ asset('images/men.png') }}'); background-size: contain; background-position: center; background-repeat: no-repeat; height: 340px;">
+                <a href="http://127.0.0.1:8000/gender/MENs" class="text-dark text-decoration-none">
+                    <div class="card-content" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%; text-align:center;">
+                        <span class="text-center">MENS</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card card2" style="background-image: url('{{ asset('images/women.jpg') }}'); background-size: contain; background-position: center; background-repeat: no-repeat; height: 340px; position: relative;">
+                <a href="http://127.0.0.1:8000/gender/women" class="text-dark text-decoration-none">
+                    <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%; text-align:center;">
+                        <span class="card-product text-center">WOMEN</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+    
+  
+
+    <div class="row mt-4">
+    
+      <div class="col-md-3">
         <div class="card" style="background-image: url('{{ asset('images/image3.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
           
             <a href="{{ route('blog') }}" class="text-dark text-decoration-none">
                 <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%; text-align:center;" >
-            <span class="card-product">BLOG</span>
-            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
+            <span class="card-product ">Bomber Jacket</span>
+          
           </div></a>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="card" style="background-image: url('{{ asset('images/image4.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
             <a href="{{ route('about') }}">
          
           <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%; text-align:center;" >
-            <span class="card-product">OUR STORIES</span>
-            <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
-          </div></a>
+            <span class="card-product">Varsity Jacket</span>
+               </div></a>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="card" style="background-image: url('{{ asset('images/image5.jpeg') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
             <a href="{{route('contact')}}">
             
                 <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%; text-align:center;" >
-                    <span class="card-product">CONTACT</span>
-                    <p>Explore a curated collection of stylish essentials tailored for the modern man.</p>
+                    <span class="card-product">Women’s Aviator Jackets</span>
+    
                 </div>
             </a>
         </div>
       </div>
+      <div class="col-md-3">
+        <div class="card" style="background-image: url('{{ asset('images/Suede and Shearling Jackets.png') }}'); background-size: cover; background-position: center; height: 260px; position: relative;">
+            <a href="{{route('contact')}}">
+            
+                <div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); color: white; padding: 20px; position: absolute; bottom: 0; width: 100%; text-align:center;" >
+                    <span class="card-product">Suede and Shearling Jackets </span>
+                   
+                </div>
+            </a>
+        </div>
+      </div> 
     </div>
+
   </div>
+  <div class="col-md-12">
+    <div class="card" style="background-image: url('{{ asset('images/image6.png') }}'); background-size: cover; background-position: center; height: 400px; position: relative;">
+        <a href="{{ route('product') }}" class="text-dark text-decoration-none">
+            <div class="overlay" style="height:250px; color: white; padding: 20px; position: absolute; bottom: 0; width: 100%; text-align:center;">
+                <a class="shop-now" href="{{ route('product') }}">Shop Now</a>
+            </div>
+        </a>
+    </div>
+</div>
+
+</div>
+
 
   <div class="line">
     <hr>
   </div>
 
-  <div class="container mt-5">
+  <div class="contain ">
     <!-- Heading Section -->
     <div class="row mb-4">
         <div class="col text-center">
@@ -246,25 +284,24 @@
 <div class="about_section">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6">
-                <div class="about_img"><img src="{{ asset('images/about.jpg') }}" class="img-fluid rounded" alt="About Us Image"></div>
-            </div>
-            <div class="col-lg-6">
-                <h2 class="about_taital">About Us</h2>
-                <p class="about_text">We are a premier store offering a wide range of products to meet all your needs. Our mission is to provide high-quality items at affordable prices with exceptional customer service. Whether you're shopping for the latest trends or everyday essentials, we've got you covered. Our team is dedicated to ensuring that your shopping experience is smooth and enjoyable. We continually strive to expand our product offerings, stay ahead of market trends, and bring you the best deals. Trust us to be your one-stop destination for all your shopping needs. Your satisfaction is our top priority, and we're always here to assist you.</p>
+                    <div class="col-lg-12">
+                <h2 class="about_taital text-center">About Us</h2>
+                <p class="about_text text-justify" style="font-family: 'Open Sans', sans-serif; font-size: 1.1rem; line-height: 1.8; color: #555;">
+                    At Premium Leather Style, we don't just make leather jackets—we craft legacies. Founded in 1860, we've endured centuries of change, constantly redefining what leather fashion means. Our journey is rooted in timeless craftsmanship—the kind that blends the classic with the contemporary, old-world skill with modern aesthetics.
+                    <br><br>
+                    We're not just about jackets. No, we're about experiences. Each coat is a statement, a masterpiece woven from years of tradition and a relentless pursuit of innovation. Our commitment to sustainability, durability, and forward-thinking fashion sets us apart.
+                    <br><br>
+                    Our products are handcrafted from the finest eco-conscious leather and responsibly sourced to ensure that every piece isn't just good for you and the planet. We believe in balancing style with environmental responsibility and take it seriously. Each jacket we create is subjected to strict quality checks, where we combine the knowledge of traditional craftsmanship with cutting-edge techniques. The result? Perfect comfort, outstanding style, and a lifespan that shows our commitment.
+                </p>    <a href="{{ route('about') }}" class="button-read">
+                    <svg width="180px" height="60px" viewBox="0 0 180 60" class="border">
+                      <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
+                      <polyline points="179,1 179,59 1,59 1,1 179,1" class="hl-line" />
+                    </svg>
+                    <span>Read Me</span>
+                  </a>
 
 
-
-                <div class="center">
-                    <a href="{{ route('about') }}" class="button-read">
-                      <svg width="180px" height="60px" viewBox="0 0 180 60" class="border">
-                        <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
-                        <polyline points="179,1 179,59 1,59 1,1 179,1" class="hl-line" />
-                      </svg>
-                      <span>Read Me</span>
-                    </a>
-                  </div>
-
+            
 
 
             </div>
@@ -274,10 +311,94 @@
 <!-- About Section End -->
 <div class="line">
     <hr>
-  </div>
+</div>
+
+<!-- Our Mission Section Start -->
+<div class="mission-section py-5 text-light position-relative" 
+     style="background-image: url('{{ asset('images/our-mission.png') }}'); background-size: cover; background-position: center;">
+    <div class="overlay position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.7);"></div>
+
+    <div class="container position-relative z-index-1">
+        <div class="row ">
+            <div class="col-lg-8 col-md-10">
+                <h2 class="display-4 fw-bold mb-4" style="font-family: 'Roboto', sans-serif; color:white;">Our Mission</h2>
+                <p class="lead " style="font-family: 'Open Sans', sans-serif; color:white;">
+                    To offer not just leatherwear but a legacy. We aim to focus on our heritage of craftsmanship with modern sustainability, delivering exceptional quality at prices that don’t break the bank. Luxury, after all, should be for everyone, and that’s our promise.
+                </p>
+                <p class="mb-4" style="font-family: 'Open Sans', sans-serif; font-size: 1.1rem;color:white;">
+                    We believe luxury shouldn’t be exclusive. It should be inclusive, attainable, and reflective of the world we live in today. We focus on making high-quality leatherwear that speaks to modern values. We strive to give our customers something they can wear with pride, knowing they’re part of a more significant movement toward responsible fashion.
+                </p>
+                <p class="mb-0" style="font-family: 'Open Sans', sans-serif; font-size: 1.1rem;color:white;">
+                    Our mission is simple yet profound: to craft leather that stands the test of time—both in its design and its commitment to the planet—while ensuring that luxury remains within reach for everyone.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Our Mission Section End -->
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <div class="tab-navigation">
+            <a href="#carouselExample" class="text-dark btn btn-light" data-slide-to="0" class="active">Ethical Manufacturing Practices</a>
+            <a href="#carouselExample" class="text-dark btn btn-light" data-slide-to="1">Our Promise</a>
+            <a href="#carouselExample" class="text-dark btn btn-light" data-slide-to="2">MADE TO LAST</a>
+        </div>
+    </div>
+
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner text-right">
+            <div class="carousel-item active">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Ethical Manufacturing Practices</h2>
+                        <p >At Premium Leather Style, ethical manufacturing isn’t just a phrase—it’s the backbone of our production process. Our approach is multilayered, beginning with the careful selection of eco-conscious leather. We source from suppliers who prioritize animal welfare and adhere to strict environmental standards, minimizing harm to the planet.</p>
+                        <p>Our manufacturing facilities operate under strict labor conditions that guarantee fair wages, safe working environments, and no exploitation. Each jacket is crafted by skilled hands and treated with respect, ensuring that ethical treatment extends to the earth and every person involved in the process.</p>
+                        <button class="btn btn-dark mt-3">CUSTOMIZE YOUR OWN</button>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="{{asset('images/manu-facture.png  ')}}" alt="Ethical Manufacturing">
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-md-6 text-center py-10">
+                                            
+                        <img src="{{asset('images/our-promises.png')}}" alt="Made to Last">
+                       
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Our Promise</h2>
+                        <br>
+                        <strong>Unmatched Craftsmanship:</strong>
+                        <span class="text-dark">When you put on one of our jackets, you're wearing a piece of history. Every piece is made by highly trained craftsmen who have dedicated years to perfecting their technique, guaranteeing that every stitch, seam, and inch of leather meets the highest standards.</span>
+                        <br>
+                        <strong>Sustainable Practices</strong>
+                        <p>Style should never come at the cost of our planet. That’s why we’ve committed to using only eco-friendly materials and sustainable processes, reducing our footprint while delivering exceptional leather products.</p>
+                        <strong>Customer Satisfaction</strong>
+                        <p>Our job isn’t finished when you buy. We're in it for the long run, offering quick shipping, simple returns, and committed customer service. We guarantee quality, comfort, and care with every jacket we provide.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-md-6">
+                        <br><br>
+                      <p>At Premium Leather Style , we're all about longevity. Our expert craftspeople thoughtfully design & handcraft your jackets one at a time with elite attention to detail, using the finest full-grain leathers & suede, durable hardware, and finishings to ensure that with us, durability is not just a promise; it's a guarantee..</p>
+                      
+                    </div>
+                    <div class="col-md-6">
+                        <img src="{{asset('images/made-to-fit.png')}}" alt="Made to Last">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Customer Testimonials Start -->
-<div class="customer_section py-5 bg-light">
-    <div class="container">
+<div class="customer_section py-5 ">
+    <div class="contain">
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="fw-bold mb-4">What Our Customers Say</h2>
@@ -297,6 +418,14 @@
                             </div>
                             <div class="customer_right ms-4">
                                 <h3 class="customer_name">Emily</h3>
+                                <!-- Star Rating -->
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
                                 <p class="customer_text">"I've been a loyal customer for years and every experience has been fantastic. The customer service is exceptional, and I always feel valued!"</p>
                             </div>
                         </div>
@@ -311,6 +440,14 @@
                             </div>
                             <div class="customer_right ms-4">
                                 <h3 class="customer_name">John</h3>
+                                <!-- Star Rating -->
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
                                 <p class="customer_text">"This company goes above and beyond to ensure their customers are satisfied. Fast service, quality products, and a friendly team. Highly recommend!"</p>
                             </div>
                         </div>
@@ -324,7 +461,15 @@
                                 </div>
                             </div>
                             <div class="customer_right ms-4">
-                                <h3 class="customer_name">Taylor swift</h3>
+                                <h3 class="customer_name">Taylor</h3>
+                                <!-- Star Rating -->
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
                                 <p class="customer_text">"Excellent service and a wonderful experience every time. I truly appreciate the attention to detail and the personalized care I receive."</p>
                             </div>
                         </div>
@@ -419,6 +564,9 @@
 </div>
 <!-- News Section End -->
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 @endsection

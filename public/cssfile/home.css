@@ -1,4 +1,14 @@
     
+  
+     .col-md-6 p{
+
+font-weight: 500;
+font-size: large;
+     }
+    .contain{
+        width: 100%;
+        padding: 20px;
+    }
     
     /* CSS Start */
 
@@ -15,17 +25,15 @@
     }
   
     .card-product {
-        margin-top:20%;
-        font-size: 24px;
+
         font-weight: 600;
-        margin-bottom: 10px;
+
         color: #f0f0f0;
-        text-align: center;
-    }
+        }
     .card p {
         margin: 0;
         padding: 0 10px;
-        text-align: center;
+     
     }
     .Feeling {
         position: relative;
@@ -171,7 +179,7 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     .about_taital {
-        font-size: 1.75rem;
+        font-size: 2.50rem;
         font-weight: bold;
         color: brown;
         margin-bottom: 1rem;
@@ -241,4 +249,94 @@
     to {
         left: 100%}
     }
-    
+    @import url(https://fonts.googleapis.com/css?family=Lato:100&display=swap);
+    .button-read, .center {
+    display: flex;
+    position: absolute;
+}
+.button-read, .button-read:hover {
+    text-decoration: none;
+    color: #fff;
+}
+.center {
+    width: 180px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+}
+.button-read {
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+    background: brown;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    outline: 0;
+    font-size: 18px;
+    font-weight: 700;
+    overflow: hidden;
+    transition: background 3.3s, color .3s;
+}
+.button-read:hover {
+    background: #951d1d;
+}
+.button-read svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-dasharray: 150 480;
+    stroke-dashoffset: 150;
+    transition: stroke-dashoffset 3.4s ease-in-out;
+}
+.button-read:hover svg {
+    stroke-dashoffset: -480;
+}
+.button-read span {
+    position: relative;
+    z-index: 1;
+}
+.product-img-container {
+    overflow: hidden;
+    height: 300px;
+}
+.product-img {
+    padding: 10px;
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    object-position: center;
+}
+.card-img {
+    border-radius: 5%}
+  .btn-attractive {
+        background-color: #5a67d8; /* Custom purple background */
+        color: white;
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-attractive:hover {
+        background-color: white;
+        color: #5a67d8;
+        border: 2px solid #5a67d8;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        height: 100%;
+    }
+.heading-1{
+    font-size: 40px;
+}

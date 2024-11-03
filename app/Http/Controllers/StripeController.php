@@ -3,40 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Stripe;
+use Stripe\Stripe;
+use Stripe\Charge;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class StripeController extends Controller
 {
-        /**
-     * success response method.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function stripe()
-    {
-        return view('stripe');
-    }
 
     /**
      * success response method.
      *
      * @return \Illuminate\Http\Response
      */
-    public function stripePost(Request $request)
+    public function stripe(): View
     {
-        Stripe\Stripe::setApiKey(env('STRIPE_KEY'));
-
-        Stripe\Charge::create ([
-                "amount" => 100 * 100,
-                "currency" => "usd",
-                "source" => $request->stripeToken,
-                "description" => "Test payment from itsolutionstuff.com."
-        ]);
-
-        Session::flash('success', 'Payment successful!');
-
-        return back();
+        return view('stripe');
     }
+      
+    /**
+     * success response method.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function stripePost(Request $request): RedirectResponse
+    {
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        try {
+            Charge::create([
+                'amount' => 1000, // Amount in cents
+                'currency' => 'usd',
+                'source' => $request->stripeToken,
+                'description' => 'Test Payment',
+            ]);
+
+            return redirect()->route('payment.success')->with('success', 'Payment successful!');
+        } catch (\Exception $e) {
+            return redirect()->route('payment.failure')->with('error', $e->getMessage());
+        }
+    }
+
 
 }
