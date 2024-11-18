@@ -1,15 +1,7 @@
     @extends('welcome')
 
     @section('main-content')
-    @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="fa fa-check-circle" style="margin-right: 10px;"></i>
-        <strong>Success!</strong> {{ session('success') }}
-        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
+
 
 @if($errors->any())
     <div class="alert alert-danger">
@@ -28,6 +20,17 @@
                     <h1 class="card-title text-white">Order Confirmation</h1>
                     <p class="lead mb-0">Thank you for your order!</p>
                     <p class="mb-0">Your order has been placed successfully.</p>
+                    <div class='form-row row'>
+                        @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa fa-check-circle" style="margin-right: 10px;"></i>
+        <strong>Success!</strong> {{ session('success') }}
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+                    </div>
                 </div>
 
                 <div class="card-body">
@@ -43,6 +46,10 @@
                                     <th>Item Image</th>
                                     <th>Item Name</th>
                                     <th>Quantity</th>
+                                    <th>
+                                        size
+                                    </th>
+                                    <th>color</th>
                                     <th>Price</th>
                                     <th>Total</th>
                                 </tr>
@@ -62,6 +69,8 @@
                                         </td>
                                         <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->quantity }}</td>
+                                        <td>{{ $item->size }}</td>
+                                        <td>{{ $item->color }}</td>
                                         <td>${{ number_format($item->price, 2) }}</td>
                                         <td>${{ number_format($item->price * $item->quantity, 2) }}</td>
                                     </tr>
@@ -90,7 +99,7 @@
                                             {{ $order->first_name }} {{ $order->last_name }}
                                         </p>
                                         <p class="mb-2">
-                                            <strong><i class="fas fa-map-marker-alt"></i> Address:</strong>
+                                            <strong><i class="fas fa-map-marker-alt "></i> Address:</strong>
                                             {{ $order->address }}
                                         </p>
                                         <p class="mb-2">
@@ -120,7 +129,7 @@
 
 
                     <div class="text-center">
-                        <a href="{{ route('product') }}" class="btn btn-lg btn-primary">Continue Shopping</a>
+                        <a href="{{ route('product') }}" class="btn btn-lg btn-danger">Continue Shopping</a>
                     </div>
                 </div>
             </div>

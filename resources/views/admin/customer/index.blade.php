@@ -35,7 +35,8 @@
             <h5 class="mb-0 text-white">User List</h5>
         </div>
         <div class="card-body">
-            <table class="table table-striped table-hover dt-responsive w-100">
+            <table  id="datatable-buttons"  class="table table-striped table-hover dt-responsive w-100">
+   
                 <thead class="thead-light">
                     <tr>
                         <th>ID</th>

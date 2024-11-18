@@ -13,9 +13,19 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-
+'mailgun' => [
+    'domain' => env('MAILGUN_DOMAIN'),
+    'secret' => env('MAILGUN_SECRET'),
+    'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+    'scheme' => 'https',
+],
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
+        'message_stream_id' => env('POSTMARK_MESSAGE_STREAM_ID'),
+        // 'client' => [
+        //     'timeout' => 5,
+        // ],
+    
     ],
 
     'ses' => [

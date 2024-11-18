@@ -1,64 +1,76 @@
 .footer {
     background-color: #690500;
     color: white;
-    padding: 30px 0;
 }
-
-.footer .logofooter {
-    max-width: 150px;
-    margin-bottom: 20px;
-}
-
-.footer p {
-    font-size: 14px;
-    line-height: 1.6;
-    margin: 0;
-}
-
-.footer h5 {
+.footer-heading {
     color: white;
     font-size: 18px;
     margin-bottom: 15px;
     font-weight: bold;
 }
-
 .footer ul {
     padding: 0;
-    list-style: none;
+    list-style-type: none;
 }
-
 .footer ul li {
     margin-bottom: 10px;
 }
-
-.footer a {
-    color: rgb(255, 255, 255);
+.footer ul li a {
+    color: #ffffff;
     text-decoration: none;
 }
-
-.footer a:hover {
-    color: #130f0f;
-    text-decoration: underline;
+.footer ul li a:hover {
+    color: #ccc;
+    text-decoration: none;
 }
-
-.footer .social-icons a {
+.social-icons a {
     display: inline-block;
     margin-right: 15px;
     color: #ffffff;
     font-size: 18px;
     transition: color 0.3s;
 }
-
-.footer .social-icons a:hover {
-    color: #fff;
+.social-icons a:hover {
+    color: #1f1b1b;
+}
+.logofooter {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+.newsletter-input {
+    width: 100%;
+    max-width: 250px;
+}
+.subcribe-h{
+    color: white;
+    font-size:12;
+}
+.form-control{
+    width: 200px;
 }
 
+/* Mobile-responsive layout */
 @media (max-width: 768px) {
     .footer .row {
         text-align: center;
     }
-
-    .footer .col-12 {
+    .footer .col {
         margin-bottom: 20px;
     }
+    .footer .d-flex-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .social-icons {
+        text-align: center;
+    }
+    .social-icons a {
+        margin: 10px;
+    }
+    .form-control{
+        width: 100%;
+    }
 }
+
+

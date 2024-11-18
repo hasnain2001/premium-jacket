@@ -16,7 +16,7 @@
     <br><br><br><br><br>
     <div class="container">
         <div class="row">
-            @if ($stores->isEmpty())
+            @if ($products->isEmpty())
             <div class="alert alert-success" role="alert">
                 <h4 class="alert-heading">Sorry!</h4>
                 <p>No products available at the moment. Please check back later.</p>
@@ -25,8 +25,8 @@
             </div>
         @else
         <div class="row">
-            @foreach ($stores as $product)
-                <div class="col-md-3">
+            @foreach ($products as $product)
+                <div class=" col-6 col-md-3"> <!-- col-6 for mobile (2 items per row), col-md-3 for desktop (4 items per row) -->
                     <div class="card mb-4 shadow-sm h-100">
                         <div class="card-header p-0">
                             @php
@@ -40,18 +40,23 @@
                         </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title text-dark">{{ $product->name }}</h5>
-
+        
                             <a href="{{ route('product_details', ['slug' => $product->slug]) }}" class="btn btn-dark">View Details</a>
-
+        
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
+        
 
         @endif
 
         </div>
     </div>
+
+    <footer>
+        @include('components.footer')
+    </footer>
 </body>
 </html>

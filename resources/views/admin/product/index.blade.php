@@ -12,6 +12,28 @@
     }
 </style>
 <div class="content">
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa fa-check-circle" aria-hidden="true"></i>
+        <strong>Success!</strong> {{ session('success') }}
+     
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+        <strong>Error!</strong>
+        <ul class="mb-0">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
 
     <!-- Start Content-->
     <div class="container-fluid">
@@ -24,7 +46,7 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Dashboard</a></li>
 
-                            <li class="breadcrumb-item active">Products</li>
+                            <li class="breadcrumb-item active"><a href="{{route('admin.product')}}">Product</a></li>
                         </ol>
                     </div>
                     <h4 class="page-title">Products</h4>
@@ -39,13 +61,19 @@
                     <div class="card-body">
                         <div class="row justify-content-between">
                             <div class="col-auto">
-                                <form action="{{route('product.search.index')}}" class="d-flex flex-wrap align-items-center">
+                                <form action="{{ route('product.search.index') }}" method="POST" class="d-flex align-items-center">
                                     @csrf
                                     <label for="inputPassword2" class="visually-hidden">Search</label>
-                                    <div class="me-3">
-                                        <input type="search" name="query" class="form-control my-1 my-lg-0" id="inputPassword2" placeholder="Search...">
-                                    </div>
+                                    <input type="search" name="query" class="form-control me-2" id="inputPassword2" placeholder="Search...">
+                                    <button type="submit" class="btn btn-outline-secondary d-flex align-items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                        </svg>
+                                    </button>
                                 </form>
+                                
+                          
+                                
                                     <label for="status-select" class="me-2">Select By Category</label>
                                     <div class="me-sm-3">
                                         <form method="GET" action="{{ route('admin.product') }}">
@@ -88,7 +116,10 @@
                         <div class="card product-box">
                             <div class="card-body">
                                 <div class="product-action">
-                                    <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-success btn-xs waves-effect waves-light"><i class="mdi mdi-pencil"></i></a>
+                                    <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-success btn-xs waves-effect waves-light"><i class="mdi mdi-pencil"></i>
+                                    </a>
+
+
                                     <a href="{{ route('admin.product.delete', $product->id) }}" onclick="return confirm('Are you sure you want to delete the selected product ?')" class="btn btn-danger btn-xs waves-effect waves-light"><i class="mdi mdi-close"></i></a>
                                 </div>
                                 <div class="bg-light">

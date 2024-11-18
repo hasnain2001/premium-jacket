@@ -14,27 +14,45 @@ use Illuminate\Support\Str;
 class ProductController extends Controller
 {
 
-    public function searchResults(Request $request)
-    {
 
-        $genders = Gender::all();
+    public function search(Request $request)
+    {
+        $categories = Product::select('categories')->distinct()->get();
+        $selectedCategory = $request->input('categories');
         $query = $request->input('query');
         $trimmedQuery = trim($query);
-        $stores = Product::where('name', 'like', "%$trimmedQuery%")
-                         ->orderBy('name')
-                         ->get();
+    
+        // Build the product query
+        $productsQuery = Product::query();
+    
+        // Apply category filter if selected
+        if ($selectedCategory) {
+            $productsQuery->where('categories', $selectedCategory);
+        }
+    
+        // Apply name search filter
+        if ($trimmedQuery) {
+            $productsQuery->where('name', 'like', "%$trimmedQuery%");
+        }
+    
+        // Paginate the products (assuming 10 products per page)
+        $products = $productsQuery->orderBy('created_at', 'desc')->paginate(10);
+    
+        // Add query parameters to pagination links (appending selectedCategory and query)
+        $products->appends([
+            'categories' => $selectedCategory,
+            'query' => $query
+        ]);
+    
+        // Check for an exact match for redirection
         $exactStore = Product::where('name', $trimmedQuery)->first();
         if ($exactStore) {
             return redirect()->route('admin.product.details', ['slug' => Str::slug($exactStore->name)]);
         }
-
-        return view('admin.product.index', [
-            'stores' => $stores,
-            'query' => $query,
-            'genders' => $genders,
-        ]);
+    
+        // Render the view with the filtered products and additional data
+        return view('admin.product.index', compact('products', 'query', 'categories', 'selectedCategory'));
     }
-
     public function productdetail($slug){
 
 
@@ -47,15 +65,7 @@ class ProductController extends Controller
 
         return view('admin.product.product-detail', compact("product"));
     }
-    public function product_blog() {
-
-        $productsByCategory = Product::select('category', Product::raw('count(*) as total'))
-            ->groupBy('category')
-            ->get();
-
-        return view('blog', compact('productsByCategory'));
-    }
-
+ 
     public function index(Request $request)
     {
         $categories = Product::select('categories')->distinct()->get();
@@ -97,6 +107,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'offprice' => 'required|numeric',
             'quantity' => 'required|integer',
+            'top_product' => 'required|integer',
             'categories' => 'nullable|string|max:255',
             'title' => 'nullable|string|max:255',
             'meta_tag' => 'nullable|string|max:255',
@@ -134,6 +145,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'offprice' => $request->offprice,
             'quantity' => $request->quantity,
+            'top_product' => $request->top_product,
             'categories' => $request->categories,
             'title' => $request->title,
             'meta_tag' => $request->meta_tag,
@@ -165,6 +177,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'offprice' => 'required|numeric',
             'quantity' => 'required|integer',
+            'top_product' => 'required|integer',
             'categories' => 'required|string|max:255',
             'title' => 'nullable|string|max:255',
             'meta_tag' => 'nullable|string|max:255',
@@ -172,14 +185,11 @@ class ProductController extends Controller
             'meta_description' => 'nullable|string',
             'productimage.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-
-
+    
         $product = Product::findOrFail($id);
-
+    
         if ($request->name !== $product->name) {
             $slug = Str::slug($request->name);
-
-
             $originalSlug = $slug;
             $count = 1;
             while (Product::where('slug', $slug)->where('id', '!=', $id)->exists()) {
@@ -188,10 +198,25 @@ class ProductController extends Controller
             }
             $product->slug = $slug;
         }
-
-        // Handle image uploads
+    
+        // Handle existing images
         $images = json_decode($product->productimage, true) ?? [];
-
+    
+        // Remove selected images
+        if ($request->delete_images) {
+            foreach ($request->delete_images as $index) {
+                if (isset($images[$index])) {
+                    // Delete the file if it exists
+                    if (file_exists(public_path($images[$index]))) {
+                        unlink(public_path($images[$index]));
+                    }
+                    unset($images[$index]);
+                }
+            }
+            $images = array_values($images); // Re-index the array
+        }
+    
+        // Add new images
         if ($files = $request->file('productimage')) {
             foreach ($files as $file) {
                 $image_name = md5(rand(1000, 10000));
@@ -203,7 +228,7 @@ class ProductController extends Controller
                 $images[] = $image_url;
             }
         }
-
+    
         // Update the product details
         $product->update([
             'name' => $request->name,
@@ -211,6 +236,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'offprice' => $request->offprice,
             'quantity' => $request->quantity,
+            'top_product' => $request->top_product,
             'categories' => $request->categories,
             'title' => $request->title,
             'meta_tag' => $request->meta_tag,
@@ -220,9 +246,12 @@ class ProductController extends Controller
             'authentication' => $request->authentication ?? "No Auth",
             'productimage' => json_encode($images),
         ]);
+    
+        return redirect()->route('admin.product')->with('success', 'Product updated successfully'); 
 
-        return redirect()->back()->with('success', 'Product updated successfully');
     }
+    
+    
 
 
 
@@ -230,6 +259,10 @@ class ProductController extends Controller
     public function destroy($id) {
         Product::find($id)->delete();
         return redirect()->back()->with('success', 'Product Deleted Successfully');
+    }
+    public function productdetail_destroy($id) {
+        Product::find($id)->delete();
+        return redirect()->route('admin.product')->with('success', 'Product Deleted Successfully');
     }
 
     public function deleteSelected(Request $request) {

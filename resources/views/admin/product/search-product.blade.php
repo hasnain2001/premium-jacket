@@ -48,16 +48,7 @@
                                 </form>
                                     <label for="status-select" class="me-2">Select By Category</label>
                                     <div class="me-sm-3">
-                                        <form method="GET" action="{{ route('admin.product') }}">
-                                            <select class="form-select my-1 my-lg-0" name="categories" id="category-select" onchange="this.form.submit()">
-                                                <option value=""><a href="{{ route('admin.product') }}" >All Categories</a></option>
-                                                @foreach($categories as $category)
-                                                    <option value="{{ $category->categories }}" {{ $selectedCategory == $category->categories ? 'selected' : '' }}>
-                                                        {{ $category->categories }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </form>
+                                       
 
                                     </div>
 
@@ -82,7 +73,7 @@
         <!-- end row-->
 
         <div class="row">
-            @if ($adminproduct->isEmpty())
+            @if ($products->isEmpty())
             <div class="alert alert-success" role="alert">
                 <h4 class="alert-heading">Sorry!</h4>
                 <p>No products available at the moment. Please check back later.</p>
@@ -91,7 +82,7 @@
             </div>
         @else
 
-                @foreach ($adminproduct as $product)
+                @foreach ($products as $product)
                     <div class="col-md-4">
                         <div class="card product-box">
                             <div class="card-body">
@@ -141,7 +132,7 @@
 
 
 
-           {{ $adminproduct->links('vendor.pagination.custom') }}
+
 
     </div> <!-- container -->
 

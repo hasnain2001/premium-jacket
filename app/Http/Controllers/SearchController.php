@@ -19,19 +19,24 @@ class SearchController extends Controller
         $genders = Gender::all();
         $query = $request->input('query');
         $trimmedQuery = trim($query);
-        $stores = Product::where('name', 'like', "%$trimmedQuery%")
-                         ->orderBy('name')
-                         ->get();
+    
+        // Paginate the results by 8 items per page (you can adjust as needed)
+        $products = Product::where('name', 'like', "%$trimmedQuery%")
+                           ->orderBy('name')
+                           ->get();
+    
+        // Check for an exact match
         $exactStore = Product::where('name', $trimmedQuery)->first();
+        
         if ($exactStore) {
             return redirect()->route('product_details', ['slug' => Str::slug($exactStore->name)]);
         }
-        return view('search_results', [
-            'stores' => $stores,
-            'query' => $query,
-            'genders' => $genders,
-        ]);
+    
+        // Pass the query parameter to pagination
+        return view('search_results', compact('products', 'query', 'genders'));
     }
+    
+    
 
 
     public function autocomplete(Request $request)

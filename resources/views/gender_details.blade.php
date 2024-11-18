@@ -1,10 +1,18 @@
-<!doctype html>
+<?php
+    header("X-Robots-Tag:index, follow");?>
+    <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @foreach ($genders as $gender)
     <title>{{ $gender->title }}</title>
+    <link rel="canonical" href="http://127.0.0.1:8000/gender/{{ Str::slug($gender->slug) }}">
+    <meta name="description" content="{!! $gender->meta_description !!}">
+
+<meta name="keywords" content="{!! $gender->meta_keyword !!}">
+<meta name="author" content="john">
+<meta name="robots" content="index, follow">
 @endforeach
 
 

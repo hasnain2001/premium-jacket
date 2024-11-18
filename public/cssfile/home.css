@@ -36,21 +36,17 @@ font-size: large;
      
     }
     .Feeling {
-        position: relative;
-        text-align: center;
-    }
-    .Feeling span {
-        font-family: Georgia, sans-serif;
-        color: black;
-        font-size: 24px;
-        font-weight: 200;
-        cursor: pointer;
+        background-color: #f9f9f9; /* Light background for contrast */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        margin-bottom: 15px;
     }
     .Feeling p {
-        font-family: Poppins, sans-serif;
-        font-size: 16px;
-        text-align: left;
-        margin-top: 10px;
+        font-family: 'Georgia', serif; /* Elegant serif font */
+        font-size: 1.1rem; /* Slightly larger font size for readability */
+        line-height: 1.6; /* Increase line spacing */
+        color: #333; /* Dark gray text color */
     }
     .Feeling span:hover + p {
         display: block;
@@ -86,11 +82,14 @@ font-size: large;
         font-weight: bold;
         color: #007bff;
     }
-    .carousel-control-prev-icon, .carousel-control-next-icon {
-        background-color: brown;
-        border-radius: 50%;
-        height: 30px;
+    .carousel-control-prev-icon, 
+    .carousel-control-next-icon {
+    
+      color: #000;
+      border-radius: 10%;
+        padding: 30px;
     }
+    
     .news_section {
         background-color: #f8f9fa;
     }
@@ -108,8 +107,8 @@ font-size: large;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     }
     .card-img-top {
-        height: 200px;
-        object-fit: cover;
+        height: 150px;
+       width: 200px;
     }
     .card-title {
         font-weight: bold;
@@ -127,8 +126,73 @@ font-size: large;
     }
     .slider-image  {
         width: 100%;
-        height: 480px;
+        height: 600px;
     }
+
+    .shop-now {
+        display: inline-block;
+        padding: 10px 20px;
+        color: white;
+        border: 1px solid white;
+        text-decoration: none;
+        font-weight: bold;
+        text-align: center;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    .shop-now:hover {
+        background-color:#690500;
+        color: white;
+    }
+    .tab-navigation a {
+            font-weight: bold;
+            color: #fff;
+            margin: 0 5px;
+            transition: 0.3s;
+        }
+        .carousel-item h2 {
+            font-size: 2rem;
+            color: #333;
+        }
+        .carousel-item p {
+            font-size: 1rem;
+            color: #555;
+            margin: 10px 0;
+        }
+        .carousel-item img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .btn-dark:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+    /* Custom styling for news section carousel */
+.news_section .carousel-indicators {
+    bottom: -30px; /* Push indicators down */
+}
+
+.news_section .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    background-color: #6c757d; /* Dark color for indicators */
+    border-radius: 20%;
+    margin: 0 4px;
+    border: 1px solid #ffffff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.news_section .carousel-indicators button.active {
+    background-color: #007bff; /* Active indicator color */
+    transform: scale(1.2); /* Slightly enlarge active indicator */
+}
+
+.news_section .carousel-indicators button:hover {
+    background-color: #495057; /* Change color on hover */
+}
+
+        
+        
     @media only screen and (max-width: 1200px) {
         .slider-image {
             height: 300px; /* Slightly smaller for medium-sized screens */
@@ -337,6 +401,136 @@ font-size: large;
         align-items: flex-end;
         height: 100%;
     }
-.heading-1{
-    font-size: 40px;
-}
+    .heading-1 {
+        font-family: 'Georgia', serif;
+        font-size: 1.5rem; 
+        font-weight: 500;
+        color: #2c3e50;
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    .product-name-box {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #333;
+    }
+    
+    .product-price-box {
+        background-color: #f0f0f0;
+     
+        font-weight: bold;
+    }
+    
+    .collection-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .collection-card:hover {
+        
+        transform: scale(1.05);
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .overlay {
+        background-color: rgba(0, 0, 0, 0.3);
+        color: white;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease;
+    }
+    
+    .overlay:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .collection-text {
+        font-size: 1.5em;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+    .collection-text:hover{
+        color: #333;
+    
+    }
+    
+          
+            .hero-title {
+                padding-top: 100px; 
+                color:brown;
+                font-size: 3rem;
+                font-weight: bold;
+            }
+            .hero-text {
+           color: white;
+                font-size: 1.25rem;
+                margin-top: 1rem;
+                margin-bottom: 2rem;
+            }
+            .btn-explore {
+                color: white;
+                background-color: #ff7f50;
+                color: white;
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                border: none;
+            }
+            .btn-explore:hover {
+                background-color: #ff6347;
+            }
+            @media (max-width: 767px) {
+        .women-section {
+            height: 400px;
+            padding: 2rem;
+        }
+    
+        .hero-title {
+            font-size: 25px;
+        }
+        .hero-text {
+            font-size: 17px;
+        }
+    
+        .card {
+            height: 100%;
+            width: 100%;
+        }
+    
+        .btn-explore {
+            font-size: 0.9rem;  /* Adjust font size if needed */
+        }
+    }
+    
+
+    
+    /* Small screens */
+    @media (max-width: 768px) {
+        .heading-1 {
+            font-size: 1.5rem; /* Slightly smaller font size for tablets */
+            margin-bottom: 15px; /* Less space below the heading */
+        }
+        .heading-1::after {
+            width: 50px; /* Adjust width of the decorative line */
+        }
+    }
+    
+    /* Extra small screens */
+    @media (max-width: 576px) {
+        .heading-1 {
+            font-size: 1.2rem; /* Smaller font size for mobile */
+            margin-bottom: 10px; /* Compact spacing */
+        }
+        .heading-1::after {
+            width: 40px; /* Further reduce width of the line */
+            height: 3px; /* Thinner line for smaller screens */
+        }
+    }
+    

@@ -16,121 +16,69 @@ class MainController extends Controller
     public function notfound()
     {
 
-        $products = Product::latest()->take(25)->get();
-        $blogs = Blog::paginate(10);
-
-        $genders = Gender::all();
-        $categoriesByGender = [];
-        foreach ($genders as $gender) {
-            $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-        }
-
- return view('404', ['products' => $products, 'blogs' => $blogs, 'genders' => $genders,'categoriesByGender' => $categoriesByGender
-        ]);
+ return view('404', );
     }
 
-    public function about()
-    {
-        $genders = Gender::all();
-        $products = Product::latest()->take(25)->get();
-        $blogs = Blog::paginate(10);
-
-        // Fetch categories based on the gender column in the categories table
-        $categoriesByGender = [];
-        foreach ($genders as $gender) {
-            $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-        }
-
-        return view('about', [
-            'products' => $products,
-            'blogs' => $blogs,
-            'genders' => $genders,
-            'categoriesByGender' => $categoriesByGender
-        ]);
-    }
+public function about()
+{
+return view('about' );
+}
+ public function feature(){
+    $products = Product::where('top_product', '>',0)->get();
+    return view('featured_product',compact('products'));
+ }
     public function index()
-    {
-        $genders = Gender::all();
-        $products = Product::latest()->take(25)->get();
-        $blogs = Blog::paginate(10);
+    { 
+    $products  = Product::where('categories', 'men fur and shearling leather jackets')->limit(4)->get();
+    $products2 = Product::where('categories', 'women fur and shearling leather jackets')->limit(4)->get();
+    $products3 = Product::where('categories', 'men fur and shearling coats')->limit(4)->get();
+    $products4 = Product::where('categories', 'men aviator jackets')->limit(4)->get();
+    $products5 = Product::where('categories', 'men biker jackets')->limit(4)->get();
+    $products6 = Product::where('top_product', '>',0)->limit(4)->get();
+    $blogs = Blog::paginate(12);
 
-        // Fetch categories based on the gender column in the categories table
-        $categoriesByGender = [];
-        foreach ($genders as $gender) {
-            $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-        }
+    return view('main', compact( 'products','blogs','products2','products3','products4','products5','products6')
 
-        return view('main', [
-            'products' => $products,
-            'blogs' => $blogs,
-            'genders' => $genders,
-            'categoriesByGender' => $categoriesByGender
-        ]);
-    }
+    );}
 
 
 
 
     public function product(){
         $products = Product::paginate(20);
-        $genders = Gender::all();
-          // Fetch categories based on the gender column in the categories table
-          $categoriesByGender = [];
-          foreach ($genders as $gender) {
-              $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-          }
-
-        return view("product",compact('products','genders','categoriesByGender' ));
+      
+        return view("product",compact('products', ));
     }
-    public function productdetail($slug)
-    {
-
-        $genders = Gender::all();
-        $categoriesByGender = [];
-        foreach ($genders as $gender) {
-            $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-        }
-
-        $product = Product::where('slug', $slug)->first();
-
-
-        if (!$product) {
-            return redirect('404');
-        }
-
-
-        return view('product_detail', [
-            'product' => $product,
-            'genders' => $genders,
-           'categoriesByGender' => $categoriesByGender
-        ]);
-    }
+public function productdetail($slug)
+{
+$product = Product::where('slug', $slug)->first();
+if (!$product) {
+return redirect('404');
+}
+$relatedproduct = Product::where('categories', $product->categories)
+->where('id', '!=', $product->id)
+->get();
+return view('product_detail', compact('product','relatedproduct'));
+}
 
 
     public function blog_home()
     {
           $blogs = Blog::paginate(5);
-          $genders =Gender::all();
-          $genders = Gender::all();
-          $categoriesByGender = [];
-    foreach ($genders as $gender) {
-        $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-    }
-    $chunks = Product::latest()->limit(25)->get();
+     
+    
+    $chunks = Product::latest()->limit(24)->get();
 
-        return view('blog', compact('blogs', 'chunks','genders','categoriesByGender'));
+        return view('blog', compact('blogs', 'chunks',));
     }
 
 public function blog_show($title) {
 
     $decodedTitle = str_replace('-', ' ', $title);
     $blog = Blog::where('title', $decodedTitle)->firstOrFail();
-     $chunks = Product::latest()->limit(25)->get();
-     $genders =Gender::all();
-     foreach ($genders as $gender) {
-        $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-    }
-    return view('blog_details', compact('blog','chunks','genders','categoriesByGender'));
+    
+  
+    return view('blog_details', compact('blog',));
 }
    public function  categories(){
     $categories = Categories::latest()->get();
@@ -147,10 +95,7 @@ public function blog_show($title) {
 
     // Fetch the category
     $category = Categories::where('slug', $title)->first();
-    $genders =Gender::all();
-    foreach ($genders as $gender) {
-        $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-    }
+   
     if (!$category) {
         return redirect('404');
     }
@@ -158,29 +103,25 @@ public function blog_show($title) {
     // Fetch related products
     $products = Product::where('categories', $title)->get();
 
-    return view('categories_details', compact('category', 'products','genders','categoriesByGender'));
+    return view('categories_details', compact('category', 'products',));
 }
 
 public function gender(){
     $genders = Gender::latest()->get();
-    foreach ($genders as $gender) {
-        $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-    }
-    return view('gender', compact('genders','categoriesByGender'));
+  
+    return view('gender', compact('genders',));
    }
 public function viewgender($title)
 {
     $slug = Str::slug($title);
     $name = ucwords(str_replace('-', ' ', $slug));
     $categories = Categories::where('gender', $name)->get();
-    $genders = Gender::all();
-    foreach ($genders as $gender) {
-        $categoriesByGender[$gender->slug] = Categories::where('gender', $gender->slug)->get();
-    }
+
+  
     $storeCount = $categories->count();
 
 
-    return view('gender_details', compact('categories', 'name', 'genders', 'storeCount','categoriesByGender'));
+    return view('gender_details', compact('categories', 'name',  'storeCount',));
 }
 
 public function thankyou(){

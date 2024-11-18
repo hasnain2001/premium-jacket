@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('categories')->nullable();
             $table->string('sizes')->nullable();
+            $table->integer('top-product')->default(0);
             $table->string('title')->nullable();
             $table->longText('meta_tag')->nullable();
             $table->longText('meta_keyword')->nullable();

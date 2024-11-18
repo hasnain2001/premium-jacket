@@ -20,7 +20,30 @@
 </style>
  <!-- Start Content-->
  <div class="container-fluid">
-
+    <div class="content">
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            <strong>Success!</strong> {{ session('success') }}
+         
+        </div>
+    @endif
+    
+    @if($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            <strong>Error!</strong>
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -33,6 +56,11 @@
                     </ol>
                 </div>
                 <h4 class="page-title">Product Detail</h4>
+                <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-success btn-xs waves-effect waves-light">Edit<i class="mdi mdi-pencil"></i>
+                </a>
+            
+                <a href="{{ route('admin.product.delete', $product->id) }}" onclick="return confirm('Are you sure you want to delete the selected product ?')" class="btn btn-danger btn-xs waves-effect waves-light">Delete    <i class="mdi mdi-close"></i></a>
+
             </div>
         </div>
     </div>

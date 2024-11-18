@@ -20,16 +20,28 @@ header("X-Robots-Tag:index, follow");?>
 <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDLGRGJN3V"></script>
+<!-- Facebook Pixel Code -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-PDLGRGJN3V');
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+ fbq('init', '550494357734449'); 
+fbq('track', 'PageView');
 </script>
+<noscript>
+ <img height="1" width="1" 
+src="https://www.facebook.com/tr?id=550494357734449&ev=PageView
+&noscript=1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
 
   <style>
-.nav-logo,.shop-text,.text{color:#fff}.nav-logo{font-size:44px;font-weight:300;text-decoration:none}nav{background-color:#000;height:auto}.conain{background-position:center;background-size:cover;background-repeat:no-repeat;background-image:url('{{ asset('images/banner.jpg') }}');height:300px;max-height:350px}.shop-text{text-align:center;padding-top:12%;font-size:3rem;font-weight:600;text-shadow:2px 2px 5px rgba(0,0,0,.5)}.product{height:200px;object-fit:cover}.card{transition:transform .3s,box-shadow .3s}.card:hover{box-shadow:0 10px 20px rgba(0,0,0,.2)}.btn-dark{background-color:#343a40;border:none;transition:background-color .3s,transform .3s}.btn-dark:hover{background-color:#23272b;transform:translateY(-3px)}@media (max-width:767.98px){.col-md-6{flex:0 0 50%;max-width:50%}}
+.nav-logo,.shop-text,.text{color:#fff}.nav-logo{font-size:44px;font-weight:300;text-decoration:none}nav{background-color:#000;height:auto}.conain{background-position:center;background-size:cover;background-repeat:no-repeat;background-image:url('{{ asset('images/banner.jpg') }}');height:200px;max-height:350px}.shop-text{text-align:center;padding-top:8%;font-size:3rem;font-weight:600;text-shadow:2px 2px 5px rgba(0,0,0,.5)}.product{height:200px;object-fit:cover}.card{transition:transform .3s,box-shadow .3s}.card:hover{box-shadow:0 10px 20px rgba(0,0,0,.2)}.btn-dark{background-color:#343a40;border:none;transition:background-color .3s,transform .3s}.btn-dark:hover{background-color:#23272b;transform:translateY(-3px)}@media (max-width:767.98px){.col-md-6{flex:0 0 50%;max-width:50%}}
 .breadcrumb-item a {
   font-weight: 500;
   color: #007bff; /* Custom link color */
@@ -62,7 +74,7 @@ header("X-Robots-Tag:index, follow");?>
     </div>
 @endif
 <div class="conain">
-    <h1 class="shop-text">Shop</h1>
+    <h1 class="shop-text" style="color: #f1c876;">Shop</h1>
 </div>
 <header class="bg-light py-3 px-4 rounded shadow-sm" aria-label="breadcrumb">
     <ol class="breadcrumb mb-0">
@@ -72,7 +84,7 @@ header("X-Robots-Tag:index, follow");?>
         </a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('product')}}" class="text-decoration-none text-primary">
+        <a href="{{route('product')}}" class="text-decoration-none text-primary"  >
             <i class="fas fa-shopping-cart"></i>Shop
         </a>
       </li>

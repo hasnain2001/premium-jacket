@@ -3,14 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Contact Form Message</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+        }
+        .card-body p {
+            margin: 0;
+            padding-left: 15px;
+        }
+    </style>
 </head>
 <body>
-    <p>Name: {{ $name }}</p>
-<p>Email: {{ $email }}</p>
-<p>Message:</p>
-<p>{{ $messageContent }}</p>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h2 class="mb-0">Contact Form Message</h2>
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong></p>
+                <p>{{ $name }}</p>
 
+                <p><strong>Email:</strong></p>
+                <p>{{ $email }}</p>
+
+                <p><strong>Message:</strong></p>
+                <p>{{ $messageContent }}</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

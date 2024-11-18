@@ -16,6 +16,7 @@ class Product extends Model
         "price",
         "offprice",
         "sizes",
+        "top_product",
         "quantity",
         "categories",
         'title',

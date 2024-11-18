@@ -25,7 +25,7 @@
             <form name="UpdateGender" id="UpdateGender" method="POST" enctype="multipart/form-data" action="{{ route('admin.gender.update', $genders->id) }}">
                 @csrf
                 <div class="row">
-                    <div class="col-6">
+                    <div class="">
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">

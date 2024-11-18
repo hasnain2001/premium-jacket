@@ -1,5 +1,6 @@
 <?php
-header("X-Robots-Tag:index, follow");?>
+header("X-Robots-Tag:index, follow");
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,72 +12,121 @@ header("X-Robots-Tag:index, follow");?>
     @if(isset($blog) && is_object($blog))
     <!-- Your custom meta tags go here -->
     <title>{!! $blog->meta_title !!}</title>
-     <link rel="canonical" href="https://deals69.com/blog-details/{{ Str::slug($blog->title) }}">
-         <meta name="description" content="{!! $blog->meta_description !!}">
-
-  <meta name="keywords" content="{!! $blog->meta_keyword !!}">
+    <link rel="canonical" href="https://deals69.com/blog-details/{{ Str::slug($blog->title) }}">
+    <meta name="description" content="{!! $blog->meta_description !!}">
+    <meta name="keywords" content="{!! $blog->meta_keyword !!}">
     <meta name="author" content="Najeeb-ullah khan">
-  <meta name="robots" content="index, follow">
- @else
-     <!-- Handle the case where $store is not valid -->
-     <!-- You can display a default canonical URL or handle it in another appropriate way -->
-     <link rel="canonical" href="https://honeycombdeals.com">
- @endif
+    <meta name="robots" content="index, follow">
+    @else
+    <link rel="canonical" href="https://honeycombdeals.com">
+    @endif
 
-   <!-- Bootstrap CSS -->
-   <!-- Add Swiper CSS -->
-   <link rel="stylesheet" href="{{ asset('bootstrap-4.6.2-dist/css/bootstrap.min.css') }}">
-<link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ asset('bootstrap-4.6.2-dist/css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
+
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        h1.text {
+      color: brown;
+      text-align: center; /* Centering the main title */
+      margin-bottom: 30px;
+    }
+        .contain{
+            margin: 5%;
+    
+            padding-left: 0;
+        }
+        /* Custom CSS for responsive adjustments */
+        .blog-post img {
+            width: 100%;
+            height: auto;
+        }
+        .card-title {
+            font-size: 1.5rem;
+        }
+        .card-body p {
+            font-size: 1rem;
+        }
+        .blog-content p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    /* Image styling for responsive scaling */
+    .blog-content img {
+        width: 100%;
+        height: auto;
+        margin: 15px 0;
+        border-radius: 5px;
+    }
+
+    /* Heading styling */
+    .blog-content h2,
+    .blog-content h3 {
+        font-weight: bold;
+        margin-top: 1.5rem;
+        font-size: 1.5rem;
+    }
+
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 768px) {
+        .blog-content p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .blog-content h2,
+        .blog-content h3 {
+            font-size: 1.25rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .blog-content p {
+            font-size: 0.85rem;
+        }
+        .blog-content h2,
+        .blog-content h3 {
+            font-size: 1.1rem;
+        }
+    }
+
+        /* Small screen adjustments */
+        @media (max-width: 768px) {
+            .card-title {
+                font-size: 1.25rem;
+            }
+            .card-body p {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav>
         @include('components.navbar')
     </nav>
     <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-8 mb-4">
+    <h1 class="text">{{ ucwords($blog->title) }}</h1>
+    <div class="contain">
+        <div class="row justify-content-start">
+            <div class="col-12 col-md-12 mb-4">
                 <div class="blog-post card shadow rounded-lg border border-light">
-                    <img class="img-fluid" src="{{ asset($blog->category_image) }}" alt="Blog Image" style="width: 800px; height: 450px;">
+                    <img class="img-fluid" src="{{ asset($blog->category_image) }}" alt="Blog Image">
                     <div class="card-body">
                         <h1 class="card-title text-3xl font-semibold text-gray-800 mb-4">{{ $blog->title }}</h1>
-                        <p class=" ">{!! $blog->content !!}</p>
+                        
+                        <div class="blog-content">
+                            {!! $blog->content !!}
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <aside class="sidebar p-3 bg-light">
-                    <!-- Sidebar Title -->
-                    <h2 class="text-left text-dark">Latest Products</h2>
-
-                    <!-- Store Listings -->
-                    <div class="row gx-2 gy-2">
-                        @foreach ($chunks as $store)
-                            <div class="col-md-6 col-sm-4 col-6">
-                                <div class="text-dark text-decoration-none d-flex flex-column p-2">
-                                    <a href="{{ route('product_details', ['slug' => Str::slug($store->slug)]) }}" class="text text-dark">
-                                    <!-- Store Image -->
-                                    @php
-                                        $images = json_decode($store->productimage);
-                                    @endphp
-                                    @if(is_array($images) && !empty($images))
-                                        <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-fluid stores shadow">
-                                    @else
-                                        <img src="{{ asset('front/assets/images/no-image-found.jpg') }}" alt="No Image" class="img-fluid stores shadow rounded-circle">
-                                    @endif
-
-                                    <!-- Store Name -->
-                                    <p class="text-capitalize">{{ $store->name }}</p>
-                                </div>
-                            </div>
-                        @endforeach
-                    </a>
-                    </div>
-                </aside>
-            </div>
         </div>
-      </div>
-      <x-footer/>
+    </div>
+    @include('components.footer')
 </body>
 </html>

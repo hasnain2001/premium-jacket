@@ -24,14 +24,16 @@ header("X-Robots-Tag:index, follow");?>
 <style>
 
 .conain {
+   
     background-position: center;
     background-size: cover;
+
     height: 200px;
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url("{{ asset("images/banner.jpg") }}");
+   
 }
 .text-product {
     font-weight: 700;
@@ -50,8 +52,8 @@ header("X-Robots-Tag:index, follow");?>
         @include('components.navbar')
     </nav>
 
-    <div class="conain">
-        <h1 class="shop-text">{{ $category->title }}</h1>
+    <div class="conain" style="background-image: url('{{ asset('images/women.png') }}');">
+        <h1 class="shop-text" style="color: #f1c876;">{{ ucwords($category->title) }}</h1>
     </div>
 <br>
 <header class="bg-light py-3 px-4 rounded shadow-sm" aria-label="breadcrumb">
@@ -70,13 +72,14 @@ header("X-Robots-Tag:index, follow");?>
         <i class="fas fa-th-large"></i>  Category
           </li> --}}
       <li class="breadcrumb-item active" aria-current="page">
-        <i class="fas fa-tag"></i> {{ $category->title }}
+        <i class="fas fa-tag"></i> {{ ucwords($category->title) }}
       </li>
     </ol>
   </header>
   
 <div class="container">
-    <h1 class="text-center">{{ $category->title }}</h1>
+    <h1 class="text-center">{{ ucwords($category->title) }}</h1>
+
     <div class="row">
         @if ($products->isEmpty())
             <div class="alert alert-success" role="alert">
@@ -95,7 +98,7 @@ header("X-Robots-Tag:index, follow");?>
                                 $images = json_decode($product->productimage);
                             @endphp
                             @if(is_array($images) && !empty($images))
-                                <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-fluid rounded-top" style="height: 100%; width: 100%; object-fit: cover;">
+                                <img src="{{ asset($images[0]) }}" alt="Product Image" class="rounded-top img-fluid" style="">
                             @else
                                 <img src="{{ asset('front/assets/images/no-image-found.jpg') }}" alt="No Image" class="img-fluid rounded-circle" style="height: 100%; width: 100%; object-fit: cover;">
                             @endif

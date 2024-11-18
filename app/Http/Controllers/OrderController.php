@@ -24,5 +24,22 @@ public function orderDetail($order_number)
     // Pass the order to the view
     return view('admin.order.order-detail', compact('order'));
 }
+public function destroy($id) {
+    // Find the order by its ID
+    $order = Order::find($id);
+    
+    if ($order) {
+        // Delete associated order items
+        $order->orderItems()->delete();  // This deletes all related order items
+        
+        // Now delete the order itself
+        $order->delete();
+        
+        return redirect()->back()->with('success', 'Order and Order Items Deleted Successfully');
+    } else {
+        return redirect()->back()->with('error', 'Order not found');
+    }
+}
+
 
 }

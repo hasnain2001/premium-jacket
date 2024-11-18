@@ -34,7 +34,12 @@ return [
     |            "failover", "roundrobin"
     |
     */
-
+'mailgun' => [
+    'transport' => 'mailgun',
+    'client' => [
+        'timeout' => 5,
+    ],
+],
     'mailers' => [
 
         'smtp' => [

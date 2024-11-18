@@ -9,8 +9,6 @@
     
 <div class="container">
     
-    <h1>Laravel - Stripe Payment Gateway Integration Example <br/> ItSolutionStuff.com</h1>
-    
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default credit-card-box">
@@ -25,6 +23,20 @@
                             <p>{{ Session::get('success') }}</p>
                         </div>
                     @endif
+               
+          
+        
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <strong>Please fix the following issues:</strong> 
+                        <ul class="mt-2">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+       
     
 <form   role="form"  action="{{ route('stripe.post') }}" method="post"   class="require-validation" data-cc-on-file="false"
                             data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"

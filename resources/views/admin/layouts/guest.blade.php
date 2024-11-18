@@ -57,132 +57,155 @@
 <script src="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.js"></script>
 </head>
 <body>
+     <!-- Begin page -->
+     <div id="wrapper">
 
-    <div id="wrapper">
-    <!-- ========== Menu ========== -->
-    <div class="app-menu">
 
-        <!-- Brand Logo -->
-        <div class="logo-box">
-            <!-- Brand Logo Light -->
-            <a href="{{route('admin.home')}}" class="logo-light">
-                <img src="{{asset('assets/images/logo-light.png')}}" alt="logo" class="logo-lg">
-                <img src="{{asset('assets/images/logo-sm.png')}}" alt="small logo" class="logo-sm">
-            </a>
+        <!-- ========== Menu ========== -->
+        <div class="app-menu">
 
-            <!-- Brand Logo Dark -->
-            <a href="{{route('admin.home')}}" class="logo-dark">
-                <img src="{{asset('assets/images/logo-dark.png')}}" alt="dark logo" class="logo-lg">
-                <img src="{{asset('assets/images/logo-sm.png')}}" alt="small logo" class="logo-sm">
-            </a>
-        </div>
+            <!-- Brand Logo -->
+            <div class="logo-box">
+                   <!-- Brand Logo Light -->
+     <a href="{{route('admin.home')}}" class="logo-light">
+        <img src="{{asset('images/logo.png')}}" alt="logo" style="width: 100px;">
 
-        <!-- menu-left -->
-        <div class="scrollbar">
+    </a>
 
-            <!-- User box -->
-            <div class="user-box text-center">
-                <img src="assets/images/users/user-1.jpg" alt="user-img" title="Mat Helme" class="rounded-circle avatar-md">
-                <div class="dropdown">
-                    <a href="javascript: void(0);" class="dropdown-toggle h5 mb-1 d-block" data-bs-toggle="dropdown">Geneva Kennedy</a>
-                    <div class="dropdown-menu user-pro-dropdown">
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <i class="fe-user me-1"></i>
-                            <span>My Account</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <i class="fe-settings me-1"></i>
-                            <span>Settings</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <i class="fe-lock me-1"></i>
-                            <span>Lock Screen</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <i class="fe-log-out me-1"></i>
-                            <span>Logout</span>
-                        </a>
-
-                    </div>
-                </div>
-                <p class="text-muted mb-0">Admin Head</p>
+    <!-- Brand Logo Dark -->
+    <a href="{{route('admin.home')}}" class="logo-dark">
+        <img src="{{asset('images/logo.png')}}" alt="dark logo" style="width: 100px;">
+        
+    </a>
             </div>
 
-            <!--- Menu -->
-            <ul class="menu">
+            <!-- menu-left -->
+            <div class="scrollbar">
 
-                <li class="menu-title">Navigation</li>
+                <!-- User box -->
+                <div class="user-box text-center">
+                    <img src="assets/images/users/user-1.jpg" alt="user-img" title="Mat Helme" class="rounded-circle avatar-md">
+                    <div class="dropdown">
+                        <a href="javascript: void(0);" class="dropdown-toggle h5 mb-1 d-block" data-bs-toggle="dropdown">Geneva Kennedy</a>
+                        <div class="dropdown-menu user-pro-dropdown">
 
-                <li class="menu-item bg-success text-white">
-                    <a href="{{route('admin.home')}}"  class="menu-link ">
-                        <span class="menu-icon"><i data-feather="airplay"></i></span>
-                        <span class=""> Dashboards </span>
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="fe-user me-1"></i>
+                                <span>My Account</span>
+                            </a>
 
-                    </a>
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="fe-settings me-1"></i>
+                                <span>Settings</span>
+                            </a>
 
-                </li>
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="fe-lock me-1"></i>
+                                <span>Lock Screen</span>
+                            </a>
 
-                <li class="menu-item">
-                    <a href="#menuCrm" data-bs-toggle="collapse" class="menu-link">
-                        <span class="menu-icon"><i data-feather="users"></i></span>
-                        <span class="menu-text"> CRM </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="menuCrm">
-                        <ul class="sub-menu">
-                            <li class="menu-item">
-                                <a href="{{route('admin.product')}}" class="menu-link">
-                                    <span class="menu-text">Product</span>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{route('admin.category')}}" class="menu-link">
-                                    <span class="menu-text">Categories</span>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{route('admin.gender')}}" class="menu-link">
-                                    <span class="menu-text">Genders</span>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{route('admin.blog')}}" class="menu-link">
-                                    <span class="menu-text">Blog</span>
-                                </a>
-                            </li>
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="fe-log-out me-1"></i>
+                                <span>Logout</span>
+                            </a>
 
-                            <li class="menu-item">
-                                <a href="{{route('admin.order')}}" class="menu-link">
-                                    <span class="menu-text">Orders</span>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{route('customer')}}" class="menu-link">
-                                    <span class="menu-text">Customers</span>
-                                </a>
-                            </li>
-                        </ul>
+                        </div>
                     </div>
-                </li>
-            </ul>
-            <!--- End Menu -->
-            <div class="clearfix"></div>
+                    <p class="text-muted mb-0">Admin Head</p>
+                </div>
+
+                <!--- Menu -->
+                <ul class="menu">
+
+                    <li class="menu-title">Navigation</li>
+
+                    <li class="menu-item bg-success text-white">
+                        <a href="{{route('admin.home')}}"  class="menu-link ">
+                            <span class="menu-icon"><i data-feather="airplay"></i></span>
+                            <span class=""> Dashboards </span>
+
+                        </a>
+
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#menuCrm" data-bs-toggle="collapse" class="menu-link">
+                            <span class="menu-icon"><i data-feather="users"></i></span>
+                            <span class="menu-text"> CRM </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="menuCrm">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a href="{{route('admin.product')}}" class="menu-link">
+                                        <span class="menu-text">Product</span>
+                                    </a>
+                                </li>
+
+                                <li class="menu-item">
+                                    <a href="{{route('admin.category')}}" class="menu-link">
+                                        <span class="menu-text">Categories</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="{{route('admin.gender')}}" class="menu-link">
+                                        <span class="menu-text">Genders</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="{{ route('admin.blog')}}" class="menu-link">
+                                        <span class="menu-text">Blog</span>
+                                    </a>
+                                </li>
+
+                                <li class="menu-item">
+                                    <a href="{{route('admin.order')}}" class="menu-link">
+                                        <span class="menu-text">Orders</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="{{URL::TO('/dashboard/customize')}}" class="menu-link">
+                                        <span class="menu-text">Customize Jacket </span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="{{route('customer')}}" class="menu-link">
+                                        <span class="menu-text">Customers</span>
+                                    </a>
+                                </li>
+                             
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <!--- End Menu -->
+                <div class="clearfix"></div>
+            </div>
         </div>
-    </div>
-    <!-- ========== Left menu End ========== -->
+        <!-- ========== Left menu End ========== -->
+
+ 
 
     @yield('main-content')
 </div>
+</div>
 
+        <!-- Vendor js -->
+        <script src="{{asset('assets/js/vendor.min.js')}}"></script>
 
+        <!-- App js -->
+        <script src="{{asset('assets/js/app.min.js')}}"></script>
+
+        <!-- Plugins js -->
+        <script src="{{asset('assets/libs/morris.js06/morris.min.js')}}"></script>
+        <script src="{{asset('assets/libs/raphael/raphael.min.js')}}"></script>
+
+        <!-- Dashboard init-->
+        <script src="{{asset('assets/js/pages/dashboard-4.init.js')}}"></script>
 
  <!-- Vendor js -->
  <script src="{{asset('assets/js/vendor.min.js')}}"></script>

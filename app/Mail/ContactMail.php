@@ -56,7 +56,7 @@ class ContactMail extends Mailable
     }
     public function build()
     {
-        return $this->view('emails.contact')
+        return $this->view('emails.contact') // Correct view path
                     ->subject('Contact Form Message')
                     ->with([
                         'name' => $this->name,
@@ -64,4 +64,7 @@ class ContactMail extends Mailable
                         'messageContent' => $this->messageContent,
                     ]);
     }
+    
+    
+    
 }

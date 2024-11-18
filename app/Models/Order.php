@@ -28,6 +28,11 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+// Order.php (Order Model)
+public function orderItems()
+{
+    return $this->hasMany(OrderItem::class);
+}
 
 
 }

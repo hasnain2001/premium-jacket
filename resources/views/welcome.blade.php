@@ -13,7 +13,8 @@ header("X-Robots-Tag:index, follow");?>
 
 <meta name="author" content="Premium Leather Style">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://premiumleatherstyle.com/">
+<link rel="canonical" href="https://premiumleatherstyle.com/ @yield('connical')">
+
 
       <!-- Bootstrap css -->
       <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />

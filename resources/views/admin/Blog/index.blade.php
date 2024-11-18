@@ -71,7 +71,7 @@
                         <p class="text-muted">No blogs available. Click the button above to add a new blog entry.</p>
                     </div>
                 @else
-                    <div class="table-wrapper">
+                    <div class="table">
                         <form id="bulkDeleteForm" action="{{ route('admin.blog.bulkDelete') }}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -126,7 +126,7 @@
                                         </tr>
                                     </tfoot>
                                 </table>
-                                <button type="submit" class="btn btn-danger my-3" onclick="return confirm('Are you sure you want to delete the selected blogs?')">Delete Selected</button>
+                                <button type="submit" class="btn btn-sm btn-danger bg-danger text-danger my-3" onclick="return confirm('Are you sure you want to delete the selected blogs?')">Delete Selected</button>
                             </div>
                         </form>
                     </div>

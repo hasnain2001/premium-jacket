@@ -117,6 +117,8 @@
                                     @enderror
                                 </div>
 
+
+
                                 <div class="form-group">
                                     <label for="quantity">Quantity:</label>
                                     <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity" required>
@@ -125,23 +127,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="mb-2">Status <span class="text-danger">*</span></label>
-                                    <br/>
-                                    <div class="d-flex flex-wrap">
-                                        <div class="form-check me-2">
-                                            <input class="form-check-input" type="radio" name="status" value="enable" id="enable" required>
-                                            <label class="form-check-label" for="enable">Enable</label>
-                                        </div>
-                                        <div class="form-check me-2">
-                                            <input class="form-check-input" type="radio" name="status" value="disable" id="disable" required>
-                                            <label class="form-check-label" for="disable">Disable</label>
-                                        </div>
-                                    </div>
-                                    @error('status')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                           
                             </div>
                         </div>
                     </div> <!-- end col -->
@@ -162,6 +148,13 @@
                                 <div>
                                     <label for="product-meta-description" class="form-label">Meta Description</label>
                                     <textarea class="form-control" rows="5" id="product-meta-description" name="meta_description" placeholder="Please enter description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="top_product ">Top Product  <span class="text-danger">*</span></label><br>
+<input class="form-control"  type="number" name="top_product" id="top_0" value="0" minlength="0">
+                               
+        
+                                 
                                 </div>
                             </div>
                         </div> <!-- end card -->
@@ -227,7 +220,7 @@
             reader.readAsDataURL(file);
         });
     }
-
+ 
 </script>
 
 @endsection

@@ -12,10 +12,11 @@ use App\Models\Product;
 use App\Models\Categories;
 use Stripe;
 use Stripe\Charge;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use App\Mail\OrderConfirmation;
+use Illuminate\Support\Facades\Mail;
 
 
 class CheckoutController extends Controller
@@ -65,10 +66,7 @@ public function index()
 
 public function store(Request $request)
 {
-
-   
-    Log::info('Checkout Request Data: ', $request->all());
-
+    // Validate request input
     $request->validate([
         'email' => 'required|email',
         'first_name' => 'required|string|max:255',
@@ -83,6 +81,8 @@ public function store(Request $request)
         'items.*.product_id' => 'required|exists:products,id',
         'items.*.price' => 'required|numeric',
         'items.*.quantity' => 'required|integer|min:1',
+        'items.*.size' => 'nullable|string|max:50',  // Validate size (if applicable)
+        'items.*.color' => 'nullable|string|max:50', // Validate color (if applicable)
     ]);
 
     DB::beginTransaction();
@@ -92,31 +92,31 @@ public function store(Request $request)
             return $item['price'] * $item['quantity'];
         });
 
-        $paymentOption = $request->payment_method;
-
         $order = Order::create([
-            'order_number' => uniqid('Order-'),
-            'total_amount' => $totalAmount,
-            'status' => 'pending',
-            'email' => $request->email,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'address' => $request->address,
-            'city' => $request->city,
-            'state' => $request->state,
-            'zip' => $request->zip,
-            'phone' => $request->phone,
-            'country' => $request->country,
-            'shipping_option' => $request->shipping_option,
-            'payment_option' => $paymentOption,
+            'order_number'      => uniqid('Order-'),
+            'total_amount'      => $totalAmount,
+            'status'            => 'pending',
+            'email'             => $request->email,
+            'first_name'        => $request->first_name,
+            'last_name'         => $request->last_name,
+            'address'           => $request->address,
+            'city'              => $request->city,
+            'state'             => $request->state,
+            'zip'               => $request->zip,
+            'phone'             => $request->phone,
+            'country'           => $request->country,
+            'shipping_option'   => $request->shipping_option,
+            'payment_option'    => $request->payment_method,
         ]);
 
         foreach ($request->items as $item) {
             OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $item['product_id'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
+                'order_id'      => $order->id,
+                'product_id'    => $item['product_id'],
+                'quantity'      => $item['quantity'],
+                'price'         => $item['price'],
+                'size'         => $item['size'],
+                'color'         => $item['color'],
             ]);
 
             $product = Product::find($item['product_id']);
@@ -126,26 +126,40 @@ public function store(Request $request)
                 throw new \Exception('Insufficient quantity for product: ' . $product->name);
             }
         }
-        if ($paymentOption === 'paypal') {
+
+        if ($request->payment_method === 'stripe') {
+            Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+            $charge = \Stripe\Charge::create([
+                "amount" => $totalAmount * 100,
+                'currency' => 'usd',
+                'description' => "Order #" . $order->order_number,
+                'source' => $request->stripeToken,
+            ]);
+
+            if ($charge->status === 'succeeded') {
+                DB::commit();
+
+              
+                Mail::to($order->email)->send(new OrderConfirmation($order, $request->items));
+
+                $this->clearCart($request);
+                Session::flash('success', 'Payment successful!');
+                return redirect()->route('checkout.success', ['order_number' => $order->order_number]);
+            } else {
+                throw new \Exception('Payment was not successful.');
+            }
+        } elseif ($request->payment_method === 'paypal') {
             return $this->processPayPalPayment($order, $totalAmount);
-        } elseif ($paymentOption === 'stripe') {
-            return $this->processStripePayment($request, $order, $totalAmount, $request->stripeToken);
-
+        } else {
+            throw new \Exception('Invalid payment method selected.');
         }
-       
-
-        DB::commit();
-        $this->clearCart($request);
-        return redirect()->route('checkout.success', ['order_number' => $order->order_number])
-            ->with('message', 'Your order has been processed successfully.');
-
     } catch (\Exception $e) {
         DB::rollback();
         Log::error('Order Processing Error: ' . $e->getMessage());
-        $order->update(['payment_option' => 'pending']);
-        return back()->withErrors(['error' => 'There was an error processing your order: ' . $e->getMessage()]);
+        return back()->withErrors(['error' => 'There was an error processing your order: please enter correct card detail  ' . $e->getMessage()]);
     }
 }
+
 
 // Separate method for PayPal payment processing
 public function processPayPalPayment($order, $totalAmount)
@@ -189,34 +203,34 @@ public function processPayPalPayment($order, $totalAmount)
 
 public function processStripePayment($order, $totalAmount, $stripeToken)
 {
-    try {
-        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
+    
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+    
         $charge = \Stripe\Charge::create([
-            "amount" => 100 * 100,
-            'currency' => 'usd',
-            'description' => "Order #" . $order->order_number,
-            'source' => $stripeToken, // Ensure this is valid
+                "amount" => 100 * 100,
+                'currency' => 'usd',
+                'description' => "Order #" . $order->order_number,
+                'source' => $stripeToken,
         ]);
 
-        // If the charge is successful
+        
+        
         Session::flash('success', 'Payment successful!');
-        return redirect()->route('checkout.success', ['order_number' => $order->order_number])
-            ->with('success', 'Payment successful!');
+              
+        // return back();
+     
+        // Check if the charge succeeded
+        if ($charge->status === 'succeeded') {
+            return redirect()->route('checkout.success', ['order_number' => $order->order_number])
+                ->with('success', 'Payment successful!');
+        } else {
+            return redirect()->route('checkout')->with('error', 'Payment was not successful.');
+        }
 
-    } catch (\Stripe\Exception\CardException $e) {
-        // Handle card errors
-        Log::error('Stripe Card Exception: ' . $e->getMessage());
-        Session::flash('error', 'Card error: ' . $e->getMessage());
-        return redirect()->route('checkout')->with('error', 'Payment failed: ' . $e->getMessage());
-
-    } catch (\Exception $e) {
-        // Handle other errors
-        Log::error('Stripe Exception: ' . $e->getMessage());
-        Session::flash('error', 'Payment processing failed: ' . $e->getMessage());
-        return redirect()->route('checkout')->with('error', 'Payment processing failed: ' . $e->getMessage());
-    }
 }
+
+
 
 
 

@@ -52,8 +52,10 @@
                             <tr>
                                 <th scope="col">Item Image</th>
                                 <th scope="col">Item Name</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Color</th>
                                 <th scope="col">Quantity</th>
-                                <th scope="col">Price</th>
+                               <th scope="col">Price</th>
                                 <th scope="col">Total</th>
                             </tr>
                         </thead>
@@ -71,6 +73,8 @@
                                         @endif
                                     </td>
                                     <td>{{ $item->product->name }}</td>
+                                    <td>{{ $item->size }}</td>
+                                    <td>{{ $item->color }}</td>
                                     <td>{{ $item->quantity }}</td>
                                     <td>${{ number_format($item->price, 2) }}</td>
                                     <td>${{ number_format($item->price * $item->quantity, 2) }}</td>
