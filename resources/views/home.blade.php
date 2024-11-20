@@ -1,5 +1,7 @@
 @extends('layouts.home')
-
+@section('title')
+    Dashboard
+@endsection
 @section('content')
 <style>
 
@@ -29,6 +31,8 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+                 
+
                 </div>
             </div>
         </div>

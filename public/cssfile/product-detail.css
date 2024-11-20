@@ -252,3 +252,114 @@ font-size: 1.5rem;
     }
 }
 
+.product-image,
+.card-img {
+width: 100%;        /* Ensures the image takes up full width of the container */
+height: auto;       /* Maintains aspect ratio */
+max-height: 250px;  /* Sets a maximum height */
+object-fit: cover;  /* Scales image to cover the box while maintaining aspect ratio */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+.product-image,
+.card-img {
+    max-height: 250px; /* Adjust max height for tablets */
+}
+}
+
+@media (max-width: 576px) {
+.product-image,
+.card-img {
+    max-height: 250px; /* Adjust max height for mobile */
+}
+}
+
+.tab-navigation .tab-btn {
+background-color: #f4f4f4; /* Light gray background for unselected tabs */
+color: #000;             /* Black text for unselected tabs */
+padding: 10px 20px;
+border: none;
+font-weight: bold;
+cursor: pointer;
+text-decoration: none;
+}
+
+.tab-navigation .tab-btn:hover {
+background-color: #ddd; /* Slightly darker gray on hover */
+}
+
+.tab-navigation .tab-btn.active {
+background-color: #000; /* Black background for active tab */
+color: #fff;           /* White text for active tab */
+}
+
+
+
+.carousel-item {
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.carousel .card {
+    border-radius: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carousel .card:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.img-product {
+    border-radius: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    padding-left: 20px;
+}
+
+ul li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.carousel-inner h2, .carousel-inner h3, .carousel-inner h4 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #333;
+}
+
+.carousel-inner ul {
+    list-style: disc;
+    padding-left: 20px;
+    color: #666;
+}
+.star {
+font-size: 2rem;
+cursor: pointer;
+transition: color 0.3s ease;
+color: #ccc; /* Default color for unselected stars */
+}
+
+.star:hover,
+.star.hovered {
+color: #f5c518; /* Hover color */
+}
+
+.star.selected {
+color: #ffc107; /* Selected star color */
+}
+
+

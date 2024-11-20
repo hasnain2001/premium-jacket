@@ -47,7 +47,7 @@ Delivery Information
 }
 </style>
 @section('main-content')
-<div class="container  delivery">
+<div class="container  delivery py-4">
     <div class="card shadow-sm">
         <div class="card-header bg-light custom-header">
             <h1 class="text-center custom-title">Delivery Information</h1>

@@ -13,7 +13,8 @@ header("X-Robots-Tag:index, follow");?>
 
 <meta name="author" content="Premium Leather Style">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://premiumleatherstyle.com/ @yield('connical')">
+<link rel="canonical" href="@yield('canonical', url()->current())">
+
 
 
       <!-- Bootstrap css -->

@@ -83,13 +83,13 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="sizes">Sizes:</label>
                                 <input type="text" class="form-control" id="sizes" name="sizes" value="{{ old('sizes', $product->sizes) }}">
                                 @error('sizes')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 

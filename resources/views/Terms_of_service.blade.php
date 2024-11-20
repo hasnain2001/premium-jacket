@@ -1,5 +1,5 @@
 @extends('welcome')
-@section('title', 'Terms of Service')
+@section('title', 'Terms of Service |')
 
 @section('main-content')
 

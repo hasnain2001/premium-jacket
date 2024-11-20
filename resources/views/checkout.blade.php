@@ -91,38 +91,32 @@
     <div class="container mt-4">
         <h3 class="text-primary mb-4">Checkout</h3>
 
-        <!-- Success/Error Messages -->
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fa fa-check-circle me-2"></i><strong>Success!</strong> {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        @session('success')
-        <div class="alert alert-success" role="alert"> 
-            {{ $value }}
-        </div>
-    @endsession
-    @if (Session::has('success'))
-    <div class="alert alert-success text-center">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-        <p>{{ Session::get('success') }}</p>
+<!-- Success Message -->
+@if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa fa-check-circle me-2"></i><strong>Success!</strong> {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 
-        @if($errors->any())
-            <div class="alert alert-danger">
-                <strong>Please fix the following issues:</strong> 
-                <ul class="mt-2">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if (session('error'))
-    <div class="alert alert-danger">
+<!-- Error Messages -->
+@if ($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Please fix the following issues:</strong>
+        <ul class="mt-2">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+<!-- Single Error Message -->
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 

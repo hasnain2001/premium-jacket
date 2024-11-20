@@ -1,5 +1,3 @@
-<?php
-header("X-Robots-Tag:index, follow");?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,165 +7,187 @@ header("X-Robots-Tag:index, follow");?>
     <title>Premium Leather Jackets | Stylish & Durable Outerwear | Product</title>
 
     <meta name="description" content="Explore a wide range of premium leather jackets for men and women. Shop stylish, durable outerwear and elevate your fashion with top-quality designs.">
-
-
     <meta name="keywords" content="leather jackets, premium jackets, men's jackets, women's jackets, stylish outerwear, durable jackets, fashion, leatherwear">
-
     <meta name="author" content="Premium Leather Style">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.premiumleatherstyle.com/product">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-<link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PDLGRGJN3V"></script>
-<!-- Facebook Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window,document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
- fbq('init', '550494357734449'); 
-fbq('track', 'PageView');
-</script>
-<noscript>
- <img height="1" width="1" 
-src="https://www.facebook.com/tr?id=550494357734449&ev=PageView
-&noscript=1"/>
-</noscript>
-<!-- End Facebook Pixel Code -->
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
 
-  <style>
-.nav-logo,.shop-text,.text{color:#fff}.nav-logo{font-size:44px;font-weight:300;text-decoration:none}nav{background-color:#000;height:auto}.conain{background-position:center;background-size:cover;background-repeat:no-repeat;background-image:url('{{ asset('images/banner.jpg') }}');height:200px;max-height:350px}.shop-text{text-align:center;padding-top:8%;font-size:3rem;font-weight:600;text-shadow:2px 2px 5px rgba(0,0,0,.5)}.product{height:200px;object-fit:cover}.card{transition:transform .3s,box-shadow .3s}.card:hover{box-shadow:0 10px 20px rgba(0,0,0,.2)}.btn-dark{background-color:#343a40;border:none;transition:background-color .3s,transform .3s}.btn-dark:hover{background-color:#23272b;transform:translateY(-3px)}@media (max-width:767.98px){.col-md-6{flex:0 0 50%;max-width:50%}}
-.breadcrumb-item a {
-  font-weight: 500;
-  color: #007bff; /* Custom link color */
+        nav {
+            background-color: #000;
+            padding: 1rem;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .conain {
+            background-image: url('{{ asset('images/banner.jpg') }}');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .shop-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #f1c876;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .img-product {   
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+    background: none; /* Ensure no background is applied */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Add shadow for emphasis */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Optional border for clarity */
+    mix-blend-mode:multiply;
+ 
+}
+.card-header{
+    background-color: #0056b3;
 }
 
-.breadcrumb-item a:hover {
-  color: #0056b3;
-  text-decoration: underline;
-}
 
-.breadcrumb .fas {
-  margin-right: 5px; /* Adds space between icons and text */
-  color: #6c757d;
-}
-  </style>
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .breadcrumb-item a {
+            font-weight: 500;
+            color: #007bff;
+        }
+
+        .breadcrumb-item a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        .btn-dark {
+            background-color: #343a40;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-dark:hover {
+            background-color: #23272b;
+            transform: translateY(-3px);
+        }
+    </style>
 </head>
 <body>
     <nav>
         @include('components.navbar')
     </nav>
-    @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
 
-@if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
+    <div class="conain">
+        <h1 class="shop-text">Shop</h1>
     </div>
-@endif
-<div class="conain">
-    <h1 class="shop-text" style="color: #f1c876;">Shop</h1>
-</div>
-<header class="bg-light py-3 px-4 rounded shadow-sm" aria-label="breadcrumb">
-    <ol class="breadcrumb mb-0">
-      <li class="breadcrumb-item">
-        <a href="/" class="text-decoration-none text-primary">
-          <i class="fas fa-home"></i> Home
-        </a>
-      </li>
-      <li class="breadcrumb-item">
-        <a href="{{route('product')}}" class="text-decoration-none text-primary"  >
-            <i class="fas fa-shopping-cart"></i>Shop
-        </a>
-      </li>
-    
-    </ol>
-  </header>
-   
-    <br>
-    <p class="h5 m-3 font-weight-bold text-center text-dark">Total Products: <span class="fw-bold">{{ $products->total() }}</span></p>
-    <br>
-    <div class="container">
+
+    <header class="bg-light py-3 px-4 rounded shadow-sm" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="/" class="text-decoration-none text-primary">
+                    <i class="fas fa-home"></i> Home
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ route('product') }}" class="text-decoration-none text-primary">
+                    <i class="fas fa-shopping-cart"></i> Shop
+                </a>
+            </li>
+        </ol>
+    </header>
+
+    <div class="container my-4">
+        <p class="h5 text-center font-weight-bold">Total Products: <span>{{ $products->total() }}</span></p>
         <div class="row">
             @if ($products->isEmpty())
-                <div class="alert alert-success text-center" role="alert">
-                    <h4 class="alert-heading">Sorry!</h4>
-                    <p>No products available at the moment. Please check back later.</p>
-                    <hr>
-                    <p class="mb-0">Feel free to browse other categories or use the search feature to find what you're looking for.</p>
+                <div class="col-12">
+                    <div class="alert alert-warning text-center">
+                        <h4>Sorry!</h4>
+                        <p>No products available at the moment. Please check back later.</p>
+                    </div>
                 </div>
             @else
-            <div class="row">
                 @foreach ($products as $product)
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-5th">
-                        <div class="card mb-4 shadow-sm h-100">
+                    <div class="col-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card h-100">
                             <div class="card-header p-0">
                                 <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}">
                                     @php
                                         $images = json_decode($product->productimage);
                                     @endphp
-                                    @if(is_array($images) && !empty($images))
-                                        <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-fluid shadow product">
+                                    @if (is_array($images) && !empty($images))
+                                        <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-product">
                                     @else
-                                        <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="img-fluid shadow rounded-circle">
+                                        <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="img-product">
                                     @endif
                                 </a>
                             </div>
-                            <div class="card-body d-flex flex-column">
-                                <span class="card-title">{{ $product->name }}</span>
+                            <div class="card-body">
+                                <div class="d-flex flex-column justify-content-center align-items-center text-center">
+                                    <span class="fw-bold mb-1 text-truncate" style="max-width: 100%;">{{ ucwords($product->name) }}</span>
+                                    <b>${{ number_format($product->price, 2) }} </b>
+                                    @if($product->offprice)
+                                        <span class="text-muted me-2">
+                                            <del>${{ number_format($product->offprice, 2) }}</del>
+                                        </span>
+                                    @endif
+                                  
+                                </div>
+                                <div class="d-grid gap-2">
                                 <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-dark mt-auto">View Product</a>
                             </div>
                         </div>
+                        </div>
                     </div>
                 @endforeach
-            </div>
-
             @endif
         </div>
     </div>
 
-    <br>
-{{ $products->links('vendor.pagination.custom') }}
-
-<br>
-
-<footer>
-    @include('components.footer')
-</footer>
-      <script>
-        function clickimg(smallimg){
-            var fullimg=document.getElementById("imagebox")
-            fullimg. src = smallimg.src
-        }
-
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.toggle-search-btn').click(function() {
-                $('.form-control').toggle('slow'); // Toggle the search input with a sliding effect (you can change 'slow' to 'fast' or a number in milliseconds)
-            });
-        });
-
-        document.getElementById('cartForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
-
-            // Get the action URL
-            var actionUrl = this.getAttribute('action');
-
-            // Redirect to the action URL
-            window.location.href = actionUrl;
-        });
-
-    </script>
-
+  {{ $products->links('vendor.pagination.custom') }}
+    <footer>
+        @include('components.footer')
+    </footer>
 </body>
 </html>

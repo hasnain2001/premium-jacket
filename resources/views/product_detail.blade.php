@@ -18,47 +18,54 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="{{asset('cssfile/product-detail.css')}}">
+                
+        <!-- Facebook Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window,document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+     fbq('init', '550494357734449'); 
+    fbq('track', 'PageView');
+    </script>
+    <noscript>
+     <img height="1" width="1" 
+    src="https://www.facebook.com/tr?id=550494357734449&ev=PageView
+    &noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
         <!-- Custom CSS -->
-        <style>
-            .conain {
-        background-position: center;
-        background-image: url('{{ asset('images/banner.jpg') }}');
-        background-size: cover;
-        height: 200px;
-        color: white;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .product-image,
-.card-img {
-    width: 100%;        /* Ensures the image takes up full width of the container */
-    height: auto;       /* Maintains aspect ratio */
-    max-height: 250px;  /* Sets a maximum height */
-    object-fit: cover;  /* Scales image to cover the box while maintaining aspect ratio */
+  <style>
+    .conain {
+    background-position: center;
+    background-image: url('{{ asset('images/banner.jpg') }}');
+    background-size: cover;
+    height: 200px;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    .product-image,
-    .card-img {
-        max-height: 250px; /* Adjust max height for tablets */
-    }
-}
-
-@media (max-width: 576px) {
-    .product-image,
-    .card-img {
-        max-height: 250px; /* Adjust max height for mobile */
-    }
+.img-product {
+    max-height: 300px; /* Limit the height for consistency */
+    object-fit: cover; /* Ensure the image fits nicely */
+    margin-bottom: 15px;
 }
 
 
-        </style>
 
-        @livewireStyles
-    </head>
+.text-spec {
+    color: #007bff; 
+}
+
+  </style>
+
+          </head>
     <body>
         <nav>
             @include('components.navbar')
@@ -70,17 +77,17 @@
         <header class="bg-light py-3 px-4 px-md-5 rounded shadow-sm" aria-label="breadcrumb">
             <ol class="breadcrumb mb-0 flex-wrap">
                 <li class="breadcrumb-item">
-                    <a href="/" class="text-decoration-none text-primary">
+                    <a href="/" class="text-decoration-none text-dark">
                         <i class="fas fa-home"></i> Home
                     </a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('product') }}" class="text-decoration-none text-primary">
+                    <a href="{{ route('product') }}" class="text-decoration-none text-dark">
                         <i class="fas fa-box"></i> Product
                     </a>
                 </li>
                 <li class="breadcrumb-item" aria-current="page">
-                    <a href="{{ route('category_details', ['slug' => Str::slug($product->categories)]) }}" class="text-decoration-none ">
+                    <a href="{{ route('category_details', ['slug' => Str::slug($product->categories)]) }}" class="text-decoration-none  text-dark  text-dark">
                         <i class="fas fa-tag"></i> {{ $product->categories }}
                     </a>
                     
@@ -312,15 +319,119 @@
                 </div>
 
             </div></div>
-
-        <div class="container mt-4">
-            <h6 class="mt-4 mb-3">Description</h6>
-            <div class="card">
-                <div class="card-body mb-6">
-                    <p class="card-text">{{ $product->description }}</p>
+            <div class="container my-5">
+                <div class="text-center mb-4">
+                    <div class="tab-navigation text-center my-4">
+                        <a href="#carouselExample" class="btn tab-btn " data-slide-to="0">Description</a>
+                        <a href="#carouselExample" class="btn tab-btn" data-slide-to="1">Specifications</a>
+                        <a href="#carouselExample" class="btn tab-btn" data-slide-to="2">Product Care</a>
+                      
+                    </div>
+                </div>
+                
+            
+                <div id="carouselExample" class="carousel slide">
+                    <div class="carousel-inner text-right">
+                        <!-- Description Section -->
+                        <div class="carousel-item active">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 class="mt-4 mb-3">Description</h3>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p class="card-text">{{ $product->description }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Specifications Section -->
+                        <div class="carousel-item">
+                            <div class="container mt-5">
+                                <div class="row align-items-center">
+                                    <!-- Image Section -->
+                                    <div class="col-md-4 text-center">
+                                        @php
+                                            $images = json_decode($product->productimage);
+                                        @endphp
+                                        @if (is_array($images) && !empty($images))
+                                            <img src="{{ asset($images[0]) }}" alt="Product Image" class="img-fluid img-product rounded shadow">
+                                        @else
+                                            <img src="{{ asset('images/No-image-available.jpg') }}" alt="No Image" class="img-fluid img-product rounded shadow">
+                                        @endif
+                                    </div>
+                                    
+                                    <!-- Specifications Section -->
+                                    <div class="col-md-6">
+                                        <h2 class="text-dart">Specifications</h2>
+                                        <ul class="list-unstyled mt-3 text-dark">
+                                            <li><i class="bi bi-shield-fill" ></i> <strong>Outer Shell:</strong> Real Leather</li>
+                                            <li><i class="bi bi-person-badge-fill" ></i> <strong>Leather Type:</strong> Sheepskin</li>
+                                            <li><i class="bi bi-palette-fill"></i> <strong>Leather Finish:</strong> Aniline</li>
+                                            <li><i class="bi bi-heart-fill" ></i> <strong>Inner Shell:</strong> Quilted viscose lining</li>
+                                            <li><i class="bi bi-arrow-bar-right" ></i> <strong>Closure Style:</strong> Button</li>
+                                            <li><i class="bi bi-award-fill" ></i> <strong>Collar Style:</strong> Notch</li>
+                                            <li><i class="bi bi-scissors" ></i> <strong>Cuffs Style:</strong> Open Hem</li>
+                                            <li><i class="bi bi-box-seam" ></i> <strong>Outside Pockets:</strong> Two</li>
+                                            <li><i class="bi bi-palette" ></i> <strong>Color:</strong> Black</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+            
+                     <!-- Product Care Section -->
+<div class="carousel-item">
+    <div class="container py-4">
+        <h2 class="text-center mb-4">Product Care</h2>
+        <div class="row align-items-center">
+            <!-- Image Section -->
+            <div class="col-md-4 text-center">
+                <img src="{{ asset('images/made-to-fit.png') }}" alt="Leather Jacket" class="img-fluid rounded shadow">
+            </div>
+            <!-- Care Details Section -->
+            <div class="col-md-8">
+                <h3 class="mb-3">Care Details</h3>
+                <div class="row">
+                    <!-- Dos Section -->
+                    <div class="col-md-6">
+                        <h4>Dos:</h4>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Store properly.</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Clean spills promptly.</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Apply a leather conditioner.</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Waterproof as needed.</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Protect from extremes.</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Seek professional care.</li>
+                        </ul>
+                    </div>
+                    <!-- Don'ts Section -->
+                    <div class="col-md-6">
+                        <h4>Don'ts:</h4>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-x-circle-fill text-danger me-2"></i> Avoid wire hangers.</li>
+                            <li><i class="bi bi-x-circle-fill text-danger me-2"></i> No harsh chemicals.</li>
+                            <li><i class="bi bi-x-circle-fill text-danger me-2"></i> Don't over-condition.</li>
+                            <li><i class="bi bi-x-circle-fill text-danger me-2"></i> Avoid heavy rain.</li>
+                            <li><i class="bi bi-x-circle-fill text-danger me-2"></i> Prevent contact with sharp objects.</li>
+                            <li><i class="bi bi-x-circle-fill text-danger me-2"></i> Don't attempt DIY repairs.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+  
+
+
+                    </div>
+                </div>
+            </div>
+   
     <hr>
 <!-- Related Products Section -->
 <div class="contain">
@@ -362,9 +473,54 @@
         <footer>
             @include('components.footer')
         </footer>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const stars = document.querySelectorAll(".star");
+    const ratingInput = document.getElementById("rating");
 
-        <script src="{{asset('js/product-detail.js')}}">
-        
-        </script>
+    stars.forEach((star) => {
+        star.addEventListener("mouseover", () => {
+            // Highlight stars up to the hovered star
+            resetStars();
+            highlightStars(star.dataset.value);
+        });
+
+        star.addEventListener("mouseout", resetStars);
+
+        star.addEventListener("click", () => {
+            // Set the rating value
+            ratingInput.value = star.dataset.value;
+            lockStars(star.dataset.value);
+        });
+    });
+
+    function highlightStars(value) {
+        stars.forEach((star) => {
+            if (star.dataset.value <= value) {
+                star.classList.add("hovered");
+            }
+        });
+    }
+
+    function resetStars() {
+        stars.forEach((star) => star.classList.remove("hovered"));
+    }
+
+    function lockStars(value) {
+        stars.forEach((star) => {
+            if (star.dataset.value <= value) {
+                star.classList.add("selected");
+            } else {
+                star.classList.remove("selected");
+            }
+        });
+    }
+});
+
+</script>
+        <script src="{{asset('js/product-detail.js')}}"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
     </html>

@@ -1,6 +1,6 @@
 @extends('welcome')
 @section('title')
-Terms & Conditions
+Terms & Conditions |
 @endsection
 
 @section('main-content')

@@ -103,9 +103,26 @@
                                             {{ $order->address }}
                                         </p>
                                         <p class="mb-2">
-                                            <strong><i class="fas fa-city"></i> City:</strong>
-                                            {{ $order->city }}, {{ $order->state }} {{ $order->zip }}
+                                            <strong><i class="fas fa-city"></i> City:{{ $order->city }}</strong>
+
                                         </p>
+                                        <p class="mb-2">
+                                            <strong>
+                                                <i class="fas fa-map-marker-alt me-2"></i> State: 
+                                            </strong> 
+                                            {{ $order->state }}
+                                        </p>
+                                        
+                                        <p class="mb-2">
+                                            <strong>
+                                                <i class="fas fa-envelope me-2"></i> Postal Code: 
+                                            </strong> 
+                                            {{ $order->zip }}
+                                        </p>
+                                        
+                                        
+                                        
+
                                     </div>
 
                                     <div class="col-md-6">
@@ -129,7 +146,7 @@
 
 
                     <div class="text-center">
-                        <a href="{{ route('product') }}" class="btn btn-lg btn-danger">Continue Shopping</a>
+                        <a href="{{ route('product') }}" class="btn btn-sm" style="background-color: #990c0c; color:aliceblue;">Continue Shopping</a>
                     </div>
                 </div>
             </div>

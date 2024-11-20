@@ -8,7 +8,8 @@ header("X-Robots-Tag:index, follow");?>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 @if ($category)
     <title>{{ $category->title }}</title>
-    <link rel="canonical" href="https://www.premiumleatherstyle.com/{{ Str::slug($category->slug) }}">
+    <link rel="canonical" href="{{ url('/category/' . Str::slug($category->slug)) }}">
+
     <meta name="description" content="{{ $category->meta_description }}">
     <meta name="keywords" content="{{ $category->meta_keyword }}">
     <meta name="author" content="john">
@@ -59,12 +60,12 @@ header("X-Robots-Tag:index, follow");?>
 <header class="bg-light py-3 px-4 rounded shadow-sm" aria-label="breadcrumb">
     <ol class="breadcrumb mb-0">
       <li class="breadcrumb-item">
-        <a href="/" class="text-decoration-none text-primary">
+        <a href="/" class="text-decoration-none text-dark">
           <i class="fas fa-home"></i> Home
         </a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{ route('categories') }}" class="text-decoration-none text-primary">
+        <a href="{{ route('categories') }}" class="text-decoration-none text-dark">
           <i class="fas fa-th-large"></i> Categories
         </a>
       </li>

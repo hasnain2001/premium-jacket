@@ -242,7 +242,7 @@ nav {
                     @if(isset($categoriesByGender[$gender->name]) && $categoriesByGender[$gender->name]->isNotEmpty())
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown{{ $gender->id }}" style="background-color: #690500;">
                             @foreach ($categoriesByGender[$gender->name] as $category)
-                                <li><a href="{{ route('category_details', ['slug' => Str::slug($category->slug)]) }}" class="dropdown-item" style="background-color: #690500; color:white; padding-top:0; margin-top:0%">{{ $category->title }}</a>
+                                <li><a href="{{ route('category_details', ['slug' => Str::slug($category->slug)]) }}" class="dropdown-item" style="color:white; padding-top:0; margin-top:0%">{{ $category->title }}</a>
                               
                                 </li>
                            

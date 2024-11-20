@@ -23,6 +23,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomizeController;
+use App\Http\Controllers\ReviewController;
 
 
 
@@ -70,7 +71,7 @@ use App\Http\Controllers\CustomizeController;
 
 
 
-
+    Route::post('/submit-review', [ReviewController::class, 'store'])->name('reviews.store');
     Route :: prefix('admin')->name('admin.')->group(function( ){
 
     Route:: middleware([GuestAdminMiddleware::class])->group(function(){
@@ -98,7 +99,7 @@ use App\Http\Controllers\CustomizeController;
     Route::post('/checkouts/stripe', 'processStripePayment')->name('checkout.stripe');
     Route::post('/checkout/paypal/{order}/{totalAmount}', 'processPayPalPayment')
     ->name('checkout.paypal');
-    Route::get('/checkout/success/{order_number}', [CheckoutController::class, 'showSuccess'])->name('checkout.success');
+    Route::get('/checkouts/success/{order_number}', [CheckoutController::class, 'showSuccess'])->name('checkout.success');
     Route::get('/checkout/cancel', 'checkout')->name('checkout.cancel');
     Route::get('/cancel', 'checkout')->name('payments.cancel');
     Route::get('payment/success', 'checkout')->name('payments.success');
